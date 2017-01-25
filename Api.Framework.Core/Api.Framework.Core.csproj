@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{17F5C4BE-6C0B-4CEE-8681-F944417D77B2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Api.Framework.Core</RootNamespace>
+    <AssemblyName>Api.Framework.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Words, Version=15.12.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Aspose.Words.15.11\Aspose.Words.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.OOXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.2.206221351\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="websocket-sharp">
+      <HintPath>..\packages\websocket-sharp\websocket-sharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attach\IObjectAttachService.cs" />
+    <Compile Include="Attach\ObjectAttachInfo.cs" />
+    <Compile Include="Attach\ObjectAttachService.cs" />
+    <Compile Include="Attach\SysAttachInfo.cs" />
+    <Compile Include="Attach\YearAttachCount.cs" />
+    <Compile Include="BaseData\DBEnum.cs" />
+    <Compile Include="BaseData\EnumInfo.cs" />
+    <Compile Include="BaseData\EnumItemInfo.cs" />
+    <Compile Include="BaseData\EnumService.cs" />
+    <Compile Include="BaseData\IEnum.cs" />
+    <Compile Include="BusinessSystem\BusinessSystemInfo.cs" />
+    <Compile Include="BusinessSystem\BusinessSystemService.cs" />
+    <Compile Include="BusinessSystem\IBusinessSystem.cs" />
+    <Compile Include="Chat\ChatGroupInfo.cs" />
+    <Compile Include="Chat\ChatService.cs" />
+    <Compile Include="Chat\WSHandler.cs" />
+    <Compile Include="DBAccess\DBExecute.cs" />
+    <Compile Include="DBAccess\EFDataTableExtension.cs" />
+    <Compile Include="DBAccess\ExpressionExtension.cs" />
+    <Compile Include="DBAccess\PageSource.cs" />
+    <Compile Include="DBAccess\ParameterRebinder.cs" />
+    <Compile Include="DB\ChatGroupEmpsEntity.cs" />
+    <Compile Include="DB\ChatGroupEmpsEntityMap.cs" />
+    <Compile Include="DB\ChatGroupEntity.cs" />
+    <Compile Include="DB\ChatGroupEntityMap.cs" />
+    <Compile Include="DB\ChatMessageEntity.cs" />
+    <Compile Include="DB\ChatMessageEntityMap.cs" />
+    <Compile Include="DB\ConfigEntityMap.cs" />
+    <Compile Include="Config\PathTreeConvertor.cs" />
+    <Compile Include="DBAccess\BaseRepository.cs" />
+    <Compile Include="BaseService.cs" />
+    <Compile Include="Config\BaseConfigForDB.cs" />
+    <Compile Include="DB\ConfigEntity.cs" />
+    <Compile Include="Config\ConfigNode.cs" />
+    <Compile Include="Config\PathNode.cs" />
+    <Compile Include="Config\IBaseConfig.cs" />
+    <Compile Include="DBAccess\OrderByExtensions.cs" />
+    <Compile Include="DBAccess\PageList.cs" />
+    <Compile Include="DBAccess\PageLinqExtensions.cs" />
+    <Compile Include="DB\ObjectAttachEntity.cs" />
+    <Compile Include="DB\ObjectAttachEntityMap.cs" />
+    <Compile Include="DB\ObjectTagEntity.cs" />
+    <Compile Include="DB\ObjectTagEntityMap.cs" />
+    <Compile Include="DB\SysAttachFileEntity.cs" />
+    <Compile Include="DB\SysAttachFileEntityMap.cs" />
+    <Compile Include="DB\SysTagEntity.cs" />
+    <Compile Include="DB\SysTagEntityMap.cs" />
+    <Compile Include="DB\UserConfigEntity.cs" />
+    <Compile Include="DB\UserConfigEntityMap.cs" />
+    <Compile Include="File\DBImageGetter.cs" />
+    <Compile Include="File\DownloadFileActionResult.cs" />
+    <Compile Include="File\EditorImageActionResult.cs" />
+    <Compile Include="File\ExcelExportHttpActionResult.cs" />
+    <Compile Include="File\FileResponseModel.cs" />
+    <Compile Include="File\FileService.cs" />
+    <Compile Include="File\HtmlPreviewAction.cs" />
+    <Compile Include="File\IFileService.cs" />
+    <Compile Include="File\IImageGetter.cs" />
+    <Compile Include="File\LoadImageActionResult.cs" />
+    <Compile Include="File\NotModifiedResponse.cs" />
+    <Compile Include="File\RequestAttachUpload.cs" />
+    <Compile Include="File\SysAttachFileInfo.cs" />
+    <Compile Include="File\UploadResponseModel.cs" />
+    <Compile Include="File\UploadStreamProvider.cs" />
+    <Compile Include="File\ZipFile.cs" />
+    <Compile Include="Office\ColumnMapInfo.cs" />
+    <Compile Include="Office\ExcelGenerator.cs" />
+    <Compile Include="Office\WordGenerator.cs" />
+    <Compile Include="Organization\IRole.cs" />
+    <Compile Include="Organization\OrgInfo.cs" />
+    <Compile Include="Permission\IPermissionOperate.cs" />
+    <Compile Include="Permission\IPermissionPersistence.cs" />
+    <Compile Include="Permission\IPermission.cs" />
+    <Compile Include="Permission\Permission.cs" />
+    <Compile Include="Permission\PermissionOperate.cs" />
+    <Compile Include="Permission\PermissionService.cs" />
+    <Compile Include="Permission\PermissionStatus.cs" />
+    <Compile Include="Safe\ITokenManager.cs" />
+    <Compile Include="Safe\JsonWebTokenManager.cs" />
+    <Compile Include="Safe\Md5.cs" />
+    <Compile Include="Safe\TokenAttribute.cs" />
+    <Compile Include="Safe\TokenConfig.cs" />
+    <Compile Include="Tag\IObjectTagService.cs" />
+    <Compile Include="Tag\ISysTagService.cs" />
+    <Compile Include="Tag\ObjectTagInfo.cs" />
+    <Compile Include="Tag\ObjectTagService.cs" />
+    <Compile Include="Tag\SysTagInfo.cs" />
+    <Compile Include="Tag\SysTagService.cs" />
+    <Compile Include="UnityContainerHelper.cs" />
+    <Compile Include="User\IUserConfig.cs" />
+    <Compile Include="User\UserConfigService.cs" />
+    <Compile Include="User\UserProductionInfo.cs" />
+    <Compile Include="User\IUser.cs" />
+    <Compile Include="User\LoginResult.cs" />
+    <Compile Include="User\UserInfo.cs" />
+    <Compile Include="User\UserPasswordInfo.cs" />
+    <Compile Include="User\UserService.cs" />
+    <Compile Include="DBAccess\PageQueryParam.cs" />
+    <Compile Include="Organization\DepartmentService.cs" />
+    <Compile Include="Organization\RoleInfo.cs" />
+    <Compile Include="Organization\RoleService.cs" />
+    <Compile Include="Organization\IDepartment.cs" />
+    <Compile Include="Organization\IOrganization.cs" />
+    <Compile Include="Organization\DepartmentInfo.cs" />
+    <Compile Include="DB\PermissionEntity.cs" />
+    <Compile Include="DB\PermissionEntityMap.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DB\SystemContext.cs" />
+    <Compile Include="User\ILogin.cs" />
+    <Compile Include="User\LoginService.cs" />
+    <Compile Include="DB\SysUserEntity.cs" />
+    <Compile Include="DB\SysUserEntityMap.cs" />
+    <Compile Include="Values.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
