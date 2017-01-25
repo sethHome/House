@@ -1,0 +1,122 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+
+    <i class="fa fa-plus" ng-class="{'fa-save' : volInfo.ID > 0 }"></i> &nbsp;
+    {{volInfo.ID > 0 ? '修改' : '添加'}}卷册
+
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body" blockui="modalPanel">
+    <form class="form-horizontal" name="FormMaintain">
+        <fieldset class="m-t-0">
+            <legend>卷册信息</legend>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label>编号</label>
+                    <span class="pull-right vad-msg" id="Number"></span>
+                    <input type="text" ng-model="volInfo.Number"
+                           name="Number" validator="required,maxlength=20" message-id="Number"
+                           placeholder="编号"
+                           class="form-control form-white" />
+                </div>
+                <div class="col-sm-6">
+                    <label>名称</label>
+                    <span class="pull-right vad-msg" id="Name"></span>
+                    <input type="text" ng-model="volInfo.Name"
+                           name="Name" validator="required,maxlength=20" message-id="Name"
+                           placeholder="名称"
+                           class="form-control form-white" />
+                </div>
+                <div class="col-sm-6">
+                    <label>开始日期</label>
+                    <span class="pull-right vad-msg" id="StartDate"></span>
+                    <div class="append-icon">
+                        <input type="text" ng-model="volInfo.StartDate"
+                               name="StartDate" validator="required" message-id="StartDate"
+                               placeholder="开始日期"
+                               class="form-control form-white"
+                               date-picker />
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label>结束日期</label>
+                    <span class="pull-right vad-msg" id="EndDate"></span>
+                    <div class="append-icon">
+                        <input type="text" ng-model="volInfo.EndDate"
+                               name="EndDate" validator="required" message-id="EndDate"
+                               placeholder="结束日期"
+                               class="form-control form-white"
+                               date-picker />
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <label>备注</label>
+                    <span class="pull-right vad-msg" id="msg_note"></span>
+                    <input type="text" ng-model="volInfo.Note"
+                           name="Note" validator="maxlength=50" message-id="msg_note"
+                           placeholder="备注"
+                           class="form-control form-white" />
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>人员安排</legend>
+
+            <div class="row">
+                <div class="col-md-4"
+                     ng-repeat="task in volInfo.TaskUsers">
+                    <label>{{task.Name}} </label>
+                    <span class="pull-right vad-msg" id="msg_{{$index}}"></span>
+
+                    <div ng-if="task.Status == 2">
+                        {{task.User | enumMap : 'user'}}（完成）
+                    </div>
+
+                    <ui-select ng-if="task.Status != 2" ng-model="task.User" theme="select2" search-enabled="false" class="form-control form-white">
+                        <ui-select-match placeholder="{{local.global.choose}}">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="item.ID as item in user_item | taskuser: spec">
+                            <div ng-bind-html="item.Name"></div>
+                        </ui-select-choices>
+                    </ui-select>
+
+                    <input class="hide" ng-model="task.User"
+                           name="task.User{{$index}}" validator="required" message-id="msg_{{$index}}">
+
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div class="modal-footer bg-aero">
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="save()"
+            ng-if="!volInfo.flage"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-plus" ng-class="{'fa-save' : volInfo.ID > 0 }"></i>
+        {{volInfo.ID > 0 ? local.global.save : '添加'}}
+    </button>
+
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="addAndClose()"
+            ng-if="!volInfo.flage && !volInfo.ID"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-plus"></i>
+        添加并关闭
+    </button>
+
+    <button type="button"
+            ng-click="close()"
+            ng-if="volInfo.flage"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-close"></i>
+        关闭
+    </button>
+</div>

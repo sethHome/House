@@ -1,0 +1,154 @@
+﻿<div class="panel ">
+    <div class="panel-header">
+        
+        <button type="button" class="btn btn-default btn-square m-0 "
+                popover-trigger="'outsideClick'"
+                popover-placement="bottom-left"
+                uib-popover-template="'filterPanel.html'">
+            <i class="fa fa-filter"></i>筛选
+        </button>
+
+        <button type="button" class="btn btn-default btn-square  m-0 "
+                ng-click="exprot()">
+            <i class="fa fa-file-excel-o"></i>导出
+        </button>
+
+        <div class="prepend-icon pull-right m-b-0 pull-right">
+            <input type="text"
+                   ng-model="filter.txtfilter"
+                   enter-press="loadSource()"
+                   ng-click="loadSource()"
+                   class="form-control form-white filterbox " placeholder="{{local.eng.number}}、{{local.eng.name}}">
+            <i class="fa fa-search"></i>
+        </div>
+    </div>
+
+    <div class="panel-content bg-white p-t-0" blockui="gridPanel">
+
+        <div style="height:{{gridHeight}}px"
+             ui-grid-pagination
+             ui-grid-auto-resize
+             ui-grid-resize-columns
+             ui-grid-move-columns
+             ui-grid-pinning
+             ui-grid="gridOptions"></div>
+    </div>
+
+
+</div>
+
+<script type="text/ng-template" id="filterPanel.html">
+    <form class="form-horizontal m-0 p-20" style="width:{{filterPanelWidth}}px;">
+
+        <div class="form-group">
+            <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.eng.type}}</label> </span>
+            <div class="col-sm-10 col-lg-10 col-md-12">
+                <ui-select ng-model="filter.type" theme="select2" search-enabled="false" class="form-control form-white">
+                    <ui-select-match placeholder="{{local.global.choose}}{{local.eng.type}}">{{$select.selected.Text}}</ui-select-match>
+                    <ui-select-choices repeat="item.Value as item in getBaseData('EngineeringType')">
+                        <div ng-bind-html="item.Text"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.eng.phase}}</label> </span>
+            <div class="col-sm-10 col-lg-10 col-md-12">
+                <ui-select ng-model="filter.phase" theme="select2" search-enabled="false" class="form-control form-white" >
+                    <ui-select-match placeholder="{{local.global.choose}}{{local.eng.phase}}">{{$select.selected.Text}}</ui-select-match>
+                    <ui-select-choices repeat="item.Value as item in getBaseData('EngineeringPhase')">
+                        <div ng-bind-html="item.Text"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.eng.vollevel}}</label> </span>
+            <div class="col-sm-10 col-lg-10 col-md-12">
+                <ui-select ng-model="filter.vollevel" theme="select2" search-enabled="false" class="form-control form-white">
+                    <ui-select-match placeholder="{{local.global.choose}}{{local.eng.vollevel}}">{{$select.selected.Text}}</ui-select-match>
+                    <ui-select-choices repeat="item.Value as item in getBaseData('VolLev')">
+                        <div ng-bind-html="item.Text"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.eng.tasktype}}</label> </span>
+            <div class="col-sm-10 col-lg-10 col-md-12">
+                <ui-select ng-model="filter.tasktype" theme="select2" search-enabled="false" class="form-control form-white">
+                    <ui-select-match placeholder="{{local.global.choose}}{{local.eng.tasktype}}">{{$select.selected.Text}}</ui-select-match>
+                    <ui-select-choices repeat="item.Value as item in getBaseData('TaskType')">
+                        <div ng-bind-html="item.Text"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.eng.status}}</label> </span>
+            <div class="col-sm-10 col-lg-10 col-md-12">
+                <ui-select ng-model="filter.status" theme="select2" search-enabled="false" class="form-control form-white">
+                    <ui-select-match placeholder="{{local.global.choose}}{{local.eng.status}}">{{$select.selected.Text}}</ui-select-match>
+                    <ui-select-choices repeat="item.Value as item in getBaseData('EngineeringStatus')">
+                        <div ng-bind-html="item.Text"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.eng.manager}}</label> </span>
+            <div class="col-sm-10 col-lg-10 col-md-12">
+                <ui-select ng-model="filter.manager" theme="select2" class="form-control form-white">
+                    <ui-select-match placeholder="{{local.global.choose}}{{local.eng.manager}}">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="item.ID as item in user_item  | filter: $select.search">
+                        <div ng-bind-html="item.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group" ng-show="filterArg.Specialty">
+            <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.specil.name}}</label> </span>
+            <div class="col-sm-10 col-lg-10 col-md-12">
+                <ui-select ng-model="filter.specialty" theme="select2" search-enabled="false" class="form-control form-white">
+                    <ui-select-match placeholder="{{local.global.choose}}{{local.eng.status}}">{{$select.selected.Text}}</ui-select-match>
+                    <ui-select-choices repeat="item.Value as item in getBaseData('Specialty')">
+                        <div ng-bind-html="item.Text"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.eng.createdate}}</label> </span>
+            <div class="col-sm-10 col-lg-10 col-md-12 ">
+
+                <div class="input-daterange input-group" date-picker>
+                    <input type="text" ng-model="filter.createdatefrom" class="form-control form-white" name="start" placeholder="{{local.global.beign}}">
+                    <span class="input-group-addon">{{local.global.to}}</span>
+                    <input type="text" ng-model="filter.createdateto" class="form-control form-white" name="end" placeholder="{{local.global.end}}">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.eng.deliverydate}}</label> </span>
+            <div class="col-sm-10 col-lg-10 col-md-12 ">
+
+                <div class="input-daterange input-group" date-picker>
+                    <input type="text" ng-model="filter.deliverydatefrom" class="form-control form-white" name="start" placeholder="{{local.global.beign}}">
+                    <span class="input-group-addon">{{local.global.to}}</span>
+                    <input type="text" ng-model="filter.deliverydateto" class="form-control form-white" name="end" placeholder="{{local.global.end}}">
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <button type="button"
+                ng-click="clearFilter()"
+                class="btn btn-danger btn-square  pull-right">
+            <i class="fa fa-refresh"></i>
+            {{local.global.reset}}
+        </button>
+
+    </form>
+</script>

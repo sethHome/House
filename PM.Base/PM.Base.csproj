@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FF5B2E24-4DAB-46BA-A681-F47F0D345202}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PM.Base</RootNamespace>
+    <AssemblyName>PM.Base</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BizObject\BizObject.cs" />
+    <Compile Include="BizObject\ITopBizObject.cs" />
+    <Compile Include="Controller\BidController.cs" />
+    <Compile Include="Controller\CalendarController.cs" />
+    <Compile Include="Controller\CarController.cs" />
+    <Compile Include="Controller\ContractController.cs" />
+    <Compile Include="Controller\CustomerController.cs" />
+    <Compile Include="Controller\CustomerPersonController.cs" />
+    <Compile Include="Controller\EngineeringController.cs" />
+    <Compile Include="Controller\EngineeringNoteController.cs" />
+    <Compile Include="Controller\EngineeringPlanController.cs" />
+    <Compile Include="Controller\EngineeringResourceController.cs" />
+    <Compile Include="Controller\EngineeringSpecialtyController.cs" />
+    <Compile Include="Controller\EngineeringVolumeCheckController.cs" />
+    <Compile Include="Controller\EngineeringVolumeController.cs" />
+    <Compile Include="Controller\FlowController.cs" />
+    <Compile Include="Controller\FormChangeController.cs" />
+    <Compile Include="Controller\NewsController.cs" />
+    <Compile Include="Controller\NotificationController.cs" />
+    <Compile Include="Controller\ObjectController.cs" />
+    <Compile Include="Controller\ObjectProcessController.cs" />
+    <Compile Include="Controller\ProcessController.cs" />
+    <Compile Include="Controller\ProjectController.cs" />
+    <Compile Include="Controller\StatisticsController.cs" />
+    <Compile Include="Controller\UserTaskController.cs" />
+    <Compile Include="DB\BidEntity.cs" />
+    <Compile Include="DB\BidEntityMap.cs" />
+    <Compile Include="DB\CalendarEntity.cs" />
+    <Compile Include="DB\CalendarEntityMap.cs" />
+    <Compile Include="DB\CarEntity.cs" />
+    <Compile Include="DB\CarEntityMap.cs" />
+    <Compile Include="DB\CarUseEntity.cs" />
+    <Compile Include="DB\CarUseEntityMap.cs" />
+    <Compile Include="DB\ContractEntity.cs" />
+    <Compile Include="DB\ContractEntityMap.cs" />
+    <Compile Include="DB\ContractObjectEntity.cs" />
+    <Compile Include="DB\ContractObjectEntityMap.cs" />
+    <Compile Include="DB\ContractPayeeEntity.cs" />
+    <Compile Include="DB\ContractPayeeEntityMap.cs" />
+    <Compile Include="DB\CustomerEntity.cs" />
+    <Compile Include="DB\CustomerEntityMap.cs" />
+    <Compile Include="DB\CustomerPersonEntity.cs" />
+    <Compile Include="DB\CustomerPersonEntityMap.cs" />
+    <Compile Include="DB\EngineeringEntity.cs" />
+    <Compile Include="DB\EngineeringEntityMap.cs" />
+    <Compile Include="DB\EngineeringNoteEntity.cs" />
+    <Compile Include="DB\EngineeringNoteEntityMap.cs" />
+    <Compile Include="DB\EngineeringPlanEntity.cs" />
+    <Compile Include="DB\EngineeringPlanEntityMap.cs" />
+    <Compile Include="DB\EngineeringResourceEntity.cs" />
+    <Compile Include="DB\EngineeringResourceEntityMap.cs" />
+    <Compile Include="DB\EngineeringSpecialtyEntity.cs" />
+    <Compile Include="DB\EngineeringSpecialtyEntityMap.cs" />
+    <Compile Include="DB\EngineeringSpecialtyProvideEntity.cs" />
+    <Compile Include="DB\EngineeringSpecialtyProvideEntityMap.cs" />
+    <Compile Include="DB\EngineeringVolumeCheckEntity.cs" />
+    <Compile Include="DB\EngineeringVolumeCheckEntityMap.cs" />
+    <Compile Include="DB\EngineeringVolumeEntity.cs" />
+    <Compile Include="DB\EngineeringVolumeEntityMap.cs" />
+    <Compile Include="DB\FormChangeEntity.cs" />
+    <Compile Include="DB\FormChangeEntityMap.cs" />
+    <Compile Include="DB\NewsEntity.cs" />
+    <Compile Include="DB\NewsEntityMap.cs" />
+    <Compile Include="DB\NotificationEntity.cs" />
+    <Compile Include="DB\NotificationEntityMap.cs" />
+    <Compile Include="DB\ObjectProcessEntityMap.cs" />
+    <Compile Include="DB\PMContext.cs" />
+    <Compile Include="DB\ProjectEntity.cs" />
+    <Compile Include="DB\ProjectEntityMap.cs" />
+    <Compile Include="DB\UserTaskEntityMap.cs" />
+    <Compile Include="Flow\BPMCarApplyOB.cs" />
+    <Compile Include="Flow\BPMFormOb.cs" />
+    <Compile Include="Flow\BPMProductionOb.cs" />
+    <Compile Include="Flow\BPMProvideOb.cs" />
+    <Compile Include="Flow\FlowDetailInfo.cs" />
+    <Compile Include="Flow\FlowNodeInfo.cs" />
+    <Compile Include="Flow\FlowService.cs" />
+    <Compile Include="Flow\FlowTask.cs" />
+    <Compile Include="Flow\ProcessInfo.cs" />
+    <Compile Include="Permission\IPMPermissionCheck.cs" />
+    <Compile Include="Permission\PMPermissionCheck.cs" />
+    <Compile Include="ProcessOwner\FormChangeOwner.cs" />
+    <Compile Include="ProcessOwner\ProvideOwner.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Bid\BidInfo.cs" />
+    <Compile Include="Service\Bid\BidService.cs" />
+    <Compile Include="Service\Calendar\CalendarInfo.cs" />
+    <Compile Include="Service\Calendar\CalendarService.cs" />
+    <Compile Include="Service\Car\CarInfo.cs" />
+    <Compile Include="Service\Car\CarService.cs" />
+    <Compile Include="Service\Car\CarUseInfo.cs" />
+    <Compile Include="Service\Car\CarUseService.cs" />
+    <Compile Include="Service\Contract\ContractInfo.cs" />
+    <Compile Include="Service\Contract\ContractPayeeInfo.cs" />
+    <Compile Include="Service\Contract\ContractPayeeService.cs" />
+    <Compile Include="Service\Contract\ContractService.cs" />
+    <Compile Include="Service\Customer\CustomerInfo.cs" />
+    <Compile Include="Service\Customer\CustomerInfoPart2.cs" />
+    <Compile Include="Service\Customer\CustomerPersonInfo.cs" />
+    <Compile Include="Service\Customer\CustomerPersonService.cs" />
+    <Compile Include="Service\Customer\CustomerService.cs" />
+    <Compile Include="Service\Document\DocumentInfo.cs" />
+    <Compile Include="Service\Document\DocumentService.cs" />
+    <Compile Include="Service\EngineeringSpecialty\EngineeringSpecialtyInfo.cs" />
+    <Compile Include="Service\EngineeringSpecialty\EngineeringSpecialtyProvideInfo.cs" />
+    <Compile Include="Service\EngineeringSpecialty\EngineeringSpecialtyProvideService.cs" />
+    <Compile Include="Service\EngineeringSpecialty\EngineeringSpecialtyService.cs" />
+    <Compile Include="Service\EngineeringVolume\EngineeringVolumeCheckForm.cs" />
+    <Compile Include="Service\EngineeringVolume\EngineeringVolumeCheckInfo.cs" />
+    <Compile Include="Service\EngineeringVolume\EngineeringVolumeCheckService.cs" />
+    <Compile Include="Service\EngineeringVolume\EngineeringVolumeFileInfo.cs" />
+    <Compile Include="Service\EngineeringVolume\EngineeringVolumeInfo.cs" />
+    <Compile Include="Service\EngineeringVolume\EngineeringVolumeNewInfo.cs" />
+    <Compile Include="Service\EngineeringVolume\EngineeringVolumeService.cs" />
+    <Compile Include="Service\EngineeringVolume\VolumeCheckGroupInfo.cs" />
+    <Compile Include="Service\EngineeringVolume\VolumeStatisticsInfo.cs" />
+    <Compile Include="Service\Engineering\EngineeringGanttInfo.cs" />
+    <Compile Include="Service\Engineering\EngineeringInfo.cs" />
+    <Compile Include="Service\Engineering\EngineeringNoteInfo.cs" />
+    <Compile Include="Service\Engineering\EngineeringNoteService.cs" />
+    <Compile Include="Service\Engineering\EngineeringPlanInfo.cs" />
+    <Compile Include="Service\Engineering\EngineeringPlanService.cs" />
+    <Compile Include="Service\Engineering\EngineeringProductionInfo.cs" />
+    <Compile Include="Service\Engineering\EngineeringResourceInfo.cs" />
+    <Compile Include="Service\Engineering\EngineeringResourceService.cs" />
+    <Compile Include="Service\Engineering\EngineeringService.cs" />
+    <Compile Include="Service\Engineering\ProjectInfo.cs" />
+    <Compile Include="Service\Engineering\ProjectService.cs" />
+    <Compile Include="Service\Form\ExportFormWord.cs" />
+    <Compile Include="Service\Form\FormChangeInfo.cs" />
+    <Compile Include="Service\Form\FormChangeService.cs" />
+    <Compile Include="Service\Form\IFormChangeService.cs" />
+    <Compile Include="Service\IBidService.cs" />
+    <Compile Include="Service\ICalendarService.cs" />
+    <Compile Include="Service\ICarService.cs" />
+    <Compile Include="Service\ICarUseService.cs" />
+    <Compile Include="Service\IContractPayeeService.cs" />
+    <Compile Include="Service\IContractService.cs" />
+    <Compile Include="Service\ICustomerPersonService.cs" />
+    <Compile Include="Service\ICustomerService.cs" />
+    <Compile Include="Service\IEngineeringNoteService.cs" />
+    <Compile Include="Service\IEngineeringPlanService.cs" />
+    <Compile Include="Service\IEngineeringResourceService.cs" />
+    <Compile Include="Service\IEngineeringService.cs" />
+    <Compile Include="Service\IEngineeringSpecialtyProvideService.cs" />
+    <Compile Include="Service\IEngineeringSpecialtyService.cs" />
+    <Compile Include="Service\IEngineeringVolumeCheckService.cs" />
+    <Compile Include="Service\IEngineeringVolumeService.cs" />
+    <Compile Include="Service\INewsService.cs" />
+    <Compile Include="Service\INotificationService.cs" />
+    <Compile Include="Service\IProjectService.cs" />
+    <Compile Include="Service\IPMUserTaskService.cs" />
+    <Compile Include="Service\News\NewsInfo.cs" />
+    <Compile Include="Service\News\NewsService.cs" />
+    <Compile Include="Service\Notification\NotificationInfo.cs" />
+    <Compile Include="Service\Notification\NotificationService.cs" />
+    <Compile Include="Service\PMEnum.cs" />
+    <Compile Include="Service\Statistics\EngStatisticsInfo.cs" />
+    <Compile Include="Service\Statistics\IStatistics.cs" />
+    <Compile Include="Service\Statistics\MyStatistics.cs" />
+    <Compile Include="Service\Statistics\StatisticsService.cs" />
+    <Compile Include="Service\UserTask\PMObjectProcessService.cs" />
+    <Compile Include="Service\UserTask\UserTaskCountInfo.cs" />
+    <Compile Include="Service\UserTask\UserTaskInfo.cs" />
+    <Compile Include="Service\UserTask\PMUserTaskService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Api.Framework.Core\Api.Framework.Core.csproj">
+      <Project>{17f5c4be-6c0b-4cee-8681-f944417d77b2}</Project>
+      <Name>Api.Framework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Api.System\Api.System.csproj">
+      <Project>{0acd9472-ebfb-4c9e-b0ef-3a674ffc5801}</Project>
+      <Name>Api.System</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BPM.DB\BPM.DB.csproj">
+      <Project>{311306e0-3e6a-4805-af0e-9497b58a6bce}</Project>
+      <Name>BPM.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BPM.Engine\BPM.Engine.csproj">
+      <Project>{e28b648e-9e26-4e52-be60-cd2f29a3e2e3}</Project>
+      <Name>BPM.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BPM.ProcessModel\BPM.ProcessModel.csproj">
+      <Project>{17ea7624-1a03-479f-991d-626b26bb4fde}</Project>
+      <Name>BPM.ProcessModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

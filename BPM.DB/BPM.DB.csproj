@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{311306E0-3E6A-4805-AF0E-9497B58A6BCE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BPM.DB</RootNamespace>
+    <AssemblyName>BPM.DB</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DBContext\BPMJoinSignTaskEntity.cs" />
+    <Compile Include="DBContext\BPMJoinSignTaskEntityMap.cs" />
+    <Compile Include="DBContext\BPMProcessInstanceEntity.cs" />
+    <Compile Include="DBContext\BPMProcessInstanceEntityMap.cs" />
+    <Compile Include="DBContext\BPMProcessTaskIDMapEntity.cs" />
+    <Compile Include="DBContext\BPMProcessTaskIDMapEntityMap.cs" />
+    <Compile Include="DBContext\BPMTaskInstanceEntity.cs" />
+    <Compile Include="DBContext\BPMTaskInstanceEntityMap.cs" />
+    <Compile Include="DBContext\BPMContext.cs" />
+    <Compile Include="DBContext\ObjectProcessEntity.cs" />
+    <Compile Include="DBContext\UserTaskEntity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\BPMJoinSignTaskService.cs" />
+    <Compile Include="Service\BPMProcessInstanceInfo.cs" />
+    <Compile Include="Service\BPMProcessInstanceService.cs" />
+    <Compile Include="Service\BPMProcessTaskIDMapInfo.cs" />
+    <Compile Include="Service\BPMProcessTaskIDMapService.cs" />
+    <Compile Include="Service\BPMTaskInstanceInfo.cs" />
+    <Compile Include="Service\BPMTaskInstanceService.cs" />
+    <Compile Include="Service\IBPMProcessInstanceService.cs" />
+    <Compile Include="Service\IBPMProcessTaskIDMapService.cs" />
+    <Compile Include="Service\IBPMTaskInstanceService.cs" />
+    <Compile Include="Service\IObjectProcessService.cs" />
+    <Compile Include="Service\IUserTaskService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Api.Framework.Core\Api.Framework.Core.csproj">
+      <Project>{17f5c4be-6c0b-4cee-8681-f944417d77b2}</Project>
+      <Name>Api.Framework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BPM.ProcessModel\BPM.ProcessModel.csproj">
+      <Project>{17ea7624-1a03-479f-991d-626b26bb4fde}</Project>
+      <Name>BPM.ProcessModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

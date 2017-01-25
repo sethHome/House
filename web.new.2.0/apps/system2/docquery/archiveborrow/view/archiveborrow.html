@@ -1,0 +1,112 @@
+﻿<div class="panel ">
+    <div class="panel-content " style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner " >
+                    <p class="bold f-20 t-center m-20" >
+                        我的档案借阅列表
+                    </p>
+                    <div class="borrow-item"
+                         ng-repeat="item in archiveBorrowList track by $index">
+                        <p> <i class="fa fa-file-zip-o "></i> {{item.name}}</p>
+                        <span class="f-12 c-gray">【{{item.typeName}}】 归档份数： {{item.copies}}</span>
+                        <button type="button" ng-click="removeArchiveItem(item)" class="btn btn-sm btn-square btn-danger ">移除</button>
+                    </div>
+                    <p class="p-10" ng-if="!archiveBorrowList">这里暂时没有待借阅档案！<a ui-sref="docquery.search">点这里去找找您想要的档案吧！</a></p>
+                  
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="70%">
+                <div class="pretty-split-pane-component-inner p-10">
+
+
+                    <form class="m-0 p-0" 
+                          name="FormMaintain" blockui="panel">
+
+                        <fieldset class="m-0 p-0 p-t-10 p-b-10" ng-show="!readOnly ">
+                            <process-control flow-name="ArchiveBorrow" task-id="taskID"
+                                             flow-data="flowData" form="FormMaintain"
+                                             task-info="borrowInfo.FlowData"
+                                             next="save({callBack : callBack,flowInfo : taskInfo})">
+                            </process-control>
+                        </fieldset>
+
+                        <fieldset class="m-0  m-t-10 ">
+
+                            <div class="row t-center m-b-20 ">
+                                <span class="text-2x">借阅申请单</span>
+
+                                <span class="pull-right text-sm m-t-20 m-r-10">{{"2016/12/01" | TDate:'yyyy年M月d日'}}</span>
+                            </div>
+
+                      
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>借阅部门</label>
+                                        <span class="pull-right vad-msg" id="msg_dept"></span>
+
+                                        <ui-select ng-model="borrowInfo.BorrowDept" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Value as item in getBaseData('Dept')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <input class="hide" ng-model="borrowInfo.BorrowDept"
+                                               message-id="msg_dept"
+                                               name="msg_dept" validator="required">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 ">
+                                    <div class="form-group">
+                                        <label>预计归还时间</label>
+                                        <span class="pull-right vad-msg" id="msg_backdate"></span>
+                                        <input type="text" ng-model="borrowInfo.BackDate" validator="required"  message-id="msg_backdate"
+                                               name="BorrowCount" class="form-control form-white" date-picker >
+
+                                    </div>
+                                </div>
+                               
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>借阅用途</label>
+                                        <span class="pull-right vad-msg" id="msg_note"></span>
+                                        <textarea class="form-control form-white "
+                                                  name="Note"
+                                                  validator="maxlength=200" message-id="msg_note"
+                                                  placeholder="您需要这些档案的原因"
+                                                  ng-model="borrowInfo.Note" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group text-sm">
+                                        说明：<br />
+                                        1、本单按苏电建〔2009〕1111号《江苏省电力公司输变电工程设计变更管理规定》编制和执行。<br />
+                                        2、设计单位校核人为室主任或专业工程师，审核人为总工程师、批准人为总经理。<br />
+                                        3、此单一式3份，设计人留存一份，其余发至相关方，工程完成后归档。
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                        </fieldset>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

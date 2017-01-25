@@ -1,0 +1,5 @@
+﻿<div ng-repeat="page in modules.demo"
+     ui-view="{{'demo.content.' + page.Name}}"
+     ng-show="$state.includes('demo.'+ page.Name)">
+
+</div>

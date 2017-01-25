@@ -1,0 +1,9 @@
+﻿
+<span class="label" ng-show="id > 0"  ng-click="openDetail()"
+      ng-class="{'label-primary' : processInfo.ProcessStatus == 4,'label-info' : processInfo.ProcessStatus != 4}"
+      uib-popover="{{processInfo.CurrentTaskUser | enumMap:'user'}}"
+      popover-trigger="mouseenter" >
+    {{processInfo.ProcessStatus == 4 ? "完成" : processInfo.CurrentTaskName}} 
+
+    <span ng-show="processInfo.CurrentTaskTime > 1">&nbsp;{{processInfo.CurrentTaskTime}} </span>
+</span>

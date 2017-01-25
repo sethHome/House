@@ -1,0 +1,42 @@
+﻿<div class="modal-header bg-primary modal-dragable ">
+    <button type="button" ng-click="closeModal()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">选择用户</h4>
+</div>
+<div class="modal-body" blockui="$parent.providePanel">
+
+    <div class="row p-l-10">
+        <div class="col-sm-5 border p-r-0" >
+            <ul style="list-style:none" data-height="400" scroll="userScroll" >
+                <li ng-repeat="dept in depts">
+                    <label style="cursor:pointer" ng-click="showUser(dept)">
+                        <i style="min-width:10px;" class="fa " ng-class="{'fa-angle-down' : dept.show , 'fa-angle-right':!dept.show}"></i> {{dept.name}}&nbsp; [{{dept.users.length}}]
+                    </label>
+                    <ul style="list-style:none" class="m-l-20 " ng-show="dept.show">
+                        <li ng-repeat="user in dept.users"
+                            ng-repeat-end="userScroll.init()">
+                            <div ng-show="!user.hide">
+                                <a class="btn btn-transparent p-0 m-0"
+                                   ng-click="chooseUser(user)">
+                                    <i class="fa fa-user"></i> {{user.Name}}
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+        <div class="col-sm-7 ">
+            <label class="label label-primary  pull-left m-r-5 p-10"
+                   ng-class="{'label-dark' : isFixed(u)}"
+                   style="cursor:pointer"
+                   ng-repeat="u in chooseUsers"
+                   ng-click="removeUser(u)"><i class="fa fa-user"></i> &nbsp;{{u.Name}}</label>
+            
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary btn-square " ng-click="ok()">确定</button>
+    <button class="btn btn-danger btn-square" ng-click="cancel()">清空</button>
+</div>

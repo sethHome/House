@@ -1,0 +1,69 @@
+﻿<div class="modal-header bg-primary modal-dragable" visiable="{{maintainModel == 2}}" ng-show="maintainModel == 2">
+    {{local.business.eng}}{{local.global.info}}
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div ng-class="{'modal-body' : maintainModel == 2}">
+    <div>
+        <fieldset class="m-t-10 m-l-10 m-r-10 p-0 p-l-20 p-r-20">
+
+            <legend>{{local.business.engineering}}</legend>
+            <div class="row m-0  p-t-10">
+                <div class="col-sm-2 p-0"><label>{{local.eng.proj}}</label></div>
+                <div class="col-sm-10">{{currentEngineering.ProjectInfo.Name}}</div>
+            </div>
+            <div class="row m-0 p-t-10">
+                <div class="col-sm-2 p-0"> <label>{{local.eng.number}}</label></div>
+                <div class="col-sm-10">{{currentEngineering.Number}}</div>
+            </div>
+            <div class="row  m-0  p-t-10">
+                <div class="col-sm-2 p-0"><label>{{local.eng.name}}</label></div>
+                <div class="col-sm-10">{{currentEngineering.Name}}</div>
+            </div>
+            <div class="row m-0  p-t-10">
+                <div class="col-sm-2 p-0"><label>{{local.eng.status}}</label></div>
+                <div class="col-sm-4">{{currentEngineering.Status | enumMap:"EngineeringStatus"}}</div>
+                <div class="col-sm-2 p-0"><label>{{local.eng.phase}}</label></div>
+                <div class="col-sm-4">{{currentEngineering.Phase | enumMap:"EngineeringPhase"}}</div>
+            </div>
+            <div class="row m-0  p-t-10">
+                <div class="col-sm-2 p-0"><label>{{local.eng.manager}}</label></div>
+                <div class="col-sm-4">
+                    {{currentEngineering.Manager | enumMap:"user"}}
+                    <a class="btn btn-transparent msgChatBtn"
+                       ng-click="openChat(currentEngineering.Manager)">
+                        <i class="fa fa-weixin"></i>
+                    </a>
+                </div>
+                <div class="col-sm-2 p-0"><label>{{local.eng.vollevel}}</label></div>
+                <div class="col-sm-4">{{currentEngineering.VolLevel | enumMap:"VolLev"}}</div>
+            </div>
+            <div class="row m-0  p-t-10">
+                <div class="col-sm-2 p-0"><label>{{local.eng.tasktype}}</label></div>
+                <div class="col-sm-4">{{currentEngineering.TaskType | enumMap:"TaskType"}}</div>
+                <div class="col-sm-2 p-0"><label>{{local.eng.type}}</label></div>
+                <div class="col-sm-4">{{currentEngineering.Type | enumMap:"EngineeringType"}}</div>
+            </div>
+            <div class="row m-0  p-t-10">
+                <div class="col-sm-2 p-0"><label>{{local.eng.createdate}}</label></div>
+                <div class="col-sm-4">{{currentEngineering.CreateDate | TDate}}</div>
+                <div class="col-sm-2 p-0"><label>{{local.eng.deliverydate}}</label></div>
+                <div class="col-sm-4">{{currentEngineering.DeliveryDate | TDate}}</div>
+            </div>
+            <div class="row m-0  p-t-10 h-70">
+                <div class="col-sm-2 p-0"><label>{{local.eng.note}}</label></div>
+                <div class="col-sm-10" style="word-wrap:break-word;">{{currentEngineering.Note}}</div>
+            </div>
+
+        </fieldset>
+
+        <fieldset class="m-t-10 m-l-10 m-r-10 p-0 p-l-20 p-r-20">
+            <legend>{{local.business.attach}}</legend>
+
+            <attach-preview obj-id="currentEngineering.ID"
+                            obj-name="Engineering"></attach-preview>
+        </fieldset>
+
+
+
+    </div>
+</div>

@@ -1,0 +1,247 @@
+﻿<div class="panel">
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner">
+
+                    <div class="nav-tabs no-border" ng-init="currentTabIndex = 1">
+                        <ul class="nav nav-tabs nav-red no-border">
+                            <li ng-click="currentTabIndex = 1" ng-class="{active : currentTabIndex == 1}"><a data-toggle="tab">正式库</a></li>
+                            <li ng-click="currentTabIndex = 2" ng-class="{active : currentTabIndex == 2}"><a data-toggle="tab">分类表[{{archiveCategoryTreeNode.length}}]</a></li>
+                        </ul>
+                        <div class="tab-content p-0 ">
+                            <div class="tab-pane" ng-class="{active : currentTabIndex == 1}">
+                                <tree tree-data="scope"
+                                      tree-model="documents"
+                                      tree-api="treeApi"
+                                      changed="archive_changed"
+                                      tree-plugins="wholerow,contextmenu,types"></tree>
+                            </div>
+
+                            <div class="tab-pane" ng-class="{active : currentTabIndex == 2}">
+                                <tree tree-data="scope"
+                                      tree-model="archiveCategoryTreeNode"
+                                      tree-api="categoryTreeApi"
+                                      changed="category_changed"
+                                      tree-plugins="wholerow,types"></tree>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="80%">
+
+                <div data-split-pane>
+                    <div data-split-pane-component>
+                        <div class="pretty-split-pane-component-inner p-10">
+                            <div class="row m-0">
+                                <!--<button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="createArchiveIndex()">
+                                    <i class="fa fa-upload"></i>上架
+                                </button>
+                                <button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="createArchiveIndex()">
+                                    <i class="fa fa-plane"></i>创建索引
+                                </button>-->
+
+                                <button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="addCondition()">
+                                    <i class="fa fa-filter"></i>数据筛选
+                                </button>
+
+                                <button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="batchUpdate()">
+                                    <i class="fa fa-pencil-square-o"></i>批量修改
+                                </button>
+
+                                <button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="displayColumns()">
+                                    <i class="fa fa-th-list"></i>字段显示
+                                </button>
+
+                                <button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="exprotExcel()">
+                                    <i class="fa fa-file-excel-o"></i>数据导出
+                                </button>
+
+                                <!--<div class="btn-group ">
+                                    <button type="button" class="btn btn-primary btn-square dropdown-toggle m-0" data-toggle="dropdown">
+                                        <i class="fa fa-navicon"></i>数据范围 <span class="caret"></span>
+                                    </button>
+                                    <span class="dropdown-arrow"></span>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a ng-click="setStatus(0)">全部 &nbsp;&nbsp; {{ filter.status == 0 ? "√" : "" }}</a>
+                                        </li>
+                                        <li ng-repeat="item in getBaseData('ArchiveStatus') track by item.Value">
+                                            <a ng-click="setStatus(item.Value)">{{item.Text}} &nbsp;&nbsp; {{ item.Value == filter.status.toString() ? "√" : "" }}</a>
+                                        </li>
+                                    </ul>
+                                </div>-->
+
+                            </div>
+
+                            <div style="height:{{gridHeight - 50}}px" class="m-t-5"
+                                 ui-grid-pagination
+                                 ui-grid-selection
+                                 ui-grid-auto-resize
+                                 ui-grid-resize-columns
+                                 ui-grid-move-columns
+                                 ui-grid="archiveGridOptions"></div>
+                        </div>
+                    </div>
+                    <div data-split-pane-divider data-width="5px"></div>
+                    <div data-split-pane-component data-width="30%">
+
+                        <div class="pretty-split-pane-component-inner ">
+                            
+                            <div class="nav-tabs no-border" ng-init="currentIndex=1">
+                                <ul class="nav nav-tabs nav-red no-border">
+                                    <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">档案信息</a></li>
+                                    <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab">{{currentArchive.HasVolume ? '案卷' : '盒'}}内文件({{archiveFileSource.length}})</a></li>
+                                    <li ng-click="currentIndex = 3" ng-class="{active : currentIndex == 3}"><a data-toggle="tab">档案日志(12)</a></li>
+                                </ul>
+                                <div class="tab-content p-0 ">
+                                    <div class="tab-pane" ng-class="{active : currentIndex == 1}">
+
+                                        <table class="item-table" border="1" cellpadding="0" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <td width="18px">&nbsp;</td>
+                                                    <td width="30%">项</td>
+                                                    <td>值</td>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr class="item-head">
+                                                    <td><i class="fa fa-info"></i> </td>
+                                                    <td colspan="2"> 基础信息</td>
+                                                </tr>
+                                                <tr class="item-row" ng-repeat="item in archiveFileds">
+                                                    <td class="item-head"></td>
+                                                    <td>{{item.Name}}</td>
+                                                    <td>{{getFiledValue(currentArchiveRow,item)}}</td>
+                                                </tr>
+                                                <tr class="item-head">
+                                                    <td><i class="fa fa-info"></i> </td>
+                                                    <td colspan="2"> 其他信息</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>全宗号</td>
+                                                    <td>{{currentArchiveRow.FondsNumber}}</td>
+                                                </tr>
+                                                <tr class="item-row" ng-if="currentArchive.HasCategory">
+                                                    <td class="item-head"></td>
+                                                    <td>分类号</td>
+                                                    <td>{{currentArchiveRow.Category }}</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>状态</td>
+                                                    <td class="c-blue">{{currentArchiveRow.Status | enumMap : 'ArchiveStatus'}}</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>归档份数</td>
+                                                    <td class="c-blue">{{currentArchiveRow.Copies}}</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>借阅份数</td>
+                                                    <td class="c-blue">{{currentArchiveRow.BorrowCount}}</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>访问级别</td>
+                                                    <td class="c-blue">{{currentArchiveRow.AccessLevel | enumMap : 'AccessLevel'}}</td>
+                                                </tr>
+                                                <tr class="item-row" >
+                                                    <td class="item-head"></td>
+                                                    <td>创建人</td>
+                                                    <td>{{currentArchiveRow.CreateUser | enumMap : 'user'}}</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>创建时间</td>
+                                                    <td>{{currentArchiveRow.CreateDate | TDate}}</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>最近修改时间</td>
+                                                    <td>{{currentArchiveRow.ModifyDate | TDate}}</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>最近修改人</td>
+                                                    <td>{{currentArchiveRow.ModifyUser | TDate}}</td>
+                                                </tr>
+                                                <tr class="item-head" ng-show="currentArchive.HasProject">
+                                                    <td><i class="fa fa-info"></i> </td>
+                                                    <td colspan="2"> 项目信息</td>
+                                                </tr>
+                                                <tr class="item-row" ng-repeat="item in projectFields" ng-show="currentArchive.HasProject">
+                                                    <td class="item-head"></td>
+                                                    <td>{{item.Name}}</td>
+                                                    <td>{{getFiledValue(projInfo,item)}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                    <div class="tab-pane" ng-class="{active : currentIndex == 2}">
+                                       
+                                        <div class="widget-news ">
+                                            <a class="message-item media"
+                                               ng-repeat="item in archiveFileSource">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <div class="pull-left p-r-10">
+                                                            <i class="fa fa-file"></i>
+                                                        </div>
+                                                        <div>
+                                                            <small class="pull-right">{{item.CreateDate | TDate}}</small>
+                                                            <span class="c-dark ">
+                                                                {{item._f1}}
+                                                            </span>
+
+                                                            <p class="f-12 c-gray">
+                                                                <span ng-repeat="f in archiveFileFileds">
+                                                                    {{f.Name}}:{{item['_f'+f.ID]}} &nbsp;|
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane p-10 c-gray f-12" ng-class="{active : currentIndex == 3}">
+
+                                        <div class="m-b-5" ng-repeat="item in currentArchiveLogs track by $index">
+                                            <i class="fa fa-calendar"></i>  {{item.LogDate | TDate : 'yyyy/MM/dd hh:mm'}}  <span class="c-blue">{{item.LogType == 1 ? "系统" : "用户"}}</span> {{item.LogUser | enumMap : 'user'}} {{item.LogContent}} 
+                                        </div>
+                                        
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

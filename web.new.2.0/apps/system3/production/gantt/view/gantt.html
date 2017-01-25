@@ -1,0 +1,99 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="panel" model="thisPanel">
+            <div class="panel-content p-0   "
+                 ng-class="{'bg-clean' :isPreview,'bg-aero' : isSearch }">
+
+                <div class="bg-aero bus-tool-bar row m-0 p-0 ">
+                    <div class="col-sm-4 m-0 p-0">
+                       
+                    </div>
+
+                    <div class="col-sm-8 p-0 m-0">
+                        <button type="button"
+                                ng-click="moreSearch()"
+                                class="btn btn-primary btn-square pull-right m-0 m-b-0 hidden-sm hidden-xs">
+                            <i class="fa fa-filter"></i> {{local.global.filter}}
+                        </button>
+                        <button type="button"
+                                ng-click="loadSource()"
+                                class="btn btn-primary btn-square pull-right m-0 m-b-0">
+                            <i class="fa fa-search"></i> {{local.global.query}}
+                        </button>
+                        <div class="prepend-icon pull-right m-b-0 ">
+                            <input type="text"
+                                   ng-model="filter.txtfilter"
+                                   enter-press="loadSource()"
+                                   ng-click="loadSource()"
+                                   class="form-control form-white filterbox " placeholder="{{local.proj.number}}、{{local.proj.name}}">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+               
+                <div fullheight="panelGrid"
+                     max-height="fullHeight"
+
+                     gantt
+                     data="data"
+                     timespans="timespans"
+                     show-side="options.labelsEnabled"
+                     daily="options.daily"
+                     filter-task="{'name': options.filterTask}"
+                     filter-row="{'name': options.filterRow}"
+                     sort-mode="options.sortMode"
+                     view-scale="options.scale"
+                     column-width="getColumnWidth(options.width, options.scale, options.zoom)"
+                     auto-expand="options.autoExpand"
+                     task-out-of-range="options.taskOutOfRange"
+                     from-date="options.fromDate"
+                     to-date="options.toDate"
+                     allow-side-resizing="options.allowSideResizing"
+                     task-content="options.taskContentEnabled ? options.taskContent : undefined"
+                     row-content="options.rowContentEnabled ? options.rowContent : undefined"
+                     current-date="options.currentDate"
+                     current-date-value="options.currentDateValue"
+                     headers="options.width && options.shortHeaders || options.longHeaders"
+                     
+                     time-frames="options.timeFrames"
+                     date-frames="options.dateFrames"
+                     time-frames-non-working-mode="options.timeFramesNonWorkingMode"
+                     time-frames-magnet="options.timeFramesMagnet"
+                     api="options.api"
+                     column-magnet="options.columnMagnet">
+                    <gantt-tree enabled="options.sideMode === 'Tree' || options.sideMode === 'TreeTable'"
+                                header-content="options.treeHeaderContent"
+                                keep-ancestor-on-filter-row="true">
+                    </gantt-tree>
+                    <gantt-table enabled="options.sideMode === 'Table' || options.sideMode === 'TreeTable'"
+                                 columns="options.sideMode === 'TreeTable' ? options.treeTableColumns : options.columns"
+                                 headers="options.columnsHeaders"
+                                 classes="options.columnsClasses"
+                                 formatters="options.columnsFormatters"
+                                 contents="options.columnsContents"
+                                 header-contents="options.columnsHeaderContents">
+                    </gantt-table>
+                    <gantt-groups enabled="options.groupDisplayMode === 'group' || options.groupDisplayMode === 'overview' || options.groupDisplayMode === 'promote'" display="options.groupDisplayMode"></gantt-groups>
+                    <gantt-tooltips content="options.tooltips.content"></gantt-tooltips>
+                    <gantt-bounds></gantt-bounds>
+                    <gantt-progress></gantt-progress>
+                    <gantt-sortable></gantt-sortable>
+                    <gantt-movable enabled="!options.readOnly"></gantt-movable>
+                    <gantt-draw-task enabled="options.canDraw"
+                                     move-threshold="2"
+                                     task-factory="options.drawTaskFactory">
+                    </gantt-draw-task>
+                    <gantt-overlap></gantt-overlap>
+                    <gantt-resize-sensor></gantt-resize-sensor>
+                </div>
+
+                <div class="bus-preview width-30p p-10 animated hidden-sm hidden-xs"
+                     ng-class="{'fadeOutRight' : !isSearch,'fadeInRight':isSearch}"
+                     ng-show="isSearch">
+                    <engineering-filter-view specialty="true"></engineering-filter-view>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

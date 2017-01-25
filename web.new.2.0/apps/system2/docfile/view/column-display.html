@@ -1,0 +1,28 @@
+﻿<div class="modal-header bg-primary modal-dragable modal-block">
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">列</h4>
+</div>
+
+<div class="modal-body ">
+
+    <div class="row m-0">
+        <div class="pull-left m-r-5" style="width:30%;" ng-repeat="col in columns">
+
+            <label class="m-t-5 icheck-inline">
+                <span>
+                    <input type="checkbox" ng-model="col.visible" icheck class="m-r-5">
+                    {{col.displayName}}
+                </span>
+            </label>
+        </div>
+    </div>
+    
+</div>
+
+<div class="modal-footer bg-aero">
+    <button type="button"
+            ng-click="ok()"
+            class="btn btn-primary btn-square ">
+        确定
+    </button>
+</div>

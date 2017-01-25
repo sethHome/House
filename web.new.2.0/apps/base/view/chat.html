@@ -1,0 +1,304 @@
+﻿
+<div class="modal-header bg-primary modal-dragable">
+    <button type="button" ng-click="cancel()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">{{currentChatTagrget.Name}}{{currentChatTagrget.GroupName}}</h4>
+</div>
+<div class="modal-body p-0">
+    <div class="pull-left" scroll="chatTarsScroll" data-height="590">
+        <div class="tab_left ">
+
+            <ul class="nav  nav-tabs nav-red" ng-show="ChatTargets.length > 1">
+                <li ng-repeat="target in ChatTargets track by target.ID"
+                    ng-repeat-end="chatTarsScroll.init()"
+                    ng-click="changeTarget(target)"
+                    ng-class="{active : currentChatTagrget.ID == target.ID}">
+                    <a>
+                        <span class="badge badge-danger chat-badge" ng-show="target.unReadMsgCount">
+                            {{target.unReadMsgCount}}
+                        </span>
+
+                        <img alt=""
+                             ng-src="assets/global/images/avatars/{{ target.IsGroup ? target.GroupImage : target.PhotoImg}}"
+                             class="img-sm img-rounded m-r-10">
+                        {{target.Name}}{{target.GroupName}}
+
+
+                    </a>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+
+    <div class="tab_left">
+        <div class="tab-content m-0 p-0" ng-class="{'no-border' : Targets.length == 1}">
+
+            <div ng-repeat="target in ChatTargets track by target.ID"
+                 class="tab-pane fade m-0 "
+                 ng-class="{'active in' : currentChatTagrget.ID == target.ID}">
+                <div class="row">
+                    <div class="p-l-20 " ng-class="{'col-sm-12' : !target.IsGroup,'col-sm-8' : target.IsGroup}" style="border-right:solid 1px #BDB9B9">
+
+                        <div class="user-list-header">
+                            <ul class="nav nav-tabs" ng-init="currentIndex = 1">
+                                <li ng-class="{'active' : currentIndex == 1}">
+                                    <a ng-click="currentIndex = 1">
+                                        <i class="fa fa-comments pull-left"></i>
+                                        <span class="pull-left">聊天</span>
+                                    </a>
+                                </li>
+                                <li ng-class="{'active' : currentIndex == 2}">
+                                    <a ng-click="currentIndex = 2">
+                                        <i class="fa fa-file-text-o pull-left"></i>
+                                        <span class="pull-left">记录</span>
+                                    </a>
+                                </li>
+                                <li ng-class="{'active' : currentIndex == 3}" ng-show="target.IsGroup">
+                                    <a ng-click="currentIndex = 3">
+                                        <i class="fa fa-wrench pull-left"></i>
+                                        <span class="pull-left">管理</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="user-list-view">
+                            <div ng-class="{'active' : currentIndex == 1}" class="tab-pane fade in">
+
+                                <div class="chat-msg-body" scroll="target.scroll" auto="true">
+                                    <div class="chat-view">
+                                        <div class="chat-inner ">
+
+                                            <div class="message clearfix"
+                                                 ng-repeat="msg in target.messages track by $index "
+                                                 ng-repeat-end="target.scroll.scrollTo('bottom')">
+
+                                                <div class="row m-0 p-0">
+                                                    <img ng-class="{'pull-right': msg.UserIdentity == currentUser.Account.ID}" class="img-sm img-circle"
+                                                         ng-src="assets/global/images/avatars/{{ msg.UserIdentity == currentUser.Account.ID ? currentUser.Account.PhotoImg :  msg.UserPhotoImg}}" />
+                                                    <span class="m-l-5 m-r-5 " ng-class="{'pull-right': msg.UserIdentity == currentUser.Account.ID}">{{msg.UserName}}</span>
+                                                    <span class="muted small-text  "
+                                                          ng-class="{'pull-right': msg.UserIdentity == currentUser.Account.ID}">
+                                                        {{msg.Date | messageDate}}
+                                                    </span>
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <div ng-show="msg.MessageType == 300"
+                                                         class="chat-bubble box-default"
+                                                         ng-bind-html="$sce.trustAsHtml(msg.Message)"
+                                                         ng-class="{'from-me m-r-55': msg.UserIdentity == currentUser.Account.ID,'from-them m-l-55': msg.UserIdentity != currentUser.Account.ID}">
+
+                                                    </div>
+
+                                                    <div ng-show="msg.MessageType == 303 "
+                                                         ng-class="{'from-me m-r-55': msg.UserIdentity == currentUser.Account.ID,'from-them m-l-55': msg.UserIdentity != currentUser.Account.ID}"
+                                                         class="chat-bubble file-info box-dark">
+
+                                                        <div ng-repeat="file in msg.Files track by file.ID">
+                                                            <div class="p-5" ng-show="file.FileType != 1 ">
+                                                                <div><i class="fa fa-file"></i> {{file.FileName}}</div>
+                                                                <div class="m-l-10 p-l-5">大小：&nbsp;{{file.FileSize | fileSize}} &nbsp; <a href="{{attachDownloadUrl}}{{file.ID}}"><i class="fa fa-download"></i> 下载</a></div>
+                                                            </div>
+                                                            <div ng-show="file.FileType == 1 ">
+                                                                <img style="max-width:100%;" ng-src="{{imagePreviewUrl + file.ID}}" />
+                                                            </div>
+                                                        </div>
+
+                                                        <div ng-show="!msg.Files">
+                                                            <attach-info attach-id="msg.Message" visiable="msg.MessageType == 303 && !msg.Files"></attach-info>
+                                                        </div>
+                                                    </div>
+
+                                                    <div ng-show="msg.IsSending" class="sending pull-right faa-flash animated">发送中</div>
+                                                    <!--<div ng-show="！msg.IsSending" class="sending pull-right ">成功</div>-->
+                                                </div>
+
+                                                <p ng-show="msg.MessageType == 102"
+                                                   class="muted small-text ">
+                                                    {{msg.OutlineUserName}}&nbsp;离线
+                                                </p>
+                                                <p ng-show="msg.MessageType == 100"
+                                                   class="muted small-text ">
+                                                    {{msg.NewConnecedUserName}}&nbsp;上线
+                                                </p>
+                                                <p ng-show="msg.MessageType == 301"
+                                                   class="muted small-text ">
+                                                    {{msg.Result}}
+                                                </p>
+
+                                                <p ng-show="msg.MessageType == -1"
+                                                   class="muted small-text ">
+                                                    已断开聊天服务器
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="chat-msg-footer">
+
+                                    <div class="p-t-5 p-l-5">
+
+                                        <a class="btn btn-sm btn-transparent btn-square m-0 "
+                                           pl-upload
+                                           pl-progress-model="percent"
+                                           pl-auto-upload="true"
+                                           pl-files-model="sendFiles"
+                                           on-file-added="fileAdded()"
+                                           on-file-uploaded="uploaded($response, $file)">
+                                            <i class="fa fa-file"></i> 发送文件
+                                        </a>
+
+                                    </div>
+
+                                    <!--<textarea type="text" placeholder=""
+                                              rows="5" ng-model="target.chatContent"
+                                              ng-keyup="KeyUp($event)"
+                                              class="form-control form-white "></textarea>-->
+
+                                    <textarea class="ckeditor" height="120px" toolbar="chat"
+                                              ng-model="target.chatContent"></textarea>
+
+                                    <button type="button" class="btn btn-square btn-info  pull-right m-t-10" ng-click="Send()">发送</button>
+                                    <button type="button" class="btn btn-square btn-danger  pull-right m-t-10" ng-click="closeTarget($index)">关闭</button>
+                                </div>
+                            </div>
+                            <div ng-class="{'active' : currentIndex == 2}" class="tab-pane fade in ">
+
+
+                                <div data-height="620" scroll="target.hisScroll" auto="true">
+
+                                    <ul class="m-10">
+                                        <li ng-repeat="message in target.messageHistory.Source track by message.ID">
+
+                                            <div class="fs-12" style="color:blue;"><span>{{message.UserName}} {{message.Date | TDate}}</span></div>
+
+                                            <div ng-show="message.MessageType == 300">
+                                                <div class="message-his" style="word-break: break-word;" ng-bind-html="$sce.trustAsHtml(message.Message)"></div>
+                                            </div>
+                                            <div ng-show="message.MessageType == 303">
+                                                <attach-info attach-id="message.Message" visiable="message.MessageType == 303"></attach-info>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+
+                                    <a class="btn btn-sm btn-transparent btn-square m-0 " ng-disabled="isEnable(1)" ng-click="changePage(1)">
+                                        <i class="fa fa-angle-double-left"></i> &nbsp;首页
+                                    </a>
+                                    <a class="btn btn-sm btn-transparent btn-square m-0 " ng-disabled="isEnable(1)" ng-click="changePage(2)">
+                                        <i class="fa fa-angle-left"></i>&nbsp;上一页
+                                    </a>
+                                    <a class="btn btn-sm btn-transparent btn-square m-0 " ng-disabled="isEnable(2)" ng-click="changePage(3)">
+                                        下一页 &nbsp;<i class="fa fa-angle-right"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-transparent btn-square m-0 " ng-disabled="isEnable(2)" ng-click="changePage(4)">
+                                        尾页 &nbsp;<i class="fa fa-angle-double-right"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-transparent btn-square m-0" ng-disabled="true">
+                                        第{{target.pageFilter.pageindex}}页,共{{target.messageHistory.PageCount}}页,共{{target.messageHistory.TotalCount}}条
+                                    </a>
+
+                                </div>
+                            </div>
+
+                            <div ng-class="{'active' : currentIndex == 3}" class="tab-pane fade in ">
+
+                                <div data-height="646" scroll="target.mgrScroll" auto="true" blockui="target.mgrBlock">
+
+                                    <form class="form-horizontal  m-0 p-0" ng-show="target.CreateEmpID == currentUser.Account.ID">
+                                        <div class="form-group ">
+                                            <label class="col-sm-2 m-t-10">组名</label>
+                                            <div class="col-sm-10  ">
+                                                <input class="form-control form-white"
+                                                       name="Name" validator="required"
+                                                       placeholder="{{local.global.input}}"
+                                                       ng-model="target.GroupName">
+                                            </div>
+                                        </div>
+                                        <div class="form-group  ">
+                                            <label class="col-sm-2 m-t-10">说明</label>
+                                            <div class="col-sm-10 ">
+                                                <textarea class="form-control form-white"
+                                                          rows="8"
+                                                          name="GroupDesc"
+                                                          placeholder="小组说明"
+                                                          ng-model="target.GroupDesc"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group ">
+                                            <div class="col-sm-2 m-t-10">
+                                                <label>小组成员</label>
+                                            </div>
+                                            <div class="col-sm-10 ">
+                                              <div class="pull-left">
+                                                  <div user-choose text="添加、移除小组成员" 
+                                                       users="target.Users" 
+                                                       fixed-user="target.CreateEmpID"></div>
+                                              </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-10">
+                                                <button ng-click="updateGroup()" class="btn btn-primary pull-right btn-square "><i class="fa fa-save"></i> 保存</button>
+                                                <button ng-click="removeGroup($index)" class="btn btn-danger pull-right btn-square "><i class="fa fa-trash-o"></i> 删除</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div ng-show="target.CreateEmpID != currentUser.Account.ID">
+                                        <button ng-click="exitGroup($index)" class="btn btn-danger btn-square "><i class="fa fa-sign-out"></i> 退出该群组</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 p-l-0"  ng-show="target.IsGroup">
+
+                        <div ng-show="target.Title"
+                             class="message clearfix muted small-text">
+                        </div>
+
+                        <div class="chat-desc-box">
+                            {{target.GroupDesc}}
+                            {{target.Title}}
+                        </div>
+                        <div class="list-view " scroll="exInfoScroll" data-height="340">
+                            <ul class="no-border">
+                                <li ng-repeat="user in target.Users"
+                                    ng-repeat-end="exInfoScroll.init()">
+                                    <a ng-click="setTarget(user)">
+                                        <span class="fs-12" ng-class="{'out-line' : !onLineUsers[user.ID]}">
+                                            <i class="icon-user "></i>&nbsp;{{user.Name}}
+                                        </span>
+                                        <span class="block text-master hint-text fs-12 m-l-20">
+                                            {{ user.Dept.Name}}
+                                            &nbsp; <span ng-show="onLineUsers[user.ID]">在线</span>
+                                            &nbsp; <span ng-show="target.CreateEmpID == user.ID">群主</span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!--<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">关闭</button>
+</div>-->

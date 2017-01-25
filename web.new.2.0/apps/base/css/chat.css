@@ -1,0 +1,503 @@
+﻿.text-master {
+    color: #626262 !important;
+}
+
+.out-line {
+    color: #B9B5B5 !important;
+}
+
+.no-top-border .list-view-fake-header {
+    border-top: 0;
+}
+
+.view-port {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+    .view-port .navbar {
+        border-radius: 0;
+        padding-left: 0;
+        margin-bottom: 0;
+        border-left: 0;
+        display: table;
+        width: 100%;
+        top: 0;
+        border-top: 0;
+    }
+
+        .view-port .navbar .navbar-inner {
+            display: table-cell;
+            height: 50px;
+            vertical-align: middle;
+        }
+
+        .view-port .navbar .action {
+            position: absolute;
+            top: 0;
+            line-height: 50px;
+            z-index: 1;
+        }
+
+            .view-port .navbar .action.pull-right {
+                right: 0;
+            }
+
+        .view-port .navbar .view-heading {
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .view-port .navbar > p {
+            line-height: 12px;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .view-port .navbar.navbar-sm {
+            min-height: 35px;
+        }
+
+            .view-port .navbar.navbar-sm .navbar-inner {
+                height: 35px;
+            }
+
+            .view-port .navbar.navbar-sm .action {
+                line-height: 35px;
+            }
+
+    .view-port .view {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        vertical-align: top;
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-perspective: 1000;
+        -webkit-transition: all 0.4s ease;
+        transition: all 0.4s ease;
+    }
+
+        .view-port .view:first-child:before {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            opacity: 0;
+            -webkit-transition: opacity 0.2s linear;
+            transition: opacity 0.2s linear;
+            z-index: -1;
+        }
+
+        .view-port .view:last-child {
+            margin-left: -4px;
+        }
+
+        .view-port .view:only-child {
+            margin: 0;
+        }
+
+    .view-port.from-top > .view:last-child {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+        -ms-transform: translate(-100%, 0);
+    }
+
+    .view-port.push > .view:first-child {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+        -ms-transform: translate(-100%, 0);
+    }
+
+    .view-port.push > .view:last-child {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+        -ms-transform: translate(-100%, 0);
+    }
+
+    .view-port.push-parrallax > .view:first-child {
+        -webkit-transition: all 400ms cubic-bezier(0.1, 0.7, 0.1, 1);
+        transition: all 400ms cubic-bezier(0.1, 0.7, 0.1, 1);
+        -webkit-transform: translate3d(-25%, 0, 0);
+        transform: translate3d(-25%, 0, 0);
+        -ms-transform: translate(-25%, 0);
+    }
+
+        .view-port.push-parrallax > .view:first-child:before {
+            opacity: 0;
+            z-index: 100;
+        }
+
+    .view-port.push-parrallax > .view:last-child {
+        -webkit-transition: all 400ms cubic-bezier(0.1, 0.7, 0.1, 1);
+        transition: all 400ms cubic-bezier(0.1, 0.7, 0.1, 1);
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+        -ms-transform: translate(-100%, 0);
+        box-shadow: 0 0 9px rgba(191, 191, 191, 0.36);
+    }
+
+.chat-view .chat-inner {
+    padding: 15px;
+    overflow-x: hidden;
+    height: calc(100% - 103px);
+}
+
+.chat-view .message {
+    /*margin-bottom: 10px;*/
+    line-height: 30px;
+}
+
+.chat-view .profile-img-wrapper {
+    height: 28px;
+    width: 28px;
+}
+
+.chat-view .chat-bubble {
+    position: relative;
+    border-radius: 5px;
+    padding: 4px 4px;
+    font-size: 14px;
+    line-height: 16px;
+    margin: 5px;
+    max-width: 60%;
+    white-space: normal;
+    word-wrap: break-word;
+    /*margin-left: 55px;*/
+    /*margin-right: 55px;*/
+    margin-top: -10px;
+}
+
+    .chat-view .chat-bubble > p {
+        margin: 0;
+    }
+
+    .chat-view .chat-bubble > p > img {
+        max-width:100% !important;
+    }
+
+.message-his > p > img {
+    max-width:100% !important;
+}
+
+.chat-view .from-me {
+    float: right;
+}
+
+.chat-view .from-them {
+    float: left;
+}
+
+.chat-view .box-default {
+    color: #2c2c2c;
+    background: #f0f0f0;
+    position: relative;
+    opacity: 0.8;
+    border: 1px solid #f0f5f8;
+}
+
+.chat-view .box-dark {
+    background-color: #2F3C37;
+    color: wheat;
+    position: relative;
+    opacity: 0.8;
+    border: 1px solid #f0f5f8;
+}
+
+.chat-view .chat-input {
+    border: 0;
+    height: 45px;
+}
+
+    .chat-view .chat-input:focus, .chat-view .chat-input:active {
+        background-color: #fff;
+    }
+
+.chat-view .user-controls {
+    padding-top: 12px;
+}
+
+
+.chat-view .sending {
+    margin-top: -12px;
+    font-size: 8px;
+}
+
+.chat-view .file-info {
+    font-size: 8pt;
+}
+
+.chat-user-list > a {
+    height: 60px;
+}
+
+.alert-list > a {
+    height: 45px;
+}
+
+.list-view ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.list-view li {
+    white-space: nowrap;
+    cursor: pointer;
+    width: 100%;
+    display: table;
+}
+
+
+
+.list-view-wrapper {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+}
+
+.list-view-container {
+    position: relative;
+}
+
+    .list-view-container .list-quickscroll ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        right: 10px;
+        z-index: 120;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+        .list-view-container .list-quickscroll ul li a {
+            font-size: 0.7em;
+            vertical-align: baseline;
+        }
+
+.list-view-group-container {
+    margin: 0;
+    min-height: 1px;
+    overflow: hidden;
+    padding: 26px 0 0 0;
+    position: relative;
+}
+
+    .list-view-group-container:last-child ul {
+        border: 0;
+    }
+
+.list-view-group-header, .list-view-fake-header {
+    background: #F3ECEC;
+    color: #232830;
+    font: normal 11px/14px'Montserrat', Arial;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 6px 0 5px 15px;
+    position: absolute;
+    border-top: 1px solid rgba(0, 0, 0, 0.07);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    /*z-index: 10;*/
+}
+
+.list-view-group-header {
+    bottom: auto;
+    min-height: 1px;
+    top: 0;
+    width: 100%;
+    border-top: 0;
+}
+
+.list-view-fake-header {
+    width: 100%;
+    z-index: 100;
+    font-size: 11px !important;
+    line-height: 14px !important;
+}
+
+    .list-view-fake-header.list-view-hidden {
+        visibility: hidden;
+    }
+
+.list-view-group-container.list-view-animated .list-view-group-header {
+    bottom: 0;
+    top: auto;
+}
+
+.col-top {
+    vertical-align: top;
+}
+
+.col-middle {
+    vertical-align: middle;
+}
+
+.col-bottom {
+    vertical-align: bottom;
+}
+
+.container-xs-height {
+    display: table;
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.row-xs-height {
+    display: table-row;
+}
+
+.col-xs-height {
+    display: table-cell;
+    float: none;
+}
+
+.user-header {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 36px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.list-view li > a {
+    display: table;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.list-view li :hover {
+    background-color: lightblue;
+}
+
+.block {
+    display: block;
+}
+
+.fs-12 {
+    font-size: 12px !important;
+}
+
+.hint-text {
+    opacity: .7;
+}
+
+.chat-msg-body {
+    height: 400px;
+    max-height: 400px;
+    min-height: 400px;
+}
+
+.chat-msg-footer {
+    height: 120px;
+}
+
+.chat-log {
+    height: 500px;
+    max-height: 500px;
+    min-height: 500px;
+}
+
+.badge-msg {
+    font-size: 12px;
+    padding: 2px 5px;
+    position: absolute;
+    /* right: 8px; */
+    /*top: 30px;*/
+    -webkit-border-radius: 8px !important;
+    -moz-border-radius: 8px !important;
+    border-radius: 8px !important;
+}
+
+.drawer-badge {
+    font-size: 12px;
+    padding: 2px 5px;
+    position: absolute;
+    -webkit-border-radius: 8px !important;
+    -moz-border-radius: 8px !important;
+    border-radius: 8px !important;
+    left: 2px;
+}
+
+.chat-badge {
+    font-size: 12px;
+    padding: 2px 5px;
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    -webkit-border-radius: 8px !important;
+    -moz-border-radius: 8px !important;
+    border-radius: 8px !important;
+}
+
+.chat-desc-box {
+    height:300px;
+    border-bottom:solid 1px #BDB9B9;
+    padding:15px;
+}
+
+
+
+.user-list-header {
+    /*background-color: #292C35;*/
+    /*font-family: 'Lato', arial;*/
+    /*font-weight: 100;*/
+    font-size: 12px;
+    height: 50px;
+    width: 280px;
+    z-index: 10;
+}
+
+    .user-list-header .nav.nav-tabs {
+        border-bottom: none;
+    }
+
+    .user-list-header .nav > li {
+        text-align: center;
+        /*width: 50%;*/
+    }
+
+        .user-list-header .nav > li > a {
+            background: none !important;
+            color: #909090;
+            font-family: 'Lato', arial, sans-serif;
+            /*font-weight: 700;*/
+            padding: 16px 10px;
+            text-transform: uppercase;
+        }
+
+    .user-list-header .nav.nav-tabs > li.active > a {
+        background: none;
+        /*color: #ffffff;*/
+    }
+
+    .user-list-header .nav-tabs > li > a::before {
+        display: none;
+    }
+
+.user-list-view .tab-pane {
+    display: none;
+}
+
+.user-list-view .active {
+    display: block !important;
+}
+
+.folder {
+    cursor:pointer;
+}

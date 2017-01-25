@@ -1,0 +1,323 @@
+﻿<div class="p-10 m-b-10" style="background-color:#F7F3F3">
+    <div class="row">
+        <div class="col-xlg-10 col-lg-12">
+            <div class="row m-b-10">
+                <div class="col-md-12">
+
+                    <a class="quick-link"
+                       ng-repeat="menu in myQuickLinks | limitTo:10"
+                       ui-sref="{{menu.href + (menu.param ? '('+menu.param+')' : '')}}">
+   
+                        <div class="row">
+                            <div class="icon">
+                                <i class="{{menu.icon}} {{menu.bg}}"></i>
+                            </div>
+                            <p class="text">{{menu.text}}</p>
+                        </div>
+                    </a>
+
+                    <div class="quick-link" ng-click="openQuickLinkMaintain()">
+                        <div class="row">
+                            <div class="icon">
+                                <i class="fa fa-plus bg-aero"></i>
+                            </div>
+                            <p class="text">添加</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="panel bg-aero">
+                        <div class="panel-content widget-info">
+                            <div class="row">
+                                <div class="left">
+                                    <i class="fa fa-umbrella bg-green"></i>
+                                </div>
+                                <div class="right">
+                                    <p class="number countup" data-from="0" data-to="myStatistics.EngCount" >
+                                    </p>
+                                    <p class="text">我的工程</p>
+                                </div>
+                                <div class="right">
+                                    <p class="number countup c-primary" data-from="0" data-to="(myStatistics.EngCount/myStatistics.TotalEngCount) * 100" suffix="%">
+                                    </p>
+                                    <p class="text">占总数量的</p>
+                                </div>
+                                <div class="right c-blue">
+                                    <p class="number countup" data-from="0" data-to="myStatistics.ThisYearEngCount" >
+                                    </p>
+                                    <p class="text">今年的工程</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="panel bg-aero">
+                        <div class="panel-content widget-info">
+                            <div class="row">
+                                <div class="left">
+                                    <i class="fa fa-bug bg-blue"></i>
+                                </div>
+                                <div class="right">
+                                    <p class="number countup" data-from="0" data-to="myStatistics.VolumeCount" >
+                                    </p>
+                                    <p class="text">完成卷册</p>
+                                </div>
+                                <div class="right">
+                                    <p class="number countup c-primary" data-from="0" data-to="(myStatistics.VolumeCount/myStatistics.TotalVolumeCount) * 100" suffix="%">
+
+                                    </p>
+                                    <p class="text">占总数量的</p>
+                                </div>
+                                <div class="right c-blue">
+                                    <p class="number countup" data-from="0" data-to="myStatistics.ThisYearVolumeCount" >
+
+                                    </p>
+                                    <p class="text">今年的卷册</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="panel bg-aero">
+                        <div class="panel-content widget-info">
+                            <div class="row">
+                                <div class="left">
+                                    <i class="fa fa-file bg-blue"></i>
+                                </div>
+                                <div class="right">
+                                    <p class="number countup" data-from="0" data-to="myStatistics.TotalMyAttachCount" >
+                                    </p>
+                                    <p class="text">上传文件</p>
+                                </div>
+                                <div class="right">
+                                    <p class="number countup c-primary" data-from="0" data-to="(myStatistics.TotalMyAttachCount/myStatistics.TotalAttachCount) * 100" suffix="%">
+                                    </p>
+                                    <p class="text">占总数量的</p>
+                                </div>
+                                <div class="right c-blue">
+                                    <p class="number countup" data-from="0" data-to="myStatistics.ThisYearMyAttachCount">
+                                    </p>
+                                    <p class="text">今年上传</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-xlg-2 hidden-lg hidden-md col-clock">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="jquery-clock small" data-jquery-clock="">
+                        <li class="jquery-clock-pin"></li>
+                        <li class="jquery-clock-sec"></li>
+                        <li class="jquery-clock-min"></li>
+                        <li class="jquery-clock-hour"></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-lg-5">
+            <div class="panel">
+                <div class="panel-header  bg-primary">
+                    <h3><i class="icon-list"></i> 新闻公告</h3>
+                    <div class="control-btn">
+                       
+                        <i ng-class="{'fa-spinner animated' : !news.Source }" class="fa  faa-spin "></i>
+                        <span class="pull-right badge badge-dark">{{news.TotalCount}}</span>
+                    </div>
+                </div>
+             
+                <div class="panel-content widget-news" scroll="newsScroll" data-height="500">
+                    <a class="message-item media"
+                       ui-sref="office.news({id:{{news.ID}}})"
+                       ng-repeat="news in news.Source"
+                       ng-repeat-end="newsScroll.init()">
+                        <div class="media">
+                            <div class="media-body">
+                                <div class="pull-left">
+                                    <i class="fa fa-newspaper-o pull-left"></i>
+                                </div>
+                                <div>
+                                    <small class="pull-right">{{news.CreateDate | TDate}}</small>
+                                    <h5 class="c-dark">{{news.Title}}&nbsp;<span class="badge badge-danger">{{news.Type | enumMap:"NewsType"}}</span></h5>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-5">
+            <div class="panel">
+                <div class="panel-header  bg-primary">
+                    <h3><i class="icon-list"></i> 我的任务</h3>
+                    <div class="control-btn">
+                        <a ng-click="loadTasks()"><i class="fa fa-refresh"></i></a>
+                    </div>
+
+                </div>
+                <div class="panel-content p-0">
+                    <ul class="nav nav-tabs" ng-init="currentTaskTab = 1">
+                        <li ng-class="{active : currentTaskTab == 1}" ng-click="currentTaskTab = 1"><a data-toggle="tab">工程&nbsp;<i ng-class="{'fa-spinner animated' : !productionTasks.Source }" class="fa  faa-spin "></i><span ng-show="productionTasks.TotalCount" class="badge badge-danger badge-msg">{{productionTasks.TotalCount}}</span></a></li>
+                        <li ng-class="{active : currentTaskTab == 2}" ng-click="currentTaskTab = 2"><a data-toggle="tab">表单&nbsp;<i ng-class="{'fa-spinner animated' : !formTasks.Source }" class="fa  faa-spin "></i><span ng-show="formTasks.TotalCount" class="badge badge-danger badge-msg">{{formTasks.TotalCount}}</span></a></li>
+                        <li ng-class="{active : currentTaskTab == 3}" ng-click="currentTaskTab = 3"><a data-toggle="tab">提资&nbsp;<i ng-class="{'fa-spinner animated' : !provideTasks.Source }" class="fa  faa-spin "></i><span ng-show="provideTasks.TotalCount" class="badge badge-danger badge-msg">{{provideTasks.TotalCount}}</span></a></li>
+                    </ul>
+                    <div class="tab-content m-0 p-0" scroll="taskScroll" data-height="460">
+                        <div class="tab-pane  widget-news "
+                             ng-hide="currentTaskTab != 1"
+                             ng-show="currentTaskTab == 1">
+                           
+                            <p class="m-5" ng-show="productionTasks.TotalCount == 0">没有任务</p>
+                            <a class="message-item media"
+                               ng-repeat="task in productionTasks.Source"
+                               ng-repeat-end="taskScroll.init()"
+                               ui-sref="home.designwork({id:task.ID})">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <div class="pull-left p-r-10 p-t-10">
+                                            <span ng-show="task.Time > 1" class="badge  badge-danger pull-left m-r-5">{{task.Time}}</span>
+                                            <span class="badge badge-primary pull-left">{{task.Name}}</span>
+                                        </div>
+                                        <div>
+                                            <small class="pull-right">{{task.ReceiveDate | TDate}}</small>
+                                            <h5 class="c-dark">{{task.Engineering.Name}}</h5>
+
+                                            <p class="f-12 c-gray">
+                                                {{task.Volume.SpecialtyID  | enumMap:"Specialty" }}，[{{task.Volume.Number}}]{{task.Volume.Name}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                        <div class="tab-pane  widget-news"
+                             ng-hide="currentTaskTab != 2"
+                             ng-show="currentTaskTab == 2">
+                            
+                            <p class="m-5" ng-show="formTasks.TotalCount == 0">没有任务</p>
+                            <a class="message-item media"
+                               ng-repeat="task in formTasks.Source"
+                               ng-repeat-end="taskScroll.init()"
+                               ng-click="openFormModel(task)">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <div class="pull-left p-r-10 p-t-10">
+                                            <span ng-show="task.Time > 1" class="badge  badge-danger pull-left m-r-5">{{task.Time}}</span>
+                                            <span class="badge badge-primary pull-left">{{task.Name}}</span>
+                                        </div>
+                                        <div>
+                                            <small class="pull-right">{{task.ReceiveDate | TDate}}</small>
+
+                                            <h5 class="c-dark">{{task.ObjectKey | enumMap:'Object'}}</h5>
+
+                                            <!--<p class="f-12 c-gray">
+                                                申请人：{{task.ObjectKey}}
+                                            </p>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="tab-pane  widget-news"
+                             ng-hide="currentTaskTab != 3"
+                             ng-show="currentTaskTab == 3">
+                            <p class="m-5" ng-show="provideTasks.TotalCount == 0">没有任务</p>
+                            <a class="message-item media"
+                               ng-repeat="task in provideTasks.Source"
+                               ng-repeat-end="taskScroll.init()"
+                               ng-click="openProvideModel(task)">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <div class="pull-left p-r-10 p-t-10">
+                                            <span ng-show="task.Time > 1" class="badge  badge-danger pull-left m-r-5">{{task.Time}}</span>
+                                            <span class="badge badge-primary pull-left">{{task.Name}}</span>
+                                        </div>
+                                        <div>
+                                            <small class="pull-right">{{task.SpecialtyProvide.CreateDate | TDate}}</small>
+                                            <h5 class="c-dark">
+                                                {{task.SpecialtyProvide.DocName}}
+                                            </h5>
+                                            <p class="f-12 c-gray">
+                                                提资人：{{task.SpecialtyProvide.SendUserID | enumMap:"user"}} | 提资专业 ： {{task.SpecialtyProvide.SendSpecialtyID | enumMap:"Specialty"}} | 收资人：{{task.SpecialtyProvide.ReceiveUserIDs | users}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 col-lg-2">
+            <div class="panel ">
+                <div class="panel-header bg-primary">
+                    <h3><i class="icon-list"></i> 今日事项</h3>
+                    <div class="control-btn">
+                        <i ng-class="{'fa-spinner animated' : !myTodayEvent.Source }" class="fa  faa-spin "></i>
+                        <span class="pull-right badge badge-dark">{{myTodayEvent.TotalCount}}</span>
+                    </div>
+                </div>
+                <div class="panel-content widget-news">
+                    <div scroll="eventScroll" data-height="500">
+                        <p class="m-5" ng-show="myTodayEvent.TotalCount == 0">今天没有日程安排</p>
+                        <a ui-sref="home.calendar" class="message-item media"
+                           ng-repeat="event in myTodayEvent.Source track by event.ID   "
+                           ng-repeat-end="eventLoaded()">
+                            <div class="media">
+                                <div class="media-body">
+                                    
+                                    <div class="pull-left p-r-10 p-t-10">
+                                        
+                                        <span class="badge">{{$index + 1}}</span>
+                                    </div>
+                                    <div>
+                                        <small class="pull-right">{{event.StartTime | calendar}}</small>
+                                        <h6 class="c-dark">
+                                            {{event.Title}}
+                                        </h6>
+                                        <p class="f-12 c-gray" ng-show="event.isBegin">
+                                            <span class="badge badge-info " ng-show="!isFinish(event)" >已开始</span>
+                                            <span class="badge badge-primary " ng-show="isFinish(event)">已结束</span>
+                                        </p>
+                                        <p class="f-12 c-gray" ng-show="!event.isBegin">
+                                            剩余： <timer end-time="event.StartTime"
+                                                       finish-callback="eventBegin(event)"
+                                                       max-time-unit="'hour'"
+                                                       interval="1000">
+                                                {{hours}}小时,{{minutes}}分,{{seconds}}秒
+                                            </timer>
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

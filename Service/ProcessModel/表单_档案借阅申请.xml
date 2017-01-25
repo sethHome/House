@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<definitions id="ArchiveBorrow" name="档案借阅申请" >
+
+  <!--档案借阅申请-->
+  <process id="A1" isClosed="false" isExecutable="true" processType="None">
+
+    <!--开始-->
+    <startEvent id="_1" name="开始" >
+      <outgoing>_2</outgoing>
+    </startEvent>
+
+    <sequenceFlow id="_2" sourceRef="_1" targetRef="_3"/>
+
+    <!--申请-->
+    <userTask id="_3" name="申请">
+      <incoming>_2</incoming>
+      <outgoing>_4</outgoing>
+      <potentialOwner resourceRef="ProcessUser" type="user">
+      </potentialOwner>
+    </userTask>
+
+    <sequenceFlow id="_4" sourceRef="_3" targetRef="_5"/>
+    
+    <!--档案管理员-->
+    <userTask id="_5" name="档案管理员" >
+      <incoming>_4</incoming>
+      <outgoing>_6</outgoing>
+      <potentialOwner resourceRef="ArchiveManager" type="user">
+      </potentialOwner>
+    </userTask>
+
+    <sequenceFlow id="_6" sourceRef="_5" targetRef="_7"/>
+
+    <exclusiveGateway id="_7" name="是否同意" default="_8"  >
+      <incoming>_6</incoming>
+      <outgoing>_8</outgoing>
+      <outgoing>_9</outgoing>
+    </exclusiveGateway>
+
+    <!--同意-->
+    <sequenceFlow id="_8" sourceRef="_7" targetRef="_10">
+      <conditionExpression>bool_Agree</conditionExpression>
+    </sequenceFlow>
+    <!--不同意-->
+    <sequenceFlow id="_9" sourceRef="_7" targetRef="_22">
+      <conditionExpression>!bool_Agree</conditionExpression>
+    </sequenceFlow>
+
+    <!--自动任务：将申请的档案中访问级别小于3的档案标记为可下载或者可借阅-->
+    <autoTask id="_10" name="LowArchive" >
+      <incoming>_8</incoming>
+      <outgoing>_11</outgoing>
+    </autoTask>
+
+    <sequenceFlow id="_11" sourceRef="_10" targetRef="_12"/>
+
+    <exclusiveGateway id="_12" name="是否有重要档案" default="_13"  >
+      <incoming>_11</incoming>
+      <outgoing>_13</outgoing>
+      <outgoing>_14</outgoing>
+    </exclusiveGateway>
+
+    <!--重要-->
+    <sequenceFlow id="_13" sourceRef="_12" targetRef="_15">
+      <conditionExpression>bool_Importent</conditionExpression>
+    </sequenceFlow>
+    <!--不重要-->
+    <sequenceFlow id="_14" sourceRef="_12" targetRef="_22">
+      <conditionExpression>!bool_Importent</conditionExpression>
+    </sequenceFlow>
+
+    <!--领导批准-->
+    <userTask id="_15" name="领导批准" >
+      <incoming>_13</incoming>
+      <outgoing>_16</outgoing>
+      <potentialOwner resourceRef="AgreeUser" type="user">
+      </potentialOwner>
+    </userTask>
+
+    <sequenceFlow id="_16" sourceRef="_15" targetRef="_17"/>
+
+    <exclusiveGateway id="_17" name="是否同意" default="_18"  >
+      <incoming>_16</incoming>
+      <outgoing>_18</outgoing>
+      <outgoing>_19</outgoing>
+    </exclusiveGateway>
+
+    <!--同意-->
+    <sequenceFlow id="_18" sourceRef="_17" targetRef="_20">
+      <conditionExpression>bool_Approve</conditionExpression>
+    </sequenceFlow>
+    <!--不同意-->
+    <sequenceFlow id="_19" sourceRef="_17" targetRef="_22">
+      <conditionExpression>!bool_Approve</conditionExpression>
+    </sequenceFlow>
+
+    <!--自动任务：将申请的档案中访问级别大于等于3的档案标记为可下载或者可借阅-->
+    <autoTask id="_20" name="HighArchive" >
+      <incoming>_18</incoming>
+      <outgoing>_21</outgoing>
+    </autoTask>
+
+    <sequenceFlow id="_21" sourceRef="_20" targetRef="_22"/>
+
+    <!--结束-->
+    <endEvent id="_22" name="结束">
+      <incoming>_11</incoming>
+    </endEvent>
+
+  </process>
+  
+  <ob name="ArchiveBorrowOB"></ob>
+
+  <!--流程资源-->
+  <resource id="ArchiveManager">
+    <user id="9">张婉娜</user>
+  </resource>
+  <resource id="AgreeUser">
+    <user id="9">张婉娜</user>
+  </resource>
+</definitions>
+

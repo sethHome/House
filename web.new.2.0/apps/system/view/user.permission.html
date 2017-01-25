@@ -1,0 +1,53 @@
+﻿
+
+<button type="button"
+        ng-click="save()"
+        class="btn btn-primary btn-square ">
+    <i class="fa fa-save"></i>
+    {{local.global.save}}
+</button>
+
+<ul class="nav nav-tabs" ng-init="currentIndex = 0">
+    <li ng-class="{active:currentIndex == 0}"><a ng-click="currentIndex = 0">UI操作</a></li>
+    <li ng-class="{active:currentIndex == 1}"><a ng-click="currentIndex = 1">数据访问</a></li>
+    <li ng-class="{active:currentIndex == 2}"><a ng-click="currentIndex = 2">接口调用</a></li>
+</ul>
+<div class="tab-content" blockui="permissionPanel">
+    <div class="tab-pane fade in"
+         fullheight="panelcontent" scroll="uiTreeScroll" calheight="-100"
+         ng-class="{'active ':currentIndex == 0}">
+
+        <tree tree-data="scope"
+              tree-model="uiPermissions"
+              tree-api="uiTreeApi"
+              tree-plugins="checkbox,wholerow,contextmenu"
+              tree-checkbox-parent="false"
+              tree-checkbox-children="false"
+              changed="permissionChanged"
+              ready="treeReady1"></tree>
+    </div>
+    <div class="tab-pane fade in"
+         fullheight="panelcontent" scroll="dataTreeScroll" calheight="-100"
+         ng-class="{'active ':currentIndex == 1}">
+
+        <tree tree-data="scope"
+              tree-model="dataPermissions"
+              tree-api="dataTreeApi"
+              tree-plugins="checkbox,wholerow"
+              tree-checkbox-parent="true"
+              tree-checkbox-children="false"
+              ready="treeReady2"></tree>
+    </div>
+    <div class="tab-pane fade in"
+         fullheight="panelcontent" scroll="apiTreeScroll" calheight="-100"
+         ng-class="{'active ':currentIndex == 2}">
+
+        <tree tree-data="scope"
+              tree-model="apiPermissions"
+              tree-api="apiTreeApi"
+              tree-plugins="checkbox,wholerow"
+              tree-checkbox-parent="true"
+              tree-checkbox-children="false"
+              ready="treeReady3"></tree>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+﻿.spec-checkbox {
+    min-width: 100px;
+    max-width: 150px;
+}
+
+.task-overdue {
+    background-color:red !important;
+        color: #fff !important;
+}

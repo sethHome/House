@@ -1,0 +1,21 @@
+﻿<div class="panel" blockui="panel1">
+    <div class="panel-header">
+        <button type="button"
+                ng-click="createFileLibrary(undefined,'添加节点')"
+                class="btn btn-primary btn-square m-0 ">
+            <i class="fa fa-plus"></i>
+            添加节点
+        </button>
+    </div>
+    <div class="panel-content " >
+
+        <div class="folder pull-left m-10 text-2x text-center"
+             style="max-width:150px;"
+             ng-click="setCurrent(node)"
+             ng-repeat="node in currentFile.Children">
+            <i class="icon-folder fa-3x "></i>
+            <p>{{node.Name}}</p>
+        </div>
+
+    </div>
+</div>

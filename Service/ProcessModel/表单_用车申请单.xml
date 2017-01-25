@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<definitions id="Form_Car" name="用车申请单" >
+
+  <!--设校审批流程-->
+  <process id="F2-1" isClosed="false" isExecutable="true" processType="None">
+
+    <!--用车-->
+    <startEvent id="_1" name="用车" >
+      <outgoing>_2</outgoing>
+    </startEvent>
+
+    <sequenceFlow id="_2" sourceRef="_1" targetRef="_3"/>
+
+    <!--申请-->
+    <userTask id="_3" name="申请">
+      <incoming>_2</incoming>
+      <outgoing>_4</outgoing>
+      <potentialOwner resourceRef="ProcessUser" type="user">
+      </potentialOwner>
+    </userTask>
+
+    <sequenceFlow id="_4" sourceRef="_3" targetRef="_5"/>
+    
+    <!--车辆管理员-->
+    <userTask id="_5" name="车辆管理员" >
+      <incoming>_4</incoming>
+      <outgoing>_6</outgoing>
+      <potentialOwner resourceRef="CarUsers" type="user">
+      </potentialOwner>
+    </userTask>
+
+    <sequenceFlow id="_6" sourceRef="_5" targetRef="_7"/>
+
+    <exclusiveGateway id="_7" name="是否同意" default="_8"  >
+      <incoming>_6</incoming>
+      <outgoing>_8</outgoing>
+      <outgoing>_9</outgoing>
+    </exclusiveGateway>
+
+    <!--同意-->
+    <sequenceFlow id="_8" sourceRef="_7" targetRef="_10">
+      <conditionExpression>bool_Agree</conditionExpression>
+    </sequenceFlow>
+    <!--不同意-->
+    <sequenceFlow id="_9" sourceRef="_7" targetRef="_3">
+      <conditionExpression>!bool_Agree</conditionExpression>
+    </sequenceFlow>
+
+    <!--用车结束-->
+    <userTask id="_10" name="用车结束" >
+      <incoming>_8</incoming>
+      <outgoing>_11</outgoing>
+      <potentialOwner resourceRef="ApplyUser" type="user">
+      </potentialOwner>
+    </userTask>
+
+    <sequenceFlow id="_11" sourceRef="_10" targetRef="_12"/>
+    
+    <!--结束-->
+    <endEvent id="_12" name="结束">
+      <incoming>_11</incoming>
+    </endEvent>
+
+  </process>
+  
+  <ob name="BPMCarApplyOB"></ob>
+
+  <!--流程资源-->
+  <resource id="CarUsers">
+    <user id="9">张婉娜</user>
+  </resource>
+  <resource id="ApplyUser" >
+    <task>_3</task>
+  </resource>
+</definitions>
+

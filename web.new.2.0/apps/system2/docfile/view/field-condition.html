@@ -1,0 +1,144 @@
+﻿<div class="modal-header modal-dragable bg-primary ">
+    <span>查询条件</span>
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+
+<div class="modal-body ">
+
+    <div class="nav-tabs no-border" ng-init="currentIndex=1">
+        <ul class="nav nav-tabs nav-red no-border">
+            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">直接查询</a></li>
+            <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab">组合查询</a></li>
+        </ul>
+        <div class="tab-content ">
+            <div class="tab-pane" ng-class="{active : currentIndex == 1}">
+                <form name="FormMaintain" >
+                    <div class="row m-b-5" ng-repeat="field in fields track by $index">
+                        <label class="col-sm-2 m-t-5">{{field.Name}}</label>
+
+                        <div class="col-sm-4">
+                            <ui-select ng-model="field.Operator" theme="select2" search-enabled="false" class="form-control form-white">
+                                <ui-select-match placeholder="选择运算符">{{$select.selected.Text}}</ui-select-match>
+                                <ui-select-choices repeat="item.Tags['op'] as item in getBaseData('Operator')">
+                                    <div ng-bind-html="item.Text"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="col-sm-4" ng-switch="field.DataType">
+
+                            <div ng-switch-when="3">
+                                <input ng-model="field.FilterValue" type="text" name="n{{field.ID}}" class="form-control form-white" date-picker
+                                       message-id="msg{{field.ID}}">
+                            </div>
+                            <div ng-switch-when="4">
+                                <ui-select ng-model="field.FilterValue" theme="select2" search-enabled="false" class="form-control form-white">
+                                    <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                    <ui-select-choices repeat="item.Value as item in getBaseData(field.BaseData)">
+                                        <div ng-bind-html="item.Text"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div ng-switch-default>
+                                <input ng-model="field.FilterValue" type="text" name="n{{field.ID}}" class="form-control form-white"
+                                       message-id="msg{{field.ID}}"
+                                       validator="{{field.Length > 0 ? 'maxlength=' + field.Length : ''}}">
+                            </div>
+                        </div>
+                        <span class="col-sm-2" id="msg{{field.ID}}"></span>
+                    </div>
+                </form>
+                
+            </div>
+
+            <div class="tab-pane" ng-class="{active : currentIndex == 2}">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <ui-select ng-model="condition.Field" theme="select2" search-enabled="false" class="form-control form-white">
+                            <ui-select-match placeholder="选择字段">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="item in fields ">
+                                <div ng-bind-html="item.Name"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-sm-4">
+                        <ui-select ng-model="condition.Operator" theme="select2" search-enabled="false" class="form-control form-white">
+                            <ui-select-match placeholder="选择运算符">{{$select.selected.Text}}</ui-select-match>
+                            <ui-select-choices repeat="item.Tags['op'] as item in getBaseData('Operator')">
+                                <div ng-bind-html="item.Text"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-sm-4">
+
+                        <div ng-show="condition.Field.DataType == 3">
+                            <input ng-model="condition.Value" type="text" name="n{{field.ID}}" class="form-control form-white" date-picker>
+                        </div>
+                        <div ng-show="condition.Field.DataType == 4">
+                            <ui-select ng-model="condition.Value" theme="select2" search-enabled="false" class="form-control form-white">
+                                <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                <ui-select-choices repeat="item.Value as item in getBaseData(condition.Field.BaseData)">
+                                    <div ng-bind-html="item.Text"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div ng-show="condition.Field.DataType != 3 && condition.Field.DataType != 4 ">
+                            <input ng-model="condition.Value" type="text" name="n{{field.ID}}" class="form-control form-white">
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-t-5">
+                    <div class="col-lg-4">
+                        <div class="icheck-inline m-t-10">
+
+                            <ui-select ng-model="condition.LogicOperation" theme="select2" search-enabled="false" class="form-control form-white">
+                                <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                <ui-select-choices repeat="item.Tags['op'] as item in getBaseData('LogicOperation')">
+                                    <div ng-bind-html="item.Text"></div>
+                                </ui-select-choices>
+                            </ui-select>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <button class="btn btn-primary btn-square width-100p "
+                                ng-click="addCondition()">
+                            <i class="fa fa-plus"></i> 添加检索条件
+                        </button>
+                    </div>
+                </div>
+                <hr class="m-t-5" />
+                <div class="row widget-news">
+                    <div class="message-item media"
+                         ng-repeat="item in conditions track by $index">
+                        <div class="media">
+                            <div class="media-body row">
+                                <div class="col-sm-10">{{item.LogicOperation}}&nbsp;&nbsp;[{{item.Field.Name}}]&nbsp;&nbsp;{{item.Operator}}&nbsp;&nbsp;"{{item.Value}}"</div>
+                                <div class="col-sm-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer bg-aero">
+    <button type="button"
+            ng-click="clear()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-refresh"></i>
+        重置
+    </button>
+
+    <button type="button"
+            ng-click="query()"
+            
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-search"></i>
+        查询
+    </button>
+
+</div>

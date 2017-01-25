@@ -1,0 +1,146 @@
+﻿<form class="form-horizontal  m-0 p-0" blockui="maintainPanel"
+      name="FormMaintain">
+
+    <div class="row m-0">
+        <button type="button"
+                validation-submit="FormMaintain"
+                ng-click="save()"
+                class="btn btn-primary btn-square ">
+            <i class="fa fa-save"></i>
+            {{local.global.save}}
+        </button>
+
+        <button type="button"
+                validation-submit="FormMaintain"
+                ng-click="enable()"
+                class="btn btn-info btn-square ">
+            <i class="fa fa-cc-discover"></i>
+            {{currentUser.Visiable ? "禁用" : "启用"}}
+        </button>
+
+        <button type="button"
+                validation-submit="FormMaintain"
+                ng-click="resetPsw()"
+                class="btn btn-danger btn-square ">
+            <i class="fa fa-refresh"></i>
+            {{local.global.reset}}密码
+        </button>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2  m-t-10">帐号</label>
+        <div class="col-sm-10 ">
+            <input class="form-control " type="text" ng-readonly="true"
+                   name="Account" validator="required,maxlength=15"
+                   placeholder="{{local.global.input}}"
+                   ng-model="currentUser.Account">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 m-t-10">姓名</label>
+        <div class="col-sm-10 ">
+            <input class="form-control form-white" type="text"
+                   name="Name" validator="required,maxlength=50"
+                   placeholder="{{local.global.input}}"
+                   ng-model="currentUser.Name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 m-t-10">部门</label>
+        <div class="col-sm-10 ">
+            <ui-select ng-model="currentUser.Dept.Key" theme="select2" search-enabled="true" class="form-control form-white">
+                <ui-select-match placeholder="{{local.global.choose}}">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="item.key as item in department ">
+                    <div ng-bind-html="item.name"></div>
+                </ui-select-choices>
+            </ui-select>
+            <input class="hide" ng-model="currentUser.Dept.Key"
+                   name="Dept" validator="required">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 m-t-10">角色</label>
+        <div class="col-sm-10 ">
+            <div class="selectbox pull-left"
+                 ng-repeat="r in roles track by r.Key"
+                 ng-class="{'bg-blue' : hasRole(r)}"
+                 ng-click="setRole(r)">{{r.Name}}</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 m-t-10">业务系统</label>
+        <div class="col-sm-10 ">
+            <div class="selectbox pull-left"
+                 ng-repeat="b in allBusiness track by b.Key"
+                 ng-class="{'bg-blue' : hasBusiness(b)}"
+                 ng-click="setBusiness(b)">{{b.Name}}</div>
+        </div>
+    </div>
+</form>
+
+<hr />
+<form class="form-horizontal  m-0 p-0" blockui="createPanel"
+      name="FormCreate" ng-controller="system.controller.user.create">
+
+    <div class="row m-0">
+        <button type="button"
+                validation-submit="FormCreate"
+                ng-click="save()"
+                class="btn btn-primary btn-square ">
+            <i class="fa fa-plus"></i>
+            添加用户
+        </button>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2  m-t-10">帐号</label>
+        <div class="col-sm-10 ">
+            <input class="form-control form-white" type="text"
+                   name="Account" validator="required,maxlength=15"
+                   placeholder="{{local.global.input}}"
+                   ng-model="newUser.Account">
+            <p ng-show="accountError" class="validation-invalid">帐号重复</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 m-t-10">姓名</label>
+        <div class="col-sm-10 ">
+            <input class="form-control form-white" type="text"
+                   name="Name" validator="required,maxlength=50"
+                   placeholder="{{local.global.input}}"
+                   ng-model="newUser.Name">
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 m-t-10">部门</label>
+        <div class="col-sm-10 ">
+            <ui-select ng-model="newUser.Dept.Key" theme="select2" search-enabled="true" class="form-control form-white">
+                <ui-select-match placeholder="{{local.global.choose}}">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="item.key as item in department ">
+                    <div ng-bind-html="item.name"></div>
+                </ui-select-choices>
+            </ui-select>
+            <input class="hide" ng-model="newUser.Dept.Key"
+                   name="Dept" validator="required">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 m-t-10">角色</label>
+        <div class="col-sm-10 ">
+            <div class="selectbox pull-left"
+                 ng-repeat="r in roles track by r.Key"
+                 ng-class="{'bg-blue' : r.selected}"
+                 ng-click="setRole(r)">{{r.Name}}</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 m-t-10">业务系统</label>
+        <div class="col-sm-10 ">
+            <div class="selectbox pull-left"
+                 ng-repeat="b in allBusiness track by b.Key"
+                 ng-class="{'bg-blue' : b.selected}"
+                 ng-click="setBusiness(b)">{{b.Name}}</div>
+        </div>
+    </div>
+</form>

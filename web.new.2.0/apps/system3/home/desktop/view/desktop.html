@@ -1,0 +1,212 @@
+﻿<div class="panel " >
+   
+
+    <div class="panel-content  p-0 " style="min-height:{{gridHeight + 49}}px; ">
+
+        <div class="tile-area " style="height: 100%; max-height: 100% !important; margin:0px -50px 0; ">
+
+            <div class="tile-group double">
+                <span class="tile-group-title">我的任务</span>
+                <div class="tile-container">
+                    <div class="tile bg-1-1 fg-white" data-role="tile" ng-click="$state.go('home.mytask',{type:1})">
+                        <div class="tile-content iconic">
+                            <div class="number countup m-l-5" data-from="0" data-to="myTaskCount['1']">
+                            </div>
+
+                            <i class="fa fa-pencil" style="font-size: 40pt;margin-left: 50px;"></i>
+
+                        </div>
+
+                        <span class="tile-label">生产</span>
+                    </div>
+                    <div class="tile bg-1-2 fg-white" data-role="tile" ng-click="$state.go('home.mytask',{type:2})">
+                        <div class="tile-content iconic">
+                            <div class="number countup m-l-5" data-from="0" data-to="myTaskCount['2']">
+                            </div>
+
+                            <i class="fa fa-table" style="font-size: 40pt;margin-left: 50px;"></i>
+                           
+                        </div>
+                        <span class="tile-label">表单</span>
+                    </div>
+                    <div class="tile bg-1-3 fg-white" data-role="tile" ng-click="$state.go('home.mytask',{type:3})">
+                        <div class="tile-content iconic">
+                            <div class="number countup m-l-5" data-from="0" data-to="myTaskCount['3']">
+                            </div>
+                            
+                            <i class="fa fa-file" style="font-size: 40pt;margin-left: 50px;"></i>
+                        </div>
+                        <span class="tile-label">收资</span>
+                    </div>
+                    <div class="tile bg-1-4 fg-white" data-role="tile" ng-click="$state.go('home.mytask',{type:4})">
+                        <div class="tile-content iconic">
+                            <div class="number countup m-l-5" data-from="0" data-to="myTaskCount['4']">
+                            </div>
+                            <i class="fa fa-paper-plane" style="font-size: 40pt;margin-left: 50px;"></i>
+                        </div>
+                        <span class="tile-label">其他</span>
+                    </div>
+                </div>
+                <div class="tile-group-title2">最近联系人</div>
+                <div class="tile-container">
+                    <div class="tile" data-role="tile">
+                        <div class="tile-content">
+
+                            <img src="../../../../../assets/global/images/avatars/10x.jpg" data-role="fitImage" data-format="square" />
+                        </div>
+                    </div>
+                    <div class="tile-small" data-role="tile">
+                        <div class="tile-content">
+                            <img src="../../../../../assets/global/images/avatars/1x.jpg" data-role="fitImage" data-format="square" />
+                        </div>
+                    </div>
+                    <div class="tile-small" data-role="tile">
+                        <div class="tile-content">
+                            <img src="../../../../../assets/global/images/avatars/2x.jpg" data-role="fitImage" data-format="square" />
+                        </div>
+                    </div>
+                    <div class="tile-small" data-role="tile">
+                        <div class="tile-content">
+                            <img src="../../../../../assets/global/images/avatars/3x.jpg" data-role="fitImage" data-format="square" />
+                        </div>
+                    </div>
+                    <div class="tile-small" data-role="tile">
+                        <div class="tile-content">
+                            <img src="../../../../../assets/global/images/avatars/4x.jpg" data-role="fitImage" data-format="square" />
+                        </div>
+                    </div>
+                    <div class="tile-small" data-role="tile">
+                        <div class="tile-content">
+                            <img src="../../../../../assets/global/images/avatars/1x.jpg" data-role="fitImage" data-format="square" />
+                        </div>
+                    </div>
+                    <div class="tile-small" data-role="tile">
+                        <div class="tile-content">
+                            <img src="../../../../../assets/global/images/avatars/2x.jpg" data-role="fitImage" data-format="square" />
+                        </div>
+                    </div>
+                    <div class="tile-small" data-role="tile">
+                        <div class="tile-content">
+                            <img src="../../../../../assets/global/images/avatars/3x.jpg" data-role="fitImage" data-format="square" />
+                        </div>
+                    </div>
+                    <div class="tile-small" data-role="tile">
+                        <div class="tile-content">
+                            <img src="../../../../../assets/global/images/avatars/4x.jpg" data-role="fitImage" data-format="square" />
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="tile-group double">
+                <div class="tile-group-title">特别关注</div>
+                <div class="tile-container">
+
+                    <div class="tile-wide  bg-aero " data-role="tile"
+                         ng-repeat="item in followEngs  | limitTo : 4"
+                         ng-repeat-end="setPage()">
+                        <div class="tile-content  p-10 ">
+                            <p class="f-16"> <i class="fa fa-newspaper-o"></i> {{item.Name}}</p>
+                            <div class="f-12 c-gray"
+                                 ng-repeat="n in item.Notes  | limitTo : 2">
+                                {{n.NoteDate | TDate:'MM/dd'}} {{n.NoteType | enumMap:'NoteType'}}  {{n.Content | subStr : 20}}
+
+                            </div>
+                        </div>
+                        <span class="tile-label-right f-12 c-gray">{{item.StartDate | TDate}}</span>
+                    </div>
+
+                    
+
+                </div>
+            </div>
+            <div class="tile-group double">
+                <span class="tile-group-title">公司公告</span>
+                <div class="tile-container ">
+                    <div class="tile-large bg-1-4 fg-white" data-role="tile" >
+                        <div class="tile-content p-10" >
+                            <p ng-bind="setContent(gonggao.Content)">
+                            </p>
+                        </div>
+                        <span class="tile-label">{{gonggao.CreateDate | TDate}}</span>
+                    </div>
+
+                    <div class="tile-wide bg-1-2 fg-white" data-role="tile"
+                         ng-repeat="n in news"
+                         ng-repeat-end="setPage()">
+
+                        <div class="tile-content p-10 ">
+                            <h4>
+                                {{n.Title}}
+                            </h4>
+                            <div class="no-margin text-shadow f-12 "
+                                 ng-bind="setContent(n.Content)">
+                            </div>
+                        </div>
+                        <div class="tile-label">{{n.CreateDate | TDate}}</div>
+                    </div>
+
+                </div>
+               
+            </div>
+            <div class="tile-group double">
+                <span class="tile-group-title">公共资源</span>
+                <div class="tile-container">
+                    <div class="tile bg-3-1 fg-white" data-role="tile">
+                        <div class="tile-content iconic">
+                            <div class="number">12</div>
+                            <span class="icon mif-pencil"></span>
+                        </div>
+
+                        <span class="tile-label">设计工具</span>
+                    </div>
+                    <div class="tile-small bg-blue" data-role="tile">
+                        <div class="tile-content ">
+                           <p class="f-16">12</p>
+                        </div>
+                        <span class="tile-label f-sm">招标模板</span>
+                    </div>
+                    <div class="tile-small bg-primary" data-role="tile">
+                        <div class="tile-content ">
+                            <p class="f-16">12</p>
+                        </div>
+                        <span class="tile-label f-sm">通用设计</span>
+                    </div>
+                    <div class="tile-small bg-green" data-role="tile">
+                        <div class="tile-content ">
+                            <p class="f-16">12</p>
+                        </div>
+                        <span class="tile-label f-sm">其他</span>
+                    </div>
+                    <div class="tile-small bg-red" data-role="tile">
+                        <div class="tile-content ">
+                            <p class="f-16">12</p>
+                        </div>
+                        <span class="tile-label f-sm">招标模板</span>
+                    </div>
+                </div>
+
+                <div class="tile-group-title2">快速访问</div>
+                <div class="tile-container">
+
+
+                    <div class="tile-small bg-blue" data-role="tile"
+                         ng-click="goQuick(item)"
+                         ng-repeat="item in userConfig.quicklink">
+                        <div class="tile-content t-center p-t-10">
+                          <i class="fa fa-link  f-30" ></i>
+                        </div>
+                        <span class="tile-label f-sm">{{item.ConfigText}}</span>
+                    </div>
+
+                 
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>

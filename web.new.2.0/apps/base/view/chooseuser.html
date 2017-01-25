@@ -1,0 +1,37 @@
+﻿<div class="container" id="lockscreen-block">
+    <div class="row">
+        <div class="col-md-8 ">
+            <div class="account-wall"
+                 ng-repeat="user in users">
+                <div class="user-image" ng-click="enter(user)">
+                    <img ng-src="assets/global/images/avatars/{{user.Account.PhotoImgLarge}}" class="img-responsive img-circle" alt="friend 8">
+                    <div class="loader"></div>
+                </div>
+                <div class="form-signin">
+                    <h2>{{user.Account.Name}}</h2>
+                    <p>{{user.Account.Dept.Name}}</p>
+                </div>
+                <div class="form-signin">
+                    <button type="button" ng-click="logout(user)" class="btn btn-danger btn-transparent">注销</button>
+                </div>
+            </div>
+
+
+            <div class="account-wall">
+                <div class="user-image" >
+                    <img src="assets/global/images/avatars/avatar7_big.png" class="img-responsive img-circle" alt="friend 8">
+                    <div class="loader"></div>
+                </div>
+                <div class="form-signin">
+                   
+                    <p>使用其他账号登录</p>
+                </div>
+                <div class="form-signin">
+                    <button type="button" ng-click="$state.go('login')" class="btn btn-primary btn-transparent">登录</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+   
+</div>

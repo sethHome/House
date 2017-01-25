@@ -1,0 +1,145 @@
+﻿<div class="modal-header bg-primary modal-dragable" visiable="{{maintainModel == 2}}" ng-show="maintainModel == 2">
+    {{local.global.plan}}
+    <button type="button" ng-click="closeMaintain()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div ng-class="{'modal-body' : maintainModel == 2}">
+    <form class="form-horizontal  m-0 p-0"
+          name="FormMaintain">
+
+        <fieldset class="m-0 p-l-30 p-r-30">
+            <legend>{{local.business.currentSpec.Engineering}}{{local.global.info}}</legend>
+
+            <div class="row m-0 ">
+                <div class="col-sm-1 p-0"> <label>{{local.eng.number}}</label></div>
+                <div class="col-sm-5">{{currentSpec.Engineering.Number | subStr: 18}}</div>
+                <div class="col-sm-1 p-0"> <label>{{local.eng.name}}</label></div>
+                <div class="col-sm-5">{{currentSpec.Engineering.Name}}</div>
+            </div>
+            <div class="row m-0  p-t-10">
+                <div class="col-sm-1 p-0"><label>{{local.eng.status}}</label></div>
+                <div class="col-sm-2">{{currentSpec.Engineering.Status | enumMap:"EngineeringStatus"}}</div>
+                <div class="col-sm-1 p-0"><label>{{local.eng.phase}}</label></div>
+                <div class="col-sm-2">{{currentSpec.Engineering.Phase | enumMap:"EngineeringPhase"}}</div>
+                <div class="col-sm-1 p-0"><label>{{local.eng.manager}}</label></div>
+                <div class="col-sm-2">
+                    {{currentSpec.Engineering.Manager | enumMap:"user"}}
+                    <a class="btn btn-transparent msgChatBtn"
+                       ng-click="openChat(currentSpec.Engineering.Manager)">
+                        <i class="fa fa-weixin"></i>
+                    </a>
+                </div>
+                <div class="col-sm-1 p-0"><label>{{local.eng.vollevel}}</label></div>
+                <div class="col-sm-2">{{currentSpec.Engineering.VolLevel | enumMap:"VolLev"}}</div>
+            </div>
+            <div class="row m-0  p-t-10">
+                <div class="col-sm-1 p-0"><label>{{local.eng.tasktype}}</label></div>
+                <div class="col-sm-2">{{currentSpec.Engineering.TaskType | enumMap:"TaskType"}}</div>
+                <div class="col-sm-1 p-0"><label>{{local.eng.type}}</label></div>
+                <div class="col-sm-2">{{currentSpec.Engineering.Type | enumMap:"EngineeringType"}}</div>
+                <div class="col-sm-1 p-0"><label>{{local.eng.createdate}}</label></div>
+                <div class="col-sm-2">{{currentSpec.Engineering.CreateDate | TDate}}</div>
+                <div class="col-sm-1 p-0"><label>{{local.eng.deliverydate}}</label></div>
+                <div class="col-sm-2">{{currentSpec.Engineering.DeliveryDate | TDate}}</div>
+            </div>
+        </fieldset>
+
+        <fieldset class="m-0 p-0 p-l-30 p-r-30">
+
+            <legend>{{local.specil.name}}</legend>
+            <div class="icheck-inline m-b-10">
+                <span class="m-r-10"
+                      ng-init="isSelected(item)"
+                      ng-show="!item.isSelected"
+                      ng-repeat="item in SpecialtysCopy">
+                    <input type="checkbox" ng-model="item.isSelected" icheck> {{item.Text}}
+                </span>
+            </div>
+        </fieldset>
+
+        <fieldset class="p-0 m-t-5 p-l-30 p-r-30">
+
+            <div class="form-group m-t-5  p-0 border-bottom">
+                <label class="col-sm-2 p-0 p-l-20">{{local.specil.name}}</label>
+                <label class="col-sm-2 p-0 p-l-20">生产流程</label>
+                <label class="col-sm-2 p-0 p-l-20">{{local.specil.manager}}</label>
+                <label class="col-sm-2 p-0 p-l-20">{{local.specil.startDate}}</label>
+                <label class="col-sm-2 p-0 p-l-20">{{local.specil.endDate}}</label>
+                <label class="col-sm-2 p-0 p-l-20">{{local.specil.note}}</label>
+            </div>
+
+            <div class="form-group "
+                 ng-show="item.isSelected"
+                 ng-repeat="item in SpecialtysCopy">
+
+                <div class="col-sm-2 ">
+                    {{item.Text}}
+                    <i ng-show="currentSpec.SpecialtyID == item.Value" class="fa fa-circle"></i>
+                </div>
+                <div class="col-sm-2 ">
+                    <ui-select ng-model="item.ProcessModel" theme="select2" search-enabled="false" class="form-control form-white">
+                        <ui-select-match placeholder="生产流程">{{$select.selected.Value}}</ui-select-match>
+                        <ui-select-choices repeat="item.Key as item in ProcessModel_item">
+                            <div ng-bind-html="item.Value"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-sm-2 ">
+                    <ui-select ng-model="item.Manager" theme="select2" search-enabled="false" class="form-control form-white">
+                        <ui-select-match placeholder="{{local.specil.manager}}">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="item.ID as item in user_item | specmanager:{SpecialtyID:item.Value,ProcessID:item.ProcessModel}">
+                            <div ng-bind-html="item.Name"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-sm-2 ">
+                    <input type="text" ng-model="item.StartDate"
+                           placeholder="{{local.specil.startDate}}"
+                           class="form-control form-white"
+                           date-picker />
+                </div>
+                <div class="col-sm-2 ">
+                    <input type="text" ng-model="item.EndDate"
+                           placeholder="{{local.specil.endDate}}"
+                           class="form-control form-white"
+                           date-picker />
+                </div>
+
+                <div class="col-sm-1">
+                    <input type="text" ng-model="item.Note"
+                           placeholder="{{local.specil.note}}"
+                           class="form-control form-white" />
+                </div>
+                <span class="col-sm-1 p-0 p-l-20">
+                    <a class="btn btn-transparent m-0 p-0"
+                       ng-click="item.isSelected = false"
+                       style="height:auto;">
+                        <i class="fa fa-close"></i>
+                    </a>
+                </span>
+            </div>
+        </fieldset>
+
+        <fieldset class="m-0 p-0 p-l-30 p-r-30">
+
+            <legend>{{local.global.operate}}</legend>
+
+            <button type="button"
+                    validation-submit="FormMaintain"
+                    ng-click="updateSpecialtys()"
+                    class="btn btn-info btn-square  pull-right">
+                <i class="fa fa-save"></i>
+                {{local.global.save}}
+            </button>
+            <button type="button"
+                    validation-submit="FormMaintain"
+                    ng-click="closeMaintain()"
+                    class="btn btn-danger btn-square  pull-right">
+                <i class="fa fa-remove"></i>
+                {{local.global.close}}
+            </button>
+
+        </fieldset>
+
+
+    </form>
+</div>

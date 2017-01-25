@@ -1,0 +1,220 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+
+    <h4 class="modal-title">
+        <i class="fa fa-edit"></i>
+        批量修改
+    </h4>
+</div>
+
+<div class="modal-body ">
+    <form name="FormMaintain">
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label">修改字段</label>
+                    <span id="msg1" class="pull-right"></span>
+                    <ui-select ng-model="result.Field" theme="select2" search-enabled="false" class="form-control form-white">
+                        <ui-select-match placeholder="选择字段">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="item in fields">
+                            <div ng-bind-html="item.Name"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <input name="field" class="hide" ng-model="result.Field.Name" validator="required" message-id="msg1" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label">更新数据域</label>
+                    <br />
+                    <p class="m-t-5">
+                        <input type="radio" value="1" name="updateRegion" ng-model="result.UpdateRegion" icheck />
+                        <span>筛选数据集</span>
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="radio" value="2" name="updateRegion" ng-model="result.UpdateRegion" icheck />
+                        <span>当页选择项</span>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row " style="background-color:aliceblue;">
+            <hr class="m-t-0" />
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="control-label">值表达式</label>
+                    <button type="button" class="btn btn-sm btn-primary btn-square pull-right "
+                            ng-click="clear()">
+                        <i class="fa fa-close"></i>
+                        清空
+                    </button>
+                    <input ng-model="expressionStr" type="text" class="form-control form-white " ng-readonly="true" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row ">
+            <hr class="m-t-0" />
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label">{{result.Field.Name}}</label>
+                    <button type="button" class="btn btn-sm btn-primary btn-square pull-right "
+                            ng-click="addValue()">
+                        <i class="fa fa-plus"></i>
+                        添加
+                    </button>
+
+                    <input ng-show="result.Field.DataType == 3" ng-model="info.Value" type="text" class="form-control form-white" date-picker>
+
+                    <div class="row" ng-show="result.Field.DataType == 4">
+                        <div class="col-lg-12">
+                            <ui-select ng-model="info.Value" theme="select2" search-enabled="false" class="form-control form-white">
+                                <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                <ui-select-choices repeat="item.Value as item in getBaseData(result.Field.BaseData)">
+                                    <div ng-bind-html="item.Text"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+
+                    <input ng-show="result.Field.DataType != 4 && result.Field.DataType != 3" ng-model="info.Value" type="text" class="form-control form-white" />
+
+                </div>
+            </div>
+            <div class="col-sm-6" ng-show="result.Field.DataType == 2">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label class="control-label">数据字段</label>
+                            <button type="button" class="btn btn-sm btn-primary btn-square pull-right "
+                                    ng-click="addDataField()">
+                                <i class="fa fa-plus"></i>
+                                添加
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ui-select ng-model="info.DataField" theme="select2" search-enabled="false" class="form-control form-white">
+                                <ui-select-match placeholder="选择字段">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="item in fields">
+                                    <div ng-bind-html="item.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-show="result.Field.DataType == 2">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label class="control-label">自动编号</label>
+                            <button type="button" class="btn btn-sm btn-primary btn-square pull-right "
+                                    ng-click="addAutoNumber()">
+                                <i class="fa fa-plus"></i>
+                                添加
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <input name="autoNumber.start" placeholder="起始值"
+                                   ng-model="info.autoNumber.start" type="text"
+                                   class="form-control form-white" validator="numberornull" />
+                        </div>
+                        <div class="col-sm-4">
+                            <input name="autoNumber.length" placeholder="长度"
+                                   ng-model="info.autoNumber.length" type="text"
+                                   class="form-control form-white" validator="numberornull" />
+                        </div>
+                        <div class="col-sm-4">
+                            <input placeholder="填充" ng-model="info.autoNumber.fill" type="text" class="form-control form-white" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="row " style="background-color:aliceblue;" ng-show="more">
+
+            <hr class="m-t-0" />
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="radio" value="1" name="updateType" ng-model="updateType" icheck />
+                            <label class="control-label">部分修改</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <input ng-readonly="updateType != 1" name="result.PartStart"
+                                   ng-class="{'form-white' : updateType == 1}"
+                                   ng-model="result.PartStart"
+                                   placeholder="起始值" type="text" class="form-control " validator="numberornull" />
+                        </div>
+                        <div class="col-sm-4">
+                            <input ng-readonly="updateType != 1" name="result.PartLength"
+                                   ng-class="{'form-white' : updateType == 1}"
+                                   ng-model="result.PartLength"
+                                   placeholder="长度" type="text" class="form-control " validator="numberornull" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="radio" value="2" name="updateType" ng-model="updateType" icheck />
+                            <label class="control-label">查找替换</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input ng-readonly="updateType != 2"
+                                   ng-class="{'form-white' : updateType == 2}"
+                                   ng-model="result.ReplaceValue"
+                                   type="text" placeholder="查找内容" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer bg-aero">
+    <button type="button"
+            ng-show="result.Field.DataType == 2"
+            ng-click="more = !more"
+            class="btn btn-primary btn-square pull-left ">
+        高级
+        <i class="fa "
+           ng-class="{'fa-angle-double-down' : more,'fa-angle-double-right' : !more,}"></i>
+    </button>
+
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="ok()"
+            class="btn btn-primary btn-square ">
+
+        确定
+        <i class="fa fa-angle-double-down"></i>
+    </button>
+</div>

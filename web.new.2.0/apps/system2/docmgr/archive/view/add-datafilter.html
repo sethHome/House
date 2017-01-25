@@ -1,0 +1,133 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">{{update ? '更新' : '新增'}}数据节点</h4>
+</div>
+
+<div class="modal-body " style="height:400px; ">
+
+    <div class="nav-tabs no-border" ng-init="currentTabIndex = 1">
+        <ul class="nav nav-tabs nav-red no-border">
+            <li ng-click="currentTabIndex = 1" ng-class="{active : currentTabIndex == 1}"><a data-toggle="tab">节点信息</a></li>
+            <li ng-click="currentTabIndex = 2" ng-class="{active : currentTabIndex == 2}"><a data-toggle="tab">数据条件</a></li>
+            <li ng-click="currentTabIndex = 3" ng-class="{active : currentTabIndex == 3}"><a data-toggle="tab">数据预览[{{totalItems}}]</a></li>
+        </ul>
+        <div class="tab-content p-0 ">
+            <div class="tab-pane p-10" ng-class="{active : currentTabIndex == 1}">
+               <form name="FormMaintain">
+                   <div class="form-group">
+                       <label for="exampleInputEmail1">节点编号</label>
+                       <span class="pull-right" id="info_msg_number"></span>
+                       <input type="text" ng-model="nodeInfo.Number" class="form-control form-white" 
+                              message-id="info_msg_number" name="Number" validator="required" >
+                   </div>
+                   <div class="form-group">
+                       <label for="exampleInputPassword1">节点名称</label>
+                       <span class="pull-right" id="info_msg_name"></span>
+                       <input type="text" ng-model="nodeInfo.Name" class="form-control form-white" 
+                              message-id="info_msg_name" name="Name" validator="required" >
+                   </div>
+                   <div class="form-group">
+                       <label for="exampleInputPassword1">节点备注</label>
+                       <textarea ng-model="nodeInfo.Note" class="form-control form-white"rows="3"></textarea>
+                   </div>
+               </form>
+               
+            </div>
+
+            <div class="tab-pane p-10" ng-class="{active : currentTabIndex == 2}">
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <ui-select ng-model="condition.Field" theme="select2" search-enabled="false" class="form-control form-white">
+                            <ui-select-match placeholder="选择字段">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="item in fields ">
+                                <div ng-bind-html="item.Name"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-sm-4">
+                        <ui-select ng-model="condition.Operator" theme="select2" search-enabled="false" class="form-control form-white">
+                            <ui-select-match placeholder="选择运算符">{{$select.selected.Text}}</ui-select-match>
+                            <ui-select-choices repeat="item.Tags['op'] as item in getBaseData('Operator')">
+                                <div ng-bind-html="item.Text"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-sm-4">
+
+                        <div ng-show="condition.Field.DataType == 3">
+                            <input ng-model="condition.Value" type="text" name="n{{field.ID}}" class="form-control form-white" date-picker>
+                        </div>
+                        <div ng-show="condition.Field.DataType == 4">
+                            <ui-select ng-model="condition.Value" theme="select2" search-enabled="false" class="form-control form-white">
+                                <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                <ui-select-choices repeat="item.Value as item in getBaseData(condition.Field.BaseData)">
+                                    <div ng-bind-html="item.Text"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div ng-show="condition.Field.DataType != 3 && condition.Field.DataType != 4 ">
+                            <input ng-model="condition.Value" type="text" name="n{{field.ID}}" class="form-control form-white">
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-t-5">
+                    <div class="col-lg-4">
+                        <div class="icheck-inline m-t-10">
+
+                            <ui-select ng-model="condition.LogicOperation" theme="select2" search-enabled="false" class="form-control form-white">
+                                <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                <ui-select-choices repeat="item.Tags['op'] as item in getBaseData('LogicOperation')">
+                                    <div ng-bind-html="item.Text"></div>
+                                </ui-select-choices>
+                            </ui-select>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <button class="btn btn-primary btn-square width-100p "
+                                ng-click="addCondition()">
+                            <i class="fa fa-plus"></i> 添加检索条件
+                        </button>
+                    </div>
+                </div>
+                <hr class="m-t-5" />
+                <div>
+                    <span ng-repeat="item in nodeInfo.Conditions track by $index">
+                       {{item.LogicOperation}}&nbsp;&nbsp;[{{item.Field.Name}}]&nbsp;&nbsp;{{item.Operator}}&nbsp;&nbsp;"{{item.Value}}"
+                    </span>
+                </div>
+               
+            </div>
+
+            <div class="tab-pane p-10" ng-class="{active : currentTabIndex == 3}">
+                <div style="height:320px;"
+                     ui-grid-auto-resize
+                     ui-grid-resize-columns
+                     ui-grid="gridOptions"></div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="modal-footer bg-aero">
+    <div ng-show="currentTabIndex == 3" class="pull-right">
+        <button type="button"
+                validation-submit="FormMaintain"
+                ng-click="save()"
+                class="btn btn-primary btn-square ">
+            保存
+        </button>
+    </div>
+    <div ng-show="currentTabIndex < 3" class="pull-right">
+        <button type="button" ng-show="currentTabIndex < 3"
+                validation-submit="FormMaintain"
+                ng-click="next()"
+                class="btn btn-primary btn-square ">
+            下一步
+        </button>
+    </div>
+   
+   
+</div>

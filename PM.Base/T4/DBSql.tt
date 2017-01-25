@@ -1,0 +1,27 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.xml" #>
+
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".txt" #>
+
+<#+ 
+	string connectionString= "server=192.168.0.80,14386;database=5.0;uid=sa;pwd=1234_4321qq;";    
+
+	public System.Data.DataRow[] GetSchema()
+	{
+		SqlConnection conn = new SqlConnection(connectionString);
+		conn.Open();
+		var schema = conn.GetSchema("Tables");
+		conn.Close();
+
+		return schema.Select("TABLE_NAME  IN ('EngineeringPlan')");
+		//return schema;
+	}
+#>

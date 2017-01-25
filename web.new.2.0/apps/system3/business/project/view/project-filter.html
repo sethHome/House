@@ -1,0 +1,93 @@
+﻿<form class=" form-horizontal m-0 p-20">
+
+    <div class="form-group">
+        <span class="col-sm-2 p-0  hidden-md"><label class="m-t-10">{{local.proj.kind}}</label> </span>
+        <div class="col-sm-10 col-lg-10 col-md-12 ">
+           
+            <ui-select ng-model="filter.kind" theme="select2" search-enabled="false" class="form-control form-white">
+                <ui-select-match placeholder="{{local.global.choose}}{{local.proj.kind}}">{{$select.selected.Text}}</ui-select-match>
+                <ui-select-choices repeat="item.Value as item in getBaseData('ProjectKind')">
+                    <div ng-bind-html="item.Text"></div>
+                </ui-select-choices>
+            </ui-select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.proj.type}}</label> </span>
+        <div class="col-sm-10 col-lg-10 col-md-12 ">
+            <ui-select ng-model="filter.type" theme="select2" search-enabled="false" class="form-control form-white">
+                <ui-select-match placeholder="{{local.global.choose}}{{local.proj.kind}}">{{$select.selected.Text}}</ui-select-match>
+                <ui-select-choices repeat="item.Value as item in getBaseData('ProjectType')">
+                    <div ng-bind-html="item.Text"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="form-group">
+        <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.proj.vollevel}}</label> </span>
+        <div class="col-sm-10 col-lg-10 col-md-12 ">
+            <ui-select ng-model="filter.vollevel" theme="select2" search-enabled="false" class="form-control form-white">
+                <ui-select-match placeholder="{{local.global.choose}}{{local.proj.vollevel}}">{{$select.selected.Text}}</ui-select-match>
+                <ui-select-choices repeat="item.Value as item in getBaseData('VolLev')">
+                    <div ng-bind-html="item.Text"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="form-group">
+        <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.proj.manager}}</label> </span>
+        <div class="col-sm-10 col-lg-10 col-md-12 ">
+            <ui-select ng-model="filter.manager" theme="select2" class="form-control form-white">
+                <ui-select-match placeholder="{{local.global.choose}}{{local.proj.manager}}">{{$select.selected.Name}}</ui-select-match>
+                <ui-select-choices repeat="item.ID as item in user_item  | filter: $select.search">
+                    <div ng-bind-html="item.Name"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="form-group">
+        <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.proj.secretlevel}}</label> </span>
+        <div class="col-sm-10 col-lg-10 col-md-12 ">
+            <ui-select ng-model="filter.secretlevel" theme="select2" search-enabled="false" class="form-control form-white">
+                <ui-select-match placeholder="{{local.global.choose}}{{local.proj.secretlevel}}">{{$select.selected.Text}}</ui-select-match>
+                <ui-select-choices repeat="item.Value as item  in getBaseData('SecretLevel')">
+                    <div ng-bind-html="item.Text"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="form-group">
+        <span class="col-sm-2  p-0 hidden-md"><label class="m-t-10">{{local.proj.createdate}}</label> </span>
+        <div class="col-sm-10 col-lg-10 col-md-12 ">
+           
+            <div class="input-daterange input-group" date-picker>
+                <input type="text" ng-model="filter.createdatefrom" class="form-control form-white" name="start" placeholder="{{local.global.beign}}">
+                <span class="input-group-addon">{{local.global.to}}</span>
+                <input type="text" ng-model="filter.createdateto" class="form-control form-white" name="end" placeholder="{{local.global.end}}">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <span class="col-sm-2 p-0 hidden-md"><label class="m-t-10">{{local.proj.deliverydate}}</label> </span>
+        <div class="col-sm-10 col-lg-10 col-md-12 ">
+
+            <div class="input-daterange input-group" date-picker>
+                <input type="text" ng-model="filter.deliverydatefrom" class="form-control form-white" name="start" placeholder="{{local.global.beign}}">
+                <span class="input-group-addon">{{local.global.to}}</span>
+                <input type="text" ng-model="filter.deliverydateto" class="form-control form-white" name="end" placeholder="{{local.global.end}}">
+            </div>
+        
+        </div>
+    </div>
+
+    
+    <button type="button"
+            ng-click="clearFilter()"
+            class="btn btn-danger btn-square  pull-right">
+        <i class="fa fa-refresh"></i>
+        {{local.global.reset}}
+    </button>
+
+</form>

@@ -1,0 +1,463 @@
+﻿<div class="row">
+    <div class="col-sm-8 col-md-8 col-lg-8">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="panel" blockui="panel1">
+                    <div class="panel-header  bg-primary">
+                        <h3><i class="icon-list"></i> 工程信息</h3>
+                    </div>
+                    <div class="panel-content ">
+                        <div class="row m-0  p-t-10">
+                            <div class="col-sm-1 p-0"><label>{{local.eng.proj}}</label></div>
+                            <div class="col-sm-11">{{currentEng.ProjectInfo.Name}}</div>
+                        </div>
+                        <div class="row m-0 p-t-10">
+                            <div class="col-sm-1 p-0"> <label>{{local.eng.number}}</label></div>
+                            <div class="col-sm-3">{{currentEng.Number}}</div>
+                            <div class="col-sm-1 p-0"><label>{{local.eng.name}}</label></div>
+                            <div class="col-sm-7">{{currentEng.Name}}</div>
+                        </div>
+                        <div class="row m-0  p-t-10">
+                            <div class="col-sm-1 p-0"><label>{{local.eng.status}}</label></div>
+                            <div class="col-sm-3">{{currentEng.Status | enumMap:"EngineeringStatus"}}</div>
+                            <div class="col-sm-1 p-0"><label>{{local.eng.phase}}</label></div>
+                            <div class="col-sm-3">{{currentEng.Phase | enumMap:"EngineeringPhase"}}</div>
+                            <div class="col-sm-1 p-0"><label>{{local.eng.manager}}</label></div>
+                            <div class="col-sm-3">{{currentEng.Manager | enumMap:"user"}}</div>
+                        </div>
+                        <div class="row m-0  p-t-10">
+                            <div class="col-sm-1 p-0"><label>{{local.eng.vollevel}}</label></div>
+                            <div class="col-sm-3">{{currentEng.VolLevel | enumMap:"VolLev"}}</div>
+                            <div class="col-sm-1 p-0"><label>{{local.eng.tasktype}}</label></div>
+                            <div class="col-sm-3">{{currentEng.TaskType | enumMap:"TaskType"}}</div>
+                            <div class="col-sm-1 p-0"><label>{{local.eng.type}}</label></div>
+                            <div class="col-sm-3">{{currentEng.Type | enumMap:"EngineeringType"}}</div>
+                        </div>
+                        <div class="row m-0  p-t-10">
+
+                            <div class="col-sm-1 p-0"><label>{{local.eng.startdate}}</label></div>
+                            <div class="col-sm-3">{{currentEng.StartDate | TDate}}</div>
+                            <div class="col-sm-1 p-0"><label>{{local.eng.deliverydate}}</label></div>
+                            <div class="col-sm-3">{{currentEng.DeliveryDate | TDate}}</div>
+                            <div class="col-sm-1 p-0"><label>{{local.eng.finishdate}}</label></div>
+                            <div class="col-sm-3">{{currentEng.FinishDate | TDate}}</div>
+                        </div>
+                        <div class="row m-0  p-t-10 h-70">
+                            <div class="col-sm-1 p-0"><label>{{local.eng.note}}</label></div>
+                            <div class="col-sm-11" style="word-wrap:break-word;">{{currentEng.Note}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="row ">
+                    <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="panel ">
+                            <div class="panel-content widget-info">
+                                <div class="row">
+                                    <div class="left">
+                                        <i class="fa fa-umbrella bg-green"></i>
+                                    </div>
+                                    <div class="right">
+                                        <p class="number countup" data-from="0" data-to="currentEng.TaskProcessPercent" suffix="%">
+                                        </p>
+                                        <p class="text">进度</p>
+                                    </div>
+                                    <div class="right">
+                                        <p class="number countup c-blue" data-from="0" data-to="123" suffix="天">
+                                        </p>
+                                        <p class="text">进行</p>
+                                    </div>
+                                    <div class="right">
+                                        <p class="number countup c-red" data-from="0" data-to="56" suffix="天">
+                                        </p>
+                                        <p class="text">剩余</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="panel ">
+                            <div class="panel-content widget-info">
+                                <div class="row">
+                                    <div class="left">
+                                        <i class="fa fa-bug bg-blue"></i>
+                                    </div>
+                                    <div class="right">
+                                        <p class="number countup" data-from="0" data-to="100">
+                                        </p>
+                                        <p class="text">完成卷册</p>
+                                    </div>
+                                    <div class="right">
+                                        <p class="number countup c-red" data-from="0" data-to="100">
+
+                                        </p>
+                                        <p class="text">未完卷册</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="panel ">
+                            <div class="panel-content widget-info">
+                                <div class="row">
+                                    <div class="left">
+                                        <i class="fa fa-file bg-blue"></i>
+                                    </div>
+                                    <div class="right">
+                                        <p class="number countup" data-from="0" data-to="100">
+                                        </p>
+                                        <p class="text">上传文件</p>
+                                    </div>
+                                    <div class="right">
+                                        <p class="number countup c-primary" data-from="0" data-to="100" suffix="%">
+                                        </p>
+                                        <p class="text">占总数量的</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="panel" blockui="PanelEngProcess">
+                    <div class="panel-header  bg-primary">
+                        <h3><i class="icon-list"></i> 工程进度</h3>
+                    </div>
+                    <div class="panel-content ">
+                        <div class="row m-0 m-b-20">
+
+                            <div class="process-view m-l-20">
+                                <div class="row ">
+                                    <div class="task bg-primary" style="width:80px;">
+                                        <span class="bold c-dark">电气一次</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-red">
+                                        <span class="bold c-dark">卷册A</span>
+
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">设计</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">校对</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-orange">
+                                        <span class="bold c-dark">审核</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-aero">
+                                        <span class="bold c-dark">批准</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row m-t-20" style="margin-left:100px;">
+                                    <div class="task bg-red">
+                                        <span class="bold c-dark">卷册A</span>
+
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">设计</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">校对</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-orange">
+                                        <span class="bold c-dark">审核</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-aero">
+                                        <span class="bold c-dark">批准</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row m-t-20 " style="margin-left:100px;">
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">卷册A</span>
+
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">设计</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">校对</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-orange">
+                                        <span class="bold c-dark">审核</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-aero">
+                                        <span class="bold c-dark">批准</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row m-t-20">
+                                    <div class="task bg-primary" style="width:80px;">
+                                        <span class="bold c-dark">电气二次</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">卷册A</span>
+
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">设计</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">校对</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-orange">
+                                        <span class="bold c-dark">审核</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-aero">
+                                        <span class="bold c-dark">批准</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row m-t-20" style="margin-left:100px;">
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">卷册A</span>
+
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">设计</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">校对</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-orange">
+                                        <span class="bold c-dark">审核</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-aero">
+                                        <span class="bold c-dark">批准</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row m-t-20 " style="margin-left:100px;">
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">卷册A</span>
+
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">设计</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-primary">
+                                        <span class="bold c-dark">校对</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-orange">
+                                        <span class="bold c-dark">审核</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                    <div class="icon-arrow-right arrow">
+                                    </div>
+                                    <div class="task bg-aero">
+                                        <span class="bold c-dark">批准</span>
+                                        <p class="text m-t-5 c-dark">
+                                            张婉娜
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="panel" blockui="panel1">
+                    <div class="panel-header  bg-info">
+                        <h3><i class="icon-cog"></i> 工程附件</h3>
+                    </div>
+                    <div class="panel-content ">
+                        <attach-preview obj-id="currentEng.ID"
+                                        obj-name="Engineering"></attach-preview>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="panel">
+                    <div class="panel-header  bg-info">
+                        <h3><i class="icon-list"></i> 工程近况</h3>
+                    </div>
+                    <div class="panel-content widget-news">
+                        <a class="message-item media"
+                           ng-repeat="news in [1,2,3,4,5]">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="pull-left">
+                                        <i class="fa fa-newspaper-o pull-left"></i>
+                                    </div>
+                                    <div>
+                                        <small class="pull-right">{{'2015/05/05' | TDate}}</small>
+                                        <h5 class="c-dark">1111111</h5>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="panel" blockui="panel1">
+                    <div class="panel-header  bg-info">
+                        <h3><i class="icon-user"></i> 工程人员</h3>
+                    </div>
+                    <div class="panel-content widget-news ">
+                        <div class="message-item media "
+                             ng-class="{'bg-aero': currentEng.ID == Eng.ID}"
+                             ng-click="EngChanged(Eng)"
+                             ng-repeat="Eng in currentEng.Children | orderBy : 'Phase' | filter:EngFilter track by Eng.ObjectID ">
+
+                            <div class="media">
+                                <div class="media-body">
+                                    <img class="pull-left m-r-10 img-md img-rounded" ng-src="assets/global/images/avatars/user3.jpg" alt="Image">
+                                    <div>
+                                        <h5 class="c-dark">{{Eng.Name}}&nbsp;<span class="badge badge-info">项目经理</span></h5>
+                                        <p class="f-12 c-gray">
+                                            变电一次，设计
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

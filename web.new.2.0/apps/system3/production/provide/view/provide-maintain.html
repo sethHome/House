@@ -1,0 +1,201 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <i class="fa fa-pencil-square-o"></i> &nbsp;提资单
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body">
+
+    <process-control flow-name="F1" task-id="taskID"
+                     flow-data="flowData" form="FormMaintain"
+                     next="save({callBack : callBack,taskInfo : taskInfo})">
+    </process-control>
+
+    <div class="nav-tabs" ng-init="currentIndex = 1">
+        <ul class="nav nav-tabs nav-red">
+            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">提资信息</a></li>
+            <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab"><i class="fa fa-paperclip"></i> 附件</a></li>
+        </ul>
+        <div class="tab-content p-r-0 ">
+            <div class="tab-pane" style="height:{{modalHeight}}px" scroll="tabPanelScl1" auto="true" ng-class="{active : currentIndex == 1}">
+                <form name="FormMaintain" >
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>
+                                    提资工程
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_engineering"></span>
+
+                                <div class="append-icon">
+                                    <input type="text" ng-model="noteInfo.Engineering"
+                                           name="engineering" validator="required" message-id="msg_engineering"
+                                           placeholder="{{local.global.input}}{{local.eng.number}}、{{local.eng.name}}"
+                                           uib-typeahead="item as item.Name for item in loadEngineering($viewValue)"
+                                           typeahead-loading="loadingLocations"
+                                           typeahead-no-results="noResults"
+                                           typeahead-template-url="customTemplate.html"
+                                           class="form-control form-white">
+                                    <i class="fa fa-binoculars"></i>
+                                </div>
+
+                                <div ng-show="noResults">
+                                    <i class="glyphicon glyphicon-remove"></i> 没有找到工程
+                                </div>
+
+                                <script type="text/ng-template" id="customTemplate.html">
+                                    <a>
+                                        <span ng-bind-html="match.model.Name | uibTypeaheadHighlight:query"></span>
+                                    </a>
+                                </script>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-1 p-0 m-t-10">收资人</label>
+                        <div class="col-sm-11 " ng-show="!readOnly">
+                            <tags-input ng-model="receiveUsers"
+                                        class="user-tag"
+                                        template="userTagTemplate"
+                                        add-from-autocomplete-only="true"
+                                        display-property="Name"
+                                        placeholder="选择用户">
+                                <auto-complete source="filterUsers($query)"
+                                               template="userTagItemTemplate"
+                                               min-length="0"
+                                               load-on-focus="true"
+                                               load-on-empty="true"
+                                               max-results-to-show="20">
+                                </auto-complete>
+                            </tags-input>
+
+                            <script type="text/ng-template" id="userTagTemplate">
+                                <div class="tag-template">
+                                    <div>
+                                        <span><i class="fa fa-user"></i> {{$getDisplayText()}}</span>
+                                        <small class="hint-text fs-12">< {{data.Dept.Name}} ></small>
+                                        <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+                                    </div>
+                                </div>
+                            </script>
+                            <script type="text/ng-template" id="userTagItemTemplate">
+                                <div class="tag-template">
+                                    <span class="col-xs-height col-middle">
+                                        <span class="thumbnail-wrapper d32  ">
+                                            <img width="34" height="34" alt=""
+                                                 ng-src="assets/global/images/avatars/{{data.PhotoImg}}"
+                                                 class="col-top user-header">
+                                        </span>
+                                    </span>
+                                    <p class="p-l-10 col-xs-height col-middle col-xs-6">
+                                        <span class="text-master">{{data.Name}}</span>
+                                        <span class="block text-master hint-text fs-12">{{data.Dept.Name}}</span>
+                                    </p>
+                                </div>
+                            </script>
+
+                            <input name="provideInfo.ReceiveUserIDs" validator="required" class="hide"
+                                   ng-model="provideInfo.ReceiveUserIDs" />
+                        </div>
+
+                        <div class="col-sm-11 p-t-10 " ng-show="readOnly">
+                            {{provideInfo.ReceiveUserIDs | users}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 p-0 m-t-10">{{local.provide.docName}}</label>
+                        <div class="col-sm-7 ">
+                            <input class="form-control form-white" name="docName" validator="required,maxlength=100"
+                                   ng-readonly="readOnly"
+                                   placeholder="{{local.global.input}}{{local.provide.docName}}"
+                                   ng-model="provideInfo.DocName" />
+                        </div>
+                        <label class="col-sm-1 p-0 m-t-10">{{local.provide.limitDate}}</label>
+                        <div class="col-sm-3">
+                            <input class="form-control form-white" name="limitDate"
+                                   ng-readonly="readOnly"
+                                   placeholder="{{local.global.input}}{{local.provide.limitDate}}"
+                                   ng-model="provideInfo.LimitDate"
+                                   date-picker />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <span class="col-sm-1 p-0"><label class="m-t-10">{{local.provide.docContent}}</label> </span>
+                        <div class="col-sm-11 ">
+                            <textarea class="form-control form-white m-t-5"
+                                      ng-readonly="readOnly"
+                                      name="provide"
+                                      validator="maxlength=500"
+                                      placeholder="{{local.global.input}}{{local.provide.docContent}}"
+                                      ng-model="provideInfo.DocContent" rows="8"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="!readOnly">
+                        <span class="col-sm-1 p-0"><label class="m-t-10">卷册文件</label> </span>
+                        <div class="col-sm-11 ">
+                            <div class="row m-0">
+                                <div class="col-sm-6 col-md-6 m-0 p-0">
+                                    <ul class="list-group">
+                                        <li class="list-group-item"
+                                            ng-repeat="vol in volumeFiles track by vol.Volume.ID"
+                                            ng-class="{'active': currentVolume == vol}"
+                                            ng-click="volChanged(vol)"
+                                            ng-repeat-end="maintainScroll.init()">
+                                            <div class="row">
+                                                <div class="col-xs-8">
+                                                    <input type="checkbox" icheck ng-model="vol.selected" ng-change="selectAll(vol)" />
+                                                    {{vol.Volume.Number}} &nbsp; | &nbsp; {{vol.Volume.Name}}
+                                                </div>
+                                                <div class="col-xs-4 color-gray hint-text fs-12">
+                                                    <span class="pull-right">文件：{{vol.Files.length}}, 选中 : {{ getSelectedFileCount(vol.Files) }}</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6 col-md-6 m-0 p-r-0">
+                                    <ul class="list-group ">
+                                        <li class="list-group-item"
+                                            ng-repeat="file in currentVolume.Files track by file.ID "
+                                            ng-repeat-end="maintainScroll.update()">
+                                            <div>
+                                                <input type="checkbox" icheck ng-model="file.selected" />
+                                                {{file.Name}}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 2}">
+                <attach-upload name="attachCtl"
+                               obj-id="provideInfo.ID"
+                               obj-name="EngineeringSpecialtyProvide">
+                </attach-upload>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer bg-aero">
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="save()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-save"></i>
+        {{local.global.save}}
+    </button>
+    <button type="button"
+            validation-reset="FormMaintain"
+            class="btn btn-danger btn-square ">
+        <i class="fa fa-refresh"></i>
+        {{local.global.reset}}
+    </button>
+</div>
+

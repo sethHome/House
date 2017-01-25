@@ -1,0 +1,48 @@
+﻿<div class="row" ui-view>
+    <div class="col-md-4">
+        <div class="panel">
+            <div class="panel-content widget-news" blockui="listPanel" fullheight="panelcontent" scroll="listScroll">
+                
+                <div class="message-item media"
+                     ng-class="{'bg-aero' : currentNews.ID == news.ID}"
+                     ng-repeat="news in news.Source"
+                     
+                     ng-click="setCurrentNews(news)"
+                     ng-repeat-end="listScroll.init()">
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="pull-left">
+                                <i class="fa fa-newspaper-o pull-left"></i>
+                            </div>
+                            <div>
+                                <small class="pull-right">{{news.CreateDate | TDate}}</small>
+                                <h5 class="c-dark">{{news.Title}}&nbsp;<span class="badge badge-danger">{{news.Type | enumMap:"NewsType"}}</span></h5>
+                                <!--<p class="f-12 c-gray" ng-bind-html="news.Content"></p>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8" >
+        <div class="panel">
+            <div class="panel-content" blockui="viewPanel" 
+                 fullheight="panelcontent" scroll="viewScroll">
+                <div >
+                    <span class="caption-subject bold uppercase">{{currentNews.Title}}</span>
+                    <div class="caption-helper m-t-10">发布者：{{currentNews.CreateUser | enumMap:"user"}} &nbsp; 发布时间：{{currentNews.CreateDate | TDate}}</div>
+                    <hr />
+                    
+                    <div style="overflow-wrap:break-word; overflow:hidden;" ng-bind-html="$sce.trustAsHtml(currentNews.Content)">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+</div>

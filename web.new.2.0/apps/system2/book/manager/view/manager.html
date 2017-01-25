@@ -1,0 +1,106 @@
+﻿<div class="panel ">
+
+    <div class="panel-content " blockui="gridPanel">
+
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="icheck-inline pull-left m-t-5">
+                    <span class="m-r-10" ng-repeat="item in getBaseData('BookStatus')">
+                        <input icheck type="radio" name="status{{item.Value}}" ng-model="txtfilter.status"> {{item.Text}}
+                    </span>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="prepend-icon pull-right m-b-5">
+                    <input type="text"
+                           ng-model="txtfilter"
+                           enter-press="setFilter(txtfilter)"
+                           class="form-control form-white filterbox " placeholder="图书名称、编号、条码">
+                    <i class="fa fa-search"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="pretty-split-pane-frame" style="height:{{gridHeight - 20}}px">
+            <div data-split-pane>
+                <div data-split-pane-component>
+
+                    <div class="pretty-split-pane-component-inner p-20">
+                        <ul id="bk-list" class="bk-list clearfix">
+                            <li ng-repeat="book in books">
+                                <book class="bk-book book-{{book.Style}} bk-bookdefault">
+                                    <div class="bk-front">
+                                        <div class="bk-cover">
+                                            <h2>
+                                                <span>{{book.Author}}</span>
+                                                <span>{{book.Name}}</span>
+                                            </h2>
+                                        </div>
+                                        <div class="bk-cover-back"></div>
+                                    </div>
+                                    <div class="bk-page">
+                                        <div class="bk-content bk-content-current">
+                                            <p>{{book.Note}}</p>
+                                        </div>
+                                        <div class="bk-content">
+                                            <p style="overflow-wrap:break-word;">
+                                                <i ng-repeat="item in book.Books"
+                                                   class="fa fa-2x "
+                                                   ng-class="{'fa-bookmark' : item == 1,'fa-bookmark-o' : item != 1}"></i>
+                                            </p>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="bk-back">
+                                        <p>
+                                            No.{{book.Number}}
+                                        </p>
+                                        <div class="bottom">
+                                            <span>￥{{book.Price}}</span> <br />
+                                            <barcode code="book.BarCode"></barcode>
+                                        </div>
+
+                                    </div>
+                                    <div class="bk-right"></div>
+                                    <div class="bk-left">
+                                        <span class="c-white">{{book.Year}}</span>
+                                        <h2>
+                                            <span>{{book.Press | enumMap:'Press'}}</span>
+                                        </h2>
+                                    </div>
+                                    <div class="bk-top"></div>
+                                    <div class="bk-bottom"></div>
+                                </book>
+                                <div class="bk-info">
+
+                                    <button type="button" class="bk-bookback btn btn-sm btn-square btn-primary m-l-0 m-r-0">反面</button>
+                                    <button type="button" class="bk-bookview btn btn-sm btn-square btn-primary m-l-0 m-r-0">打开</button>
+                                    <button type="button" class="btn btn-sm btn-square btn-primary m-l-0 m-r-0">借阅</button>
+                                    <button type="button" class="btn btn-sm btn-square btn-primary m-l-0 m-r-0">下载</button>
+
+                                </div>
+                            </li>
+                          
+                        </ul>
+
+                    </div>
+
+                </div>
+                <div data-split-pane-divider data-width="5px"></div>
+                <div data-split-pane-component data-width="25%">
+                    <div class="pretty-split-pane-component-inner">
+
+                        <tree tree-data="scope"
+                              tree-model="bookCategorys"
+                              tree-api="treeApi"
+                              tree-plugins="wholerow,types"
+                              changed="bookCategoryChanges">
+                        </tree>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,260 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <i class="fa fa-plane"></i> &nbsp; 工程策划
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body">
+
+    <div class="nav-tabs" ng-init="currentIndex = 1">
+        <ul class="nav nav-tabs nav-red">
+            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">项目要求</a></li>
+            <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab">工程策划</a></li>
+            <li ng-click="currentIndex = 3" ng-class="{active : currentIndex == 3}"><a data-toggle="tab">专业策划</a></li>
+            <li ng-click="currentIndex = 4" ng-class="{active : currentIndex == 4}"><a data-toggle="tab">提资计划</a></li>
+
+        </ul>
+        <div class="tab-content p-r-0 ">
+            <div class="tab-pane" style="height:{{modalHeight}}px" scroll="tabPanelScl1" auto="true" ng-class="{active : currentIndex == 1}">
+                <form class="m-r-10" name="FormMaintain">
+
+                    <div class="form-group">
+                        <label>设计依据</label>
+                        <span class="pull-right vad-msg" id="msg_AccordingTo"></span>
+                        <textarea class="form-control form-white " type="text"
+                                  name="AccordingTo" validator="maxlength=1000" message-id="msg_AccordingTo"
+                                  placeholder="{{local.global.input}}设计依据"
+                                  ng-model="planInfo.AccordingTo" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>设计范围</label>
+                        <span class="pull-right vad-msg" id="msg_Range"></span>
+                        <textarea class="form-control form-white " type="text"
+                                  name="Range" validator="maxlength=1000" message-id="msg_Range"
+                                  placeholder="{{local.global.input}}设计范围"
+                                  ng-model="planInfo.Range" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>设计成品</label>
+                        <span class="pull-right vad-msg" id="msg_Product"></span>
+                        <textarea class="form-control form-white " type="text"
+                                  name="Product" validator="maxlength=1000" message-id="msg_Product"
+                                  placeholder="{{local.global.input}}设计成品"
+                                  ng-model="planInfo.Product" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>其他说明</label>
+                        <span class="pull-right vad-msg" id="msg_Note"></span>
+                        <textarea class="form-control form-white " type="text"
+                                  name="Note" validator="maxlength=1000" message-id="msg_Note"
+                                  placeholder="{{local.global.input}}其他说明"
+                                  ng-model="planInfo.Note" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>设计输入</label>
+                        <span class="pull-right vad-msg" id="msg_Input"></span>
+                        <textarea class="form-control form-white " type="text"
+                                  name="Input" validator="maxlength=1000" message-id="msg_Input"
+                                  placeholder="{{local.global.input}}设计输入"
+                                  ng-model="planInfo.Input" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>主要设计原则</label>
+                        <span class="pull-right vad-msg" id="msg_Principle"></span>
+                        <textarea class="form-control form-white " type="text"
+                                  name="Principle" validator="maxlength=1000" message-id="msg_Principle"
+                                  placeholder="{{local.global.input}}主要设计原则"
+                                  ng-model="planInfo.Principle" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>质量目标</label>
+                        <span class="pull-right vad-msg" id="msg_Quality"></span>
+                        <textarea class="form-control form-white " type="text"
+                                  name="Quality" validator="maxlength=1000" message-id="msg_Quality"
+                                  placeholder="{{local.global.input}}主要设计原则"
+                                  ng-model="planInfo.Quality" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>质量保证措施</label>
+                        <span class="pull-right vad-msg" id="msg_Measures"></span>
+                        <textarea class="form-control form-white " type="text"
+                                  name="Measures" validator="maxlength=1000" message-id="msg_Measures"
+                                  placeholder="{{local.global.input}}质量保证措施"
+                                  ng-model="planInfo.Measures" rows="5"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 2}">
+
+                <div class="row">
+                    <label class="col-sm-2 p-0 p-l-20">{{local.specil.name}}</label>
+                    <label class="col-sm-2 p-0 p-l-20">生产流程</label>
+                    <label class="col-sm-2 p-0 p-l-20">{{local.specil.manager}}</label>
+                    <label class="col-sm-2 p-0 p-l-20">{{local.specil.startDate}}</label>
+                    <label class="col-sm-2 p-0 p-l-20">{{local.specil.endDate}}</label>
+                    <label class="col-sm-2 p-0 p-l-20">{{local.specil.note}}</label>
+                </div>
+
+                <div class="row m-t-5" ng-repeat="item in SpecialtysCopy">
+
+                    <div class="col-md-2 ">
+                        <div class="icheck-inline ">
+                            <input type="checkbox" ng-model="item.isSelected" icheck> {{item.Text}}
+                        </div>
+                    </div>
+                    <div class="col-md-2 ">
+                        <ui-select ng-model="item.ProcessModel" theme="select2" search-enabled="false" class="form-control form-white">
+                            <ui-select-match placeholder="生产流程">{{$select.selected.Value}}</ui-select-match>
+                            <ui-select-choices repeat="item.Key as item in ProcessModel_item">
+                                <div ng-bind-html="item.Value"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2 ">
+                        <ui-select ng-model="item.Manager" theme="select2" search-enabled="false" class="form-control form-white">
+                            <ui-select-match placeholder="{{local.specil.manager}}">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="item.ID as item in user_item | specmanager:{SpecialtyID:item.Value,ProcessID:item.ProcessModel}">
+                                <div ng-bind-html="item.Name"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2 ">
+                        <div class="append-icon">
+                            <input type="text" ng-model="item.StartDate"
+                                   placeholder="{{local.specil.startDate}}"
+                                   class="form-control form-white"
+                                   date-picker />
+                            <i class="fa fa-calendar"></i>
+                        </div>
+
+                    </div>
+                    <div class="col-md-2 ">
+
+                        <div class="append-icon">
+                            <input type="text" ng-model="item.EndDate"
+                                   placeholder="{{local.specil.endDate}}"
+                                   class="form-control form-white"
+                                   date-picker />
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-2 ">
+                        <input type="text" ng-model="item.Note"
+                               placeholder="{{local.specil.note}}"
+                               class="form-control form-white" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 3}">
+
+                <uib-accordion close-others="true">
+
+                    <div ng-repeat="s in Specialtys"
+                         uib-accordion-group class="panel-default"
+                         is-open="s.isOpen">
+                        <uib-accordion-heading>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <label>{{s.SpecialtyID | enumMap:"Specialty"}} </label>（<span ng-show="s.newVolumeCount > 0">新增： {{s.newVolumeCount}} / </span>{{s.Volumes.length + s.newVolumeCount}}）
+
+                                    
+                                </div>
+                                <div class="col-sm-3">
+                                    负责人： <i class="fa fa-user"></i> {{s.Manager | enumMap : "user"}}
+                                </div>
+                                <div class="col-sm-3">
+                                    时间要求： <i class="fa fa-calendar"></i> {{s.StartDate | TDate}} - <i class="fa fa-calendar"></i> {{s.EndDate | TDate}}
+                                </div>
+                                <div class="col-sm-2">
+                                    <span ng-show="s.beforeSaved">
+                                        <span class="faa-flash animated" >保存中</span>
+                                    </span>
+
+                                   <span ng-show="s.saved" class="label label-success">保存成功</span>
+                                </div>
+                                <div class="col-sm-2">
+                                    <i class="pull-right fa" ng-class="{'fa-caret-down': s.isOpen, 'fa-caret-right': !s.isOpen}"></i>
+                                </div>
+                            </div>
+                           
+                        </uib-accordion-heading>
+
+                        <button type="button" class="btn btn-default btn-square "
+                                ng-click="addVolume(s)">
+                            <i class="fa fa-plus"></i> 添加
+                        </button>
+
+                        <div class="prepend-icon pull-right pull-right">
+                            <input type="text"
+                                   ng-model="filter.txtfilter"
+                                   class="form-control form-white" placeholder="编号、名称">
+                            <i class="fa fa-search"></i>
+                        </div>
+                       
+                        <div class="widget-news ">
+                            <a class="message-item media m-r-10 m-b-10 border a-box pull-left" style="width:32% "
+                               ng-class="{'bg-aero' : !vol.CanDelete}"
+                               ng-repeat="vol in s.Volumes | filter:filter.txtfilter">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <div class="pull-left p-r-10">
+                                            <i class="fa fa-file"></i>
+                                        </div>
+                                        <div>
+
+                                            <button ng-if="vol.CanDelete" class="close pull-right c-red " ng-click="deleteVolume(s,vol)">×</button>
+
+                                            <span class="c-dark " style="cursor:pointer;" ng-click="updateVolume(s,vol)">
+                                                {{vol.Number}}-{{vol.Name}}
+                                            </span>
+                                            <p class="f-12 c-gray">
+                                                设计：{{vol.Designer | enumMap:"user" }} &nbsp;| &nbsp;
+                                                校对：{{vol.Checker | enumMap:"user"}} &nbsp; | &nbsp;
+                                                开始：{{vol.StartDate | TDate}} 
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a class="message-item media m-r-10 m-b-10 border a-box pull-left" style="width: 32%;" 
+                               ng-repeat="vol in s.newVolumes | filter:filter.txtfilter">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <div class="pull-left p-r-10">
+                                            <i class="fa fa-file-o"></i>
+                                        </div>
+                                        <div>
+                                            <i class="fa fa-close pull-right c-red"
+                                               style="cursor:pointer;" ng-click="deleteVolume(s,vol)"></i>
+
+                                            <span class="c-dark " style="cursor:pointer;" ng-click="updateVolume(s,vol)">
+                                                {{vol.Number}}-{{vol.Name}}
+                                            </span>
+                                            <p class="f-12 c-gray">
+                                                设计：{{vol.Designer | enumMap:"user" }} &nbsp;| &nbsp;
+                                                校对：{{vol.Checker | enumMap:"user"}} &nbsp; | &nbsp;
+                                                开始：{{vol.StartDate | TDate}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </uib-accordion>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 4}">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer bg-aero">
+    <button type="button"
+            ng-click="save()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-save"></i>
+        {{local.global.save}}
+    </button>
+   
+</div>

@@ -1,0 +1,306 @@
+﻿<div class="panel ">
+
+    <div class="panel-content " blockui="gridPanel" >
+
+        <div class="nav-tabs no-border" >
+            <ul class="nav nav-tabs nav-red">
+                <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">生产任务</a></li>
+                <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab">表单任务</a></li>
+                <li ng-click="currentIndex = 3" ng-class="{active : currentIndex == 3}"><a data-toggle="tab">提资任务</a></li>
+                <li ng-click="currentIndex = 4" ng-class="{active : currentIndex == 4}"><a data-toggle="tab">其他任务</a></li>
+            </ul>
+            <div class="tab-content p-r-0 ">
+                <div class="tab-pane"  ng-class="{active : currentIndex == 1}">
+                    
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <div class="icheck-inline pull-left m-t-5">
+                                <span class="m-r-10">
+                                    <input icheck type="checkbox" name="proTaskStatus1"
+                                           value="1" ng-model="proTaskStatus.process"> 处理中（{{proTaskStatusCount[1]}}）
+                                </span>
+                                <span class="m-r-10">
+                                    <input icheck type="checkbox" name="proTaskStatus2"
+                                           value="2" ng-model="proTaskStatus.finish"> 已完成（{{proTaskStatusCount[2]}}）
+                                </span>
+                                <span class="m-r-10"> | </span>
+                                <span class="m-r-10"
+                                      ng-repeat="item in proTaskNames">
+                                    <input icheck type="checkbox" name="taskType"
+                                           value="1" ng-model="item.selected"> {{item.name}}（{{item.count}}）
+                                </span>
+                                <span class="m-r-10"> | </span>
+                                <label>共 {{productionTasks.TotalCount}} 个任务</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="prepend-icon pull-right m-b-5 ">
+                                <input type="text"
+                                       ng-model="proEngName"
+                                       class="form-control form-white" placeholder="工程名称">
+                                <i class="fa fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pretty-split-pane-frame" style="height:{{gridHeight - 80}}px">
+                        <div data-split-pane>
+                            <div data-split-pane-component>
+
+                                <div class="pretty-split-pane-component-inner p-10" >
+                                    
+
+                                    <div class="form-paper"
+                                         ng-click="$state.go('production.work',{id:task.ID})"
+                                         ng-repeat="task in productionTasks.Source | statusfilter:proTaskStatus | namefilter:proTaskNames | protaskFilter:currentProEng">
+                                        <div class="form-paper-content">
+                                            <h4 class="form-title-{{task.Status}}">{{task.Name}}（{{task.Time}}次） </h4>
+                                            <hr class="m-t-0 m-b-5" />
+                                            <p class="f-12">工程：{{task.Engineering.Name}}</p>
+                                            <p class="f-12 c-gray">
+                                                专业：{{task.Volume.SpecialtyID  | enumMap:"Specialty" }}
+                                                <br />
+                                                卷册：{{task.Volume.Name}}
+                                                <br />
+                                                日期：{{task.ReceiveDate | TDate}}
+                                            </p>
+                                            <span class="f-12 c-gray page-number">
+                                                -{{$index + 1}}-
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div data-split-pane-divider data-width="5px"></div>
+                            <div data-split-pane-component data-width="25%">
+                                <div class="pretty-split-pane-component-inner" >
+
+                                    <tree tree-data="scope"
+                                          tree-model="proEngNodes"
+                                          tree-api="treeApi"
+                                          tree-plugins="wholerow,search,types"
+                                          changed="proEngChanged"
+                                          search="proEngName">
+                                    </tree>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="tab-pane"  ng-class="{active : currentIndex == 2}">
+
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <div class="icheck-inline pull-left m-t-5">
+                                <span class="m-r-10">
+                                    <input icheck type="checkbox" name="formTaskStatus1"
+                                           value="1" ng-model="formTaskStatus.process"> 处理中（{{formTaskStatusCount[1]}}）
+                                </span>
+                                <span class="m-r-10">
+                                    <input icheck type="checkbox" name="proTaskStatus2"
+                                           value="2" ng-model="formTaskStatus.finish"> 已完成（{{formTaskStatusCount[2]}}）
+                                </span>
+                                <span class="m-r-10"> | </span>
+                                <span class="m-r-10"
+                                      ng-repeat="item in formNames">
+                                    <input icheck type="checkbox" name="formTaskType"
+                                           value="1" ng-model="item.selected"> {{item.name | enumMap:'Object'}}（{{item.count}}）
+                                </span>
+                                <span class="m-r-10"> | </span>
+                                <label>共 {{formTasks.TotalCount}} 个任务</label>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="prepend-icon pull-right m-b-5 ">
+                                <input type="text"
+                                       ng-model="formEngName"
+                                       class="form-control form-white" placeholder="工程名称">
+                                <i class="fa fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pretty-split-pane-frame" style="height:{{gridHeight - 80}}px">
+                        <div data-split-pane>
+                            <div data-split-pane-component>
+
+                                <div class="pretty-split-pane-component-inner p-10">
+
+
+                                    <div class="form-paper"
+                                         ng-repeat="task in formTasks.Source | statusfilter:formTaskStatus | formNameFilter:formNames | engnamefilter:formEngName">
+                                        <div class="form-paper-content">
+                                            <h4 class="form-title-{{task.Status}}">{{task.ObjectKey | enumMap:'Object'}} </h4>
+                                            <hr class="m-t-0 m-b-5" />
+
+                                            <p class="f-12 c-gray">
+                                                日期：{{task.ReceiveDate | TDate}}
+                                                <br />
+                                                任务：{{task.Name}}（{{task.Time}}次）
+                                            </p>
+
+                                            <span class="f-12 c-gray page-number">
+                                                -{{$index + 1}}-
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div data-split-pane-divider data-width="5px"></div>
+                            <div data-split-pane-component data-width="25%">
+                                <div class="pretty-split-pane-component-inner widget-news">
+
+                                    <a class="message-item media"
+                                      ng-repeat="item in formNames">
+                                        <div class="media">
+                                            <div class="media-body p-10">
+                                                <div class="row">
+                                                    <div class="col-sm-10 f-14"><i class="fa fa-file"></i> {{item.name | enumMap:'Object'}}</div>
+                                                    <div class="col-sm-2"><span class="badge badge-danger pull-right">{{item.count}}</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a class="message-item media">
+                                        <div class="media">
+                                            <div class="media-body p-10">
+                                                <div class="row">
+                                                    <div class="col-sm-10 f-14"><i class="fa fa-file"></i> 联系单</div>
+                                                    <div class="col-sm-2"><span class="badge badge-danger pull-right">15</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="message-item media">
+                                        <div class="media">
+                                            <div class="media-body p-10">
+                                                <div class="row">
+                                                    <div class="col-sm-10 f-14"><i class="fa fa-file"></i> 联系单</div>
+                                                    <div class="col-sm-2"><span class="badge badge-danger pull-right">15</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="message-item media">
+                                        <div class="media">
+                                            <div class="media-body p-10">
+                                                <div class="row">
+                                                    <div class="col-sm-10 f-14"><i class="fa fa-file"></i> 联系单</div>
+                                                    <div class="col-sm-2"><span class="badge badge-danger pull-right">15</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane" ng-class="{active : currentIndex == 3}">
+
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <div class="icheck-inline pull-left m-t-5">
+                                <span class="m-r-10">
+                                    <input icheck type="checkbox" name="provideTaskStatus1"
+                                           value="1" ng-model="provideTaskStatus.process"> 处理中（{{provideTaskStatusCount[1]}}）
+                                </span>
+                                <span class="m-r-10">
+                                    <input icheck type="checkbox" name="provideTaskStatus2"
+                                           value="2" ng-model="provideTaskStatus.finish"> 已完成（{{provideTaskStatusCount[2]}}）
+                                </span>
+                                
+                                <span class="m-r-10"> | </span>
+                                <label>共 {{provideTasks.TotalCount}} 个任务</label>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="prepend-icon pull-right m-b-5 ">
+                                <input type="text"
+                                       ng-model="provideEngName"
+                                       class="form-control form-white" placeholder="工程名称">
+                                <i class="fa fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pretty-split-pane-frame" style="height:{{gridHeight - 80}}px">
+                        <div data-split-pane>
+                            <div data-split-pane-component>
+
+                                <div class="pretty-split-pane-component-inner p-10">
+
+
+                                    <div class="form-paper"
+                                         ng-repeat="task in provideTasks.Source | statusfilter:provideTaskStatus | engnamefilter:provideEngName">
+                                        <div class="form-paper-content">
+                                            <h4 class="form-title-{{task.Status}}">{{task.SpecialtyProvide.DocName}}</h4>
+                                            <hr class="m-t-0 m-b-5" />
+                                            <p class="f-12">工程：{{task.Engineering.Name}}</p>
+                                            <p class="f-12 c-gray">
+                                                发送：{{task.SpecialtyProvide.SendSpecialtyID | enumMap:"Specialty"}}<br />
+                                                接收：{{task.SpecialtyProvide.ReceiveSpecialtyID | enumMap:"Specialty"}} <br />
+                                                任务：{{task.Name}}（{{task.Time}}次）
+                                            </p>
+                                            <span class="f-12 c-gray page-number">
+                                                -{{$index + 1}}-
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div data-split-pane-divider data-width="5px"></div>
+                            <div data-split-pane-component data-width="25%">
+                                <div class="pretty-split-pane-component-inner">
+
+                                    456
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane" style="height:{{gridHeight - 50}}px" scroll="tabPanelScl4" auto="true" ng-class="{active : currentIndex == 4}">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="icheck-inline pull-left m-t-5">
+                                <span class="m-r-10">
+                                    <input icheck type="checkbox" name="taskStatus"
+                                           value="1" ng-model="taskStatus1"> 未完成
+                                </span>
+                                <span class="m-r-10">
+                                    <input icheck type="checkbox" name="taskStatus"
+                                           value="2" ng-model="taskStatus2"> 已完成
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="prepend-icon pull-right m-t-5 ">
+                                <input type="text"
+                                       ng-model="filter.txtfilter"
+                                       enter-press="loadSource()"
+                                       ng-click="loadSource()"
+                                       class="form-control form-white filterbox " placeholder="项目名称">
+                                <i class="fa fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

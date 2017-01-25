@@ -1,0 +1,297 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <i class="fa fa-pencil-square-o"></i> &nbsp;{{local.business.bid}}{{local.global.info}}
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body">
+
+    <div class="nav-tabs" ng-init="currentIndex = 1">
+        <ul class="nav nav-tabs nav-red">
+            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">{{local.business.bid}}{{local.global.info}}</a></li>
+            <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab"><i class="fa fa-paperclip"></i> 附件</a></li>
+        </ul>
+        <div class="tab-content p-r-0 ">
+            <div class="tab-pane" style="height:{{modalHeight}}px" scroll="tabPanelScl1" auto="true" ng-class="{active : currentIndex == 1}">
+                <form class="m-r-10" name="FormMaintain">
+
+                    <div class="row">
+                        <div class="col-sm-6 ">
+                           <div class="form-group">
+                               <label>{{local.bid.name}}</label>
+
+                               <span class="pull-right vad-msg" id="msg_name"></span>
+                               <input class="form-control " type="text"
+                                      name="Number" validator="required,maxlength=200" message-id="msg_name"
+                                      placeholder="{{local.global.input}}{{local.bid.name}}"
+                                      ng-model="bidInfo.Name">
+                           </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.bid.manager}}</label>
+                                <span class="pull-right vad-msg" id="msg_manager"></span>
+
+                                <ui-select ng-model="bidInfo.Manager" theme="select2" search-enabled="false" class="form-control ">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.bid.manager}}">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="item.ID as item in user_item">
+                                        <div ng-bind-html="item.Name"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="bidInfo.Manager" message-id="msg_manager"
+                                       name="Manager" validator="required">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 ">
+                            <div class="form-group">
+                                <label>{{local.cust.name}}</label>
+                                <span class="pull-right vad-msg" id="msg_cust_name"></span>
+
+                                <customer model="customers" type="1"></customer>
+
+                                <div class="append-icon">
+                                    <input type="text" ng-model="bidInfo.Customer"
+                                           name="Customer" validator="required" message-id="msg_customer"
+                                           placeholder="{{local.global.choose}}{{local.cust.name}}"
+                                           uib-typeahead="item as item.Name for item in customers.Source | filter:$viewValue | limitTo:8"
+                                           class="form-control ">
+                                    <i class="fa fa-binoculars"></i>
+                                </div>
+
+                                <input class="hide" ng-model="bidInfo.Customer.ID" message-id="msg_cust_name"
+                                       name="CustomerID" validator="required">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.business.person}}</label>
+                                
+                                <ui-select ng-model="bidInfo.PersonID" theme="select2" search-enabled="false" class="form-control ">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.business.person}}">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="item.ID as item in bidInfo.Customer.Persons ">
+                                        <div><i class="fa fa-male"></i> {{item.Name}} <span class="pull-right"><i class="fa fa-phone"></i> {{item.Phone}}</span> </div>
+                                    </ui-select-choices>
+                                </ui-select>
+                              
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 ">
+                            <div class="form-group">
+                                <label>{{local.bid.bidFee}}</label>
+                                <span class="pull-right vad-msg" id="msg_bidFee"></span>
+                                <div class="append-icon">
+                                    <input type="text" ng-model="bidInfo.BidFee"
+                                           name="BidFee" validator="required,money"  message-id="msg_bidFee"
+                                           placeholder="{{local.global.input}}{{local.bid.bidFee}}"
+                                           class="form-control  money-input" />
+                                    <i>{{local.global.unit}}</i>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.bid.bidStatus}}</label>
+                                <span class="pull-right vad-msg" id="msg_bidStatus"></span>
+                                <ui-select ng-model="bidInfo.BidStatus" theme="select2" search-enabled="false" class="form-control ">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.bid.bidStatus}}">{{$select.selected.Text}}</ui-select-match>
+                                    <ui-select-choices repeat="item.Value as item in getBaseData('BidStatus')">
+                                        <div ng-bind-html="item.Text"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="bidInfo.BidStatus" message-id="msg_bidStatus"
+                                       name="BidStatus" validator="required">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.bid.serviceFee}}</label>
+                                <span class="pull-right vad-msg" id="msg_serviceFee"></span>
+                                <div class="append-icon">
+                                    <input type="text" ng-model="bidInfo.ServiceFee"
+                                           name="ServiceFee" validator="required,money" message-id="msg_serviceFee"
+                                           placeholder="{{local.global.input}}{{local.bid.serviceFee}}"
+                                           class="form-control  money-input" />
+                                    <i>{{local.global.unit}}</i>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.bid.servicePercent}}</label>
+                                <span class="pull-right vad-msg" id="msg_servicePercent"></span>
+                                <input type="text" ng-model="bidInfo.ServicePercent"
+                                       name="ServicePercent" validator="required,money" message-id="msg_servicePercent"
+                                       placeholder="{{local.global.input}}{{local.bid.servicePercent}}"
+                                       class="form-control  money-input" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.bid.deposit}}</label>
+                                <span class="pull-right vad-msg" id="msg_deposit"></span>
+                                <div class="append-icon">
+                                    <input type="text" ng-model="bidInfo.DepositFee"
+                                           name="DepositFee" validator="required,money" message-id="msg_deposit"
+                                           placeholder="{{local.global.input}}{{local.bid.deposit}}"
+                                           class="form-control  money-input" />
+                                    <i>{{local.global.unit}}</i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>应退</label>
+                               
+                                <div class="append-icon">
+                                    <input type="text" ng-model="bidInfo.ReturnFee" ng-readonly="true"
+                                           name="ReturnFee" placeholder="应退"
+                                           class="form-control  money-input" />
+                                    <i>{{local.global.unit}}</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.bid.agency}}</label>
+                                <span class="pull-right vad-msg" id="msg_agency"></span>
+                                <input class="form-control  t-right" type="text"
+                                       name="Agency" validator="required,maxlength=50" message-id="msg_agency"
+                                       placeholder="{{local.global.input}}{{local.bid.agency}}"
+                                       ng-model="bidInfo.Agency">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.bid.depositStatus}}</label>
+                                <span class="pull-right vad-msg" id="msg_depositStatus"></span>
+                                <ui-select ng-model="bidInfo.DepositFeeStatus" theme="select2" search-enabled="false" class="form-control ">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.bid.depositStatus}}">{{$select.selected.Text}}</ui-select-match>
+                                    <ui-select-choices repeat="item.Value as item in getBaseData('DepositFeeStatus')">
+                                        <div ng-bind-html="item.Text"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="bidInfo.DepositFeeStatus" message-id="msg_depositStatus"
+                                       name="DepositFeeStatus" validator="required">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 ">
+                            <div class="form-group">
+                                <label>{{local.bid.limitFee}}</label>
+                                <span class="pull-right vad-msg" id="msg_limitFee"></span>
+                                <div class="append-icon">
+                                    <input type="text" ng-model="bidInfo.LimitFee"
+                                           name="LimitFee" validator="required,money" message-id="msg_limitFee"
+                                           placeholder="{{local.global.input}}{{local.bid.limitFee}}"
+                                           class="form-control  money-input" />
+                                    <i>{{local.global.unit}}</i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.bid.isTentative}}</label>
+                                
+                                <div class="icheck-inline ">
+                                    <input type="checkbox" ng-model="bidInfo.IsTentative" icheck>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 ">
+                            <div class="form-group">
+                                <label>{{local.bid.bidDate}}</label>
+                                <span class="pull-right vad-msg" id="msg_bidDate"></span>
+
+                                <div class="append-icon">
+                                    <input type="text" ng-model="bidInfo.BidDate"
+                                           name="BidDate" validator="required" message-id="msg_bidDate"
+                                           placeholder="{{local.global.choose}}{{local.bid.bidDate}}"
+                                           class="form-control  "
+                                           date-picker />
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.bid.successfulBidDate}}</label>
+
+                                <div class="append-icon">
+                                    <input type="text" ng-model="bidInfo.SuccessfulBidDate"
+                                           name="SuccessfulBidDate" 
+                                           placeholder="{{local.global.choose}}{{local.bid.successfulBidDate}}"
+                                           class="form-control "
+                                           date-picker />
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>{{local.bid.note}}</label>
+                                <span class="pull-right vad-msg" id="msg_note"></span>
+                                <textarea class="form-control "
+                                          name="Note"
+                                          validator="maxlength=1000" message-id="msg_note"
+                                          placeholder="{{local.global.input}}{{local.bid.note}}"
+                                          ng-model="bidInfo.Note" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </form>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 2}">
+                <div>
+                    <attach-upload name="attachCtl"
+                                   obj-id="bidInfo.ID"
+                                   obj-name="Bid">
+                    </attach-upload>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer bg-aero">
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="save()"
+            class="btn btn-primary btn-square">
+        <i class="fa fa-save"></i>
+        {{local.global.save}}
+    </button>
+    <button type="button"
+            ng-click="reset()"
+            validation-reset="FormMaintain"
+            class="btn btn-danger btn-square ">
+        <i class="fa fa-refresh"></i>
+        {{local.global.reset}}
+    </button>
+</div>
+
+
+

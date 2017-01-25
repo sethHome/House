@@ -1,0 +1,28 @@
+﻿<ul class="nav nav-sidebar">
+
+    <li ng-repeat="menu in SubMenus['System2_file']"
+        ng-repeat-end="initSilder()"
+        ng-class="{ active  :$state.includes(menu.Href) , 'nav-parent' : menu.SubMenus }">
+
+        <a ui-sref="{{ menu.Href ?  menu.Href : '#'}}">
+
+            <i class="{{menu.Icon ? menu.Icon : 'fa fa-bars'}}"></i>
+
+            <span>{{menu.Text}}</span>
+
+            <span class="fa arrow" ng-show="menu.SubMenus"></span>
+        </a>
+
+        <ul class="children collapse"
+            ng-show="menu.SubMenus">
+
+            <li ng-repeat="submenu in menu.SubMenus"
+                ng-click="openMenu(submenu)"
+                ng-class="{active  : $state.includes(submenu.Href,submenu.Param)}">
+                <a ui-sref="{{submenu.Href + (submenu.Param ? '('+submenu.Param+')' : '')}}"> {{submenu.Text}}</a>
+            </li>
+        </ul>
+
+    </li>
+
+</ul>

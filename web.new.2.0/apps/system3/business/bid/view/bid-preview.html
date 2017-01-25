@@ -1,0 +1,91 @@
+﻿<div>
+    <fieldset class=" m-t-10 m-l-10 m-r-10 p-0 p-l-20 p-r-20">
+
+        <legend>{{local.business.bid}}</legend>
+
+        <div class="row  m-0  p-t-10">
+            <div class="col-sm-2 p-0"><label>{{local.bid.name}}</label></div>
+            <div class="col-sm-10">{{currentBid.Name}}</div>
+        </div>
+        <div class="row m-0  p-t-10">
+            <div class="col-sm-2 p-0"><label>{{local.cust.name}}</label></div>
+            <div class="col-sm-10">{{currentBid.Customer.Name}}</div>
+        </div>
+        <div class="row m-0  p-t-10">
+            <div class="col-sm-2 p-0"><label>{{local.business.person}}</label></div>
+            <div class="col-sm-4">
+                {{ currentBid.Person.Name}}
+            </div>
+            <div class="col-sm-2 p-0"><label>{{local.person.phone}}</label></div>
+            <div class="col-sm-4">{{currentBid.Person.Phone}}</div>
+        </div>
+        <div class="row m-0  p-t-10">
+            <div class="col-sm-2 p-0"><label>{{local.bid.agency}}</label></div>
+            <div class="col-sm-4">
+               {{currentBid.Agency}}
+            </div>
+            <div class="col-sm-2 p-0"><label>{{local.bid.bidStatus }}</label></div>
+            <div class="col-sm-4">{{currentBid.BidStatus | enumMap:"BidStatus"}}</div>
+        </div>
+
+        <div class="row m-0  p-t-10">
+            <div class="col-sm-2 p-0"><label>{{local.bid.bidFee}}</label></div>
+            <div class="col-sm-4">
+                {{ currentBid.BidFee | money}} &nbsp;{{local.global.unit}}
+            </div>
+            <div class="col-sm-2 p-0"><label>{{local.bid.serviceFee}}</label></div>
+            <div class="col-sm-4">
+                {{ currentBid.ServiceFee | money}} &nbsp;{{local.global.unit}}
+            </div>
+        </div>
+        <div class="row m-0  p-t-10">
+            <div class="col-sm-2 p-0"><label>{{local.bid.deposit}}</label></div>
+            <div class="col-sm-4">
+                {{ currentBid.DepositFee | money}} &nbsp;{{local.global.unit}}
+            </div>
+            <div class="col-sm-2 p-0"><label>{{local.bid.returnFee}}</label></div>
+            <div class="col-sm-4">
+                <span class="label label-info">
+                    {{ currentBid.DepositFee - currentBid.ServiceFee | money}}
+                </span> &nbsp;{{local.global.unit}}
+            </div>
+        </div>
+        <div class="row m-0  p-t-10">
+            <div class="col-sm-2 p-0"><label>{{local.bid.limitFee}}</label></div>
+            <div class="col-sm-4">
+                {{ currentBid.LimitFee | money}} &nbsp;{{local.global.unit}}
+                <span class="label label-primary" ng-show="currentBid.IsTentative">&nbsp;{{local.bid.isTentative}}</span>
+            </div>
+            <div class="col-sm-2 p-0"><label>{{local.bid.depositStatus}}</label></div>
+            <div class="col-sm-4">
+                <span class="label " ng-class="{'label-danger' : currentBid.DepositFeeStatus  == 3,'label-info' : currentBid.DepositFeeStatus  == 4}">
+                    {{ currentBid.DepositFeeStatus | enumMap:"DepositFeeStatus"}}
+                </span>
+                
+            </div>
+        </div>
+        <div class="row m-0  p-t-10">
+            <div class="col-sm-2 p-0"><label>{{local.bid.bidDate}}</label></div>
+            <div class="col-sm-4">{{currentBid.BidDate | TDate}}</div>
+            <div class="col-sm-2 p-0"><label>{{local.bid.successfulBidDate}}</label></div>
+            <div class="col-sm-4">{{currentBid.SuccessfulBidDate | TDate}}</div>
+        </div>
+
+        <div class="row m-0  p-t-10 h-70">
+            <div class="col-sm-2 p-0"><label>{{local.bid.note}}</label></div>
+            <div class="col-sm-10" style="word-wrap:break-word;">{{currentBid.Note}}</div>
+        </div>
+
+    </fieldset>
+
+    <fieldset class="m-t-10 m-l-10 m-r-10 p-0 p-l-20 p-r-20">
+        <legend>{{local.business.attach}}</legend>
+
+        <attach-preview obj-id="currentBid.ID"
+                        obj-name="bidtract"></attach-preview>
+    </fieldset>
+
+
+    
+
+</div>

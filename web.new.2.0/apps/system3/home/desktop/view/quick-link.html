@@ -1,0 +1,31 @@
+﻿
+<div class="modal-body">
+
+    <div class="row bg-primary" >
+       
+            <h4 class="modal-title pull-left m-5 ">我的菜单</h4>
+            <button type="button" ng-click="close()" class="close pull-right m-5 "><i class="icons-office-52"></i></button>
+       
+    </div>
+   
+
+    <div fullheight="window" calheight="-50" scroll="quickLinkScroll">
+        <div class="m-10">
+            <div class="quick-link m-t-5 m-l-5"
+                 ng-repeat="menu in myMenus"
+                 ng-repeat-end="quickLinkScroll.init()"
+                 ng-click="select(menu)">
+                <div class="row">
+                    <span class="badge badge-primary badge-msg" style="position:absolute;z-index: 10;"  ng-show="menu.selected">
+                        <i class="fa fa-check"></i>
+                    </span>
+                    <div class="icon">
+                        <i class="{{menu.icon}} {{menu.bg}}"></i>
+                    </div>
+                    <p class="text">{{menu.text}}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

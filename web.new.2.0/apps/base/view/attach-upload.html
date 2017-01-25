@@ -1,0 +1,177 @@
+﻿<div class="attch-region" id="attahRegion{{objName}}">
+    <div class="fileup-btns">
+        <div class="pull-left" ng-show="selectedAttachs.length == 1">
+            <button type="button"
+                    popover-append-to-body="true"
+                    uib-popover-template="tagPopover.templateUrl"
+                    class="btn btn-sm btn-primary btn-square">
+                <i class="fa fa-tags"></i>&nbsp;{{local.global.addTag}}
+            </button>
+        </div>
+
+        <div class="pull-left" ng-show="selectedAttachs.length > 0">
+            <a href="{{attachDownloadUrl}}?ids={{getSelecedIDs()}}"
+               class="btn btn-sm btn-primary btn-square ">
+                <i class="fa fa-download"></i>&nbsp;{{local.global.download}}
+            </a>
+            <button type="button"
+                    ng-click="removeAttach()"
+                    class="btn btn-sm btn-danger btn-square">
+                <i class="fa fa-close"></i>&nbsp;{{local.global.remove}}
+            </button>
+        </div>
+
+        <div class="pull-left" ng-show="attachFiles.length + upAttachs.length > 1">
+            <button type="button" ng-click="selectAll()"
+                    class="btn btn-sm btn-primary btn-square">
+                <i class="fa fa-square"></i>&nbsp;{{local.global.selectall}}
+            </button>
+            <button type="button" ng-click="unSelectAll()"
+                    class="btn btn-sm btn-primary btn-square">
+                <i class="fa fa-recycle"></i>&nbsp;{{local.global.unselect}}
+            </button>
+        </div>
+
+    </div>
+
+    <div class="fileup-content"
+         scroll="fileUpScroll">
+
+        <div class="attach-file"
+             ng-repeat="attach in attachFiles | filter:attachFilter"
+             ng-repeat-end="fileUpScroll.init()"
+             ng-click="attachSelected(attach)"
+             ng-class="{'attach-selected' : attach.selected}"
+             popover-append-to-body="true"
+             popover-trigger="'outsideClick'"
+             popover-placement="bottom-left"
+             popover-title="{{attach.Name}}"
+             uib-popover-template="'fileDetail.html'">
+
+            <div class="file-icon file-{{attach.Type}}"
+                 ng-show="attach.Type != 1">
+            </div>
+            <div class="file-image " ng-show="attach.Type == 1">
+                <img ng-src="{{imagePreviewUrl + attach.ID}}" />
+            </div>
+
+            <p class="file-name">{{attach.Name | subStr:6 }}</p>
+
+        </div>
+
+        <div class="attach-file"
+             ng-repeat="attach in upAttachs | filter:attachFilter"
+             ng-repeat-end="fileUpScroll.init()"
+             ng-click="attachSelected(attach)"
+             ng-class="{'attach-selected' : attach.selected}">
+
+            <div class="file-icon file-{{attach.typeID}}"
+                 ng-show="attach.typeID != 1">
+            </div>
+
+            <div class="file-image" ng-show="attach.typeID == 1">
+                <image-preview style="cursor:pointer;" height="55px" model="attach"></image-preview>
+            </div>
+
+            <p class="file-name">{{attach.name | subStr:6 }}</p>
+
+            <uib-progressbar ng-show="attach.percent < 100" class="progress-bar-thin " value="attach.percent"></uib-progressbar>
+
+            
+        </div>
+
+        <div pl-upload
+             drop-element = "attahRegion{{objName}}"
+             pl-progress-model="percent"
+             pl-auto-upload="true"
+             pl-filters-model="plFiltersModel"
+             pl-files-model="upAttachs"
+             on-file-uploaded="uploaded($response, $file)"
+             on-before-upload="beforeUpload($file)"
+             class="attach-upload-btn back-text  hint-tex">
+            选择文件
+        </div>
+    </div>
+
+
+    <script type="text/ng-template" id="myPopoverTemplate.html">
+        <div class="row" style="width:500px;">
+
+            <div class="col-sm-9">
+                <tags-input ng-model="tagPopover.tags"
+                            
+                            display-property="TagName"
+                            placeholder="{{local.global.choosetag}}">
+                    <auto-complete source="filterTags($query)"
+                                   min-length="0"
+                                   load-on-focus="true"
+                                   load-on-empty="true"
+                                   max-results-to-show="10"></auto-complete>
+                </tags-input>
+
+                
+            </div>
+            <div class="col-sm-3">
+                <button type="button"
+                        ng-click="saveTags()"
+                        class="btn btn-primary btn-square pull-right m-t-5">
+                    <i class="fa fa-save"></i>&nbsp;{{local.global.save}}
+                </button>
+            </div>
+
+        </div>
+    </script>
+    <script type="text/ng-template" id="tagItem">
+        <p class="m-0 ">
+            <i class="fa fa-tag"></i> {{$highlight($getDisplayText())}}
+        </p>
+    </script>
+
+    <script type="text/ng-template" id="fileDetail.html">
+        <div style="width:400px;" >
+
+            <div class="row m-0 ">
+                <div class="col-sm-3 p-0"><label>文件大小</label></div>
+                <div class="col-sm-9 " id="size">{{attach.Size | fileSize}}</div>
+            </div>
+            <div class="row m-0 ">
+                <div class="col-sm-3 p-0"><label>标签</label></div>
+                <div class="col-sm-9 ">
+                    <span class="label label-info "
+                          ng-class="{'m-l-5':!$first}"
+                          ng-repeat="tag in attach.Tags">{{tag.TagName}}</span>
+                </div>
+            </div>
+            <div class="row m-0  ">
+                <div class="col-sm-3 p-0"><label>上传时间</label></div>
+                <div class="col-sm-9 " id="date">{{attach.UploadDate | TDate}}</div>
+            </div>
+            <div class="row m-0 ">
+                <div class="col-sm-3 p-0"><label>上传用户</label></div>
+                <div class="col-sm-9 " id="person">
+                    {{attach.UploadUser | enumMap:"user" }}
+                    <a class="btn btn-transparent msgChatBtn"
+                       ng-click="openChat(attach.UploadUser)">
+                        <i class="fa fa-weixin"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <a id="download"
+               href="{{attachDownloadUrl}}{{attach.ID}}"
+               class="btn btn-sm btn-primary btn-square pull-right ">
+                <i class="fa fa-download"></i>&nbsp;下载
+            </a>
+
+            <a id="imageload"
+               href="{{attach.Type == 1 ?imagePreviewUrl : officePreviewUrl}}{{attach.ID}}"
+               target="_blank"
+               class="btn btn-sm btn-primary btn-square pull-right ">
+                <i class="fa fa-picture-o"></i>&nbsp;预览
+            </a>
+        </div>
+    </script>
+
+  
+</div>

@@ -1,0 +1,136 @@
+﻿
+<div class="panel" blockui="menuPanel">
+
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner p-10">
+
+                    <div class="form-group">
+                        <input class="form-control form-white" type="text" placeholder="输入筛选" ng-model="menusFilter">
+                    </div>
+                    <tree tree-data="scope"
+                          tree-model="menus"
+                          tree-api="treeApi"
+                          tree-plugins="wholerow,contextmenu,search,types"
+                          search="menusFilter"
+                          changed="menusChanged"></tree>
+                </div>
+               
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="50%">
+                <div class="pretty-split-pane-component-inner p-20">
+
+
+                    <form class="form-horizontal" blockui="editPanel">
+                        <button class="btn btn-default btn-square" ng-click="updateMenu()"><i class="fa fa-save"></i> 保存 </button>
+
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Name</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="currentMenu.Text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Key</span>
+                            <div class="col-sm-10">
+                                <input class="form-control" ng-readonly="true" type="text" ng-model="currentMenu.Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Icon</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="currentMenu.Icon">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Href</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="currentMenu.Href">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Param</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="currentMenu.Param">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Permission</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="currentMenu.PermissionKey">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">IndexValue</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="currentMenu.IndexValue">
+                            </div>
+                        </div>
+                    </form>
+
+                    <form class="form-horizontal" blockui="newPanel">
+
+                        <button class="btn btn-default btn-square" ng-click="createMenu()"><i class="fa fa-save"></i> 添加 </button>
+
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">上级菜单</span>
+                            <div class="col-sm-10">
+                                {{currentMenu.Text}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Name</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="newMenu.Text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Key</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="newMenu.Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Icon</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="newMenu.Icon">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Href</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="newMenu.Href">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Param</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="newMenu.Param">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Permission</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="newMenu.PermissionKey">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">IndexValue</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="newMenu.IndexValue">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

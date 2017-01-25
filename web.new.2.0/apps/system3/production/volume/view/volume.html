@@ -1,0 +1,70 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="panel" model="thisPanel">
+            <div class="panel-content p-0   "
+                 ng-class="{'bg-clean' :isPreview,'bg-aero' : isSearch }">
+
+                <div class="bg-aero bus-tool-bar row m-0 p-0 ">
+                    <div class="col-sm-4 m-0 p-0">
+                        <button type="button"
+                                
+                                ng-click="plan()"
+                                class="btn btn-primary btn-square m-b-0 hidden-sm hidden-xs">
+                            <i class="fa fa-edit"></i>{{local.global.plan}}
+                        </button>
+                    </div>
+
+                    <div class="col-sm-8 p-0 m-0">
+                        <button type="button"
+                                ng-click="moreSearch()"
+                                class="btn btn-primary btn-square pull-right m-0 m-b-0 hidden-sm hidden-xs">
+                            <i class="fa fa-filter"></i> {{local.global.filter}}
+                        </button>
+                        <button type="button"
+                                ng-click="loadSource()"
+                                class="btn btn-primary btn-square pull-right m-0 m-b-0">
+                            <i class="fa fa-search"></i> {{local.global.query}}
+                        </button>
+                        <div class=" prepend-icon pull-right m-b-0">
+                            <input type="text"
+                                   ng-model="filter.txtfilter"
+                                   enter-press="loadSource()"
+                                   ng-click="loadSource()"
+                                   class="form-control form-white filterbox " placeholder="{{local.proj.number}}、{{local.proj.name}}">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white"
+                     ng-class="{
+                        'width-100p' : !isSearch && !isMaintain,
+                        'width-70p':isSearch,
+                        'width-50p':isMaintain}"
+                     fullheight="panelGrid"
+                     ui-grid="gridOptions"
+                     ui-grid-selection
+                     ui-grid-pagination
+                     ui-grid-exporter
+                     ui-grid-auto-resize
+                     ui-grid-grouping
+                     ui-grid-resize-columns
+                     ui-grid-move-columns
+                     ui-grid-pinning
+                     ui-grid-cellNav></div>
+
+                <div class="bus-preview width-30p p-10 animated hidden-sm hidden-xs"
+                     ng-class="{'fadeOutRight' : !isSearch,'fadeInRight':isSearch}"
+                     ng-show="isSearch">
+                    <engineering-filter-view specialty="true"></engineering-filter-view>
+                </div>
+                <div class="bus-preview width-50p p-10 animated  hidden-sm hidden-xs"
+                     scroll="maintainScroll" fullheight="panelGrid"
+                     ng-class="{'fadeOutRight' : !isMaintain,'fadeInRight':isMaintain}"
+                     ng-show="isMaintain"
+                     ng-include="'apps/system3/production/volume/view/volume-maintain.html'">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

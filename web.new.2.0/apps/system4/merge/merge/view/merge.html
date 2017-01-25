@@ -1,0 +1,340 @@
+﻿<div class="panel" blockui="mergePanel">
+
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner ">
+
+                    <div style="height:{{panelHeight - 50}}px;"
+                         ui-grid-pagination
+                         ui-grid-selection
+                         ui-grid-auto-resize
+                         ui-grid-resize-columns
+                         ui-grid-move-columns
+                         ui-grid="gridOptions"></div>
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="70%">
+                <div class="pretty-split-pane-component-inner ">
+
+                    <ul class="nav nav-tabs" ng-init="currentTaskTab = 1">
+                        <li ng-class="{active : currentTaskTab == 1}" ng-click="currentTaskTab = 1"><a data-toggle="tab">工程信息</a></li>
+                        <li ng-class="{active : currentTaskTab == 2}" ng-click="currentTaskTab = 2"><a data-toggle="tab">合并记录</a></li>
+                        <li ng-class="{active : currentTaskTab == 3}" ng-click="currentTaskTab = 3"><a data-toggle="tab">合并结果</a></li>
+                        <!--<li ng-class="{active : currentTaskTab == 4}" ng-click="currentTaskTab = 4"><a data-toggle="tab">合并选项</a></li>-->
+                    </ul>
+                    <div class="tab-content">
+
+                        <div class="tab-pane" ng-class="{active : currentTaskTab == 1}">
+                            <label> <i class="fa fa-file-word-o"></i> 项目信息</label>
+                            <fieldset class="m-t-5 m-b-5">
+                                <div class="row m-0  p-t-10">
+                                    <div class="col-sm-2 p-0"><label>项目编号</label></div>
+                                    <div class="col-sm-4">{{currentProj.Number }}</div>
+                                    <div class="col-sm-2 p-0"><label>项目名称</label></div>
+                                    <div class="col-sm-4">{{currentProj.Name }}</div>
+                                </div>
+                                <div class="row m-0  p-t-10">
+                                    <div class="col-sm-2 p-0"><label>项目负责人</label></div>
+                                    <div class="col-sm-4">{{currentProj.Manager | enumMap : 'user'}}</div>
+                                    <div class="col-sm-2 p-0"><label>项目地区</label></div>
+                                    <div class="col-sm-4">{{currentProj.Area | enumMap : 'region'}}</div>
+                                </div>
+                                <div class="row m-0  p-t-10">
+                                    <div class="col-sm-2 p-0"><label>禁用内容</label></div>
+                                    <div class="col-sm-10">{{currentProj.DisableWord}}</div>
+                                </div>
+                            </fieldset>
+                            <label> <i class="fa fa-file-word-o"></i> 专业信息</label>
+                            <fieldset class="m-t-5 p-0">
+                                <div class="widget-news">
+
+                                    <div class="message-item media bold bg-white m-t-10 ">
+                                        <div class="media">
+                                            <div class="media-body row">
+                                                <div class="col-sm-2">专业</div>
+                                                <div class="col-sm-2">负责人</div>
+                                                <div class="col-sm-2">最后上传时间</div>
+                                                <div class="col-sm-4">是否有未合并文档</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="message-item media"
+                                         ng-repeat="s in currentProj.ProjSpecils track by s.ID ">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <div class="media-body row">
+                                                    <div class="col-sm-2">{{s.SpecilID | enumMap:'Specialty'}}</div>
+                                                    <div class="col-sm-2">{{s.Manager | enumMap : 'user'}}</div>
+                                                    <div class="col-sm-2">{{s.LastUpdateDate | TDate}}</div>
+                                                    <div class="col-sm-2">
+                                                        <span class="label label-info" ng-if="s.IsMerge">是</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <br />
+                            <button class="btn btn-primary btn-square pull-right " ng-click="merge()">
+                                <i class="fa fa-file-word-o"></i> 合并各专业文档
+                            </button>
+                        </div>
+
+                        <div class="tab-pane  widget-news" ng-class="{active : currentTaskTab == 2}">
+
+                            <p class="m-5" ng-show="mergeHistorys.length == 0">没有合并文档</p>
+
+                            <div class="message-item media"
+                                 ng-repeat="f in mergeHistorys | orderBy : 'UploadDate':true track by f.ID ">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <div class="media-body row">
+                                            <div class="col-sm-2">{{f.UploadDate | TDate:'yyyy/MM/dd hh:mm:ss'}}</div>
+                                            <div class="col-sm-2">{{f.UploadUser | enumMap : 'user'}}</div>
+                                            <div class="col-sm-2">{{f.Size | fileSize}}</div>
+                                            <div class="col-sm-2">
+                                                <a href="{{attachDownloadUrl}}{{f.ID}}"><i class="fa fa-download"></i> 下载</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane " ng-class="{active : currentTaskTab == 3}">
+
+                            <div class="row m-0  p-t-10">
+                                <div class="col-sm-12 p-0">{{mergeResult.ErrorMessage}}</div>
+                            </div>
+
+                            <div class="row m-0  p-t-10">
+                                <div class="col-sm-2 p-0"><label>项目区域检查</label></div>
+                                <div class="col-sm-10 p-0">
+                                    <p>是否包含{{currentProj.Area | enumMap : 'region'}}: {{mergeResult.ContainsArea ?  "包含" : "不包含"}}</p>
+
+                                    <span>其他地区出现次数：</span>
+                                    <span ng-repeat="item in getBaseData('region')"
+                                          ng-show="item.Value != currentProj.Area">
+                                        {{item.Text}} - {{mergeResult.OtherAreas[item.Text]}}
+                                        &nbsp;&nbsp;
+                                    </span>
+
+                                </div>
+                            </div>
+
+                            <div class="row m-0  p-t-10">
+                                <div class="col-sm-2 p-0"><label>项目禁用内容检查</label></div>
+                                <div class="col-sm-10 p-0"><span>共找到 {{mergeResult.DisableWordMatchs.length}} 处匹配</span></div>
+                            </div>
+
+
+                            <div class="row m-0  p-t-10">
+                                <div class="col-sm-2 p-0"><label>章节序号检查</label></div>
+                                <div class="col-sm-10 p-0">
+                                    <p ng-repeat="info in mergeResult.ParaIndexCheck">{{info}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane " ng-class="{active : currentTaskTab == 4}">
+                            <fieldset>
+                                <legend>标题一</legend>
+                                <div class="row">
+                                   
+                                    <div class="col-md-3">
+                                        字体
+                                        <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Value as item in getBaseData('FontFamily')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                   
+                                    <div class="col-md-3">
+                                        位置
+                                        <ui-select ng-model="MergeOption.Head1Style.Align" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Value as item in getBaseData('Alignment')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        大小
+                                        <div style="width:100%" class="primary">
+                                            <div class="slide-ios" data-slider-max="30" data-slider-value="14"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        序号与标题的空格
+                                        <div style="width:100%" class="primary">
+                                            <div class="slide-ios" data-slider-max="5" data-slider-value="3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        章节序号样式
+                                        <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Value as item in HeadNumbers">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+
+                                </div>
+                                
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>标题二</legend>
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        字体
+                                        <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Value as item in getBaseData('FontFamily')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        位置
+                                        <ui-select ng-model="MergeOption.Head1Style.Align" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Value as item in getBaseData('Alignment')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        大小
+                                        <div style="width:100%" class="primary">
+                                            <div class="slide-ios" data-slider-max="30" data-slider-value="14"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        序号与标题的空格
+                                        <div style="width:100%" class="primary">
+                                            <div class="slide-ios" data-slider-max="5" data-slider-value="3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>正文</legend>
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        字体
+                                        <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Value as item in getBaseData('FontFamily')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        大小
+                                        <div style="width:100%" class="primary">
+                                            <div class="slide-ios" data-slider-max="30" data-slider-value="14"></div>
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>目录</legend>
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        字体
+                                        <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Value as item in getBaseData('FontFamily')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        大小
+                                        <div style="width:100%" class="primary">
+                                            <div class="slide-ios" data-slider-max="30" data-slider-value="14"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>页码</legend>
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        字体
+                                        <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Value as item in getBaseData('FontFamily')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        大小
+                                        <div style="width:100%" class="primary">
+                                            <div class="slide-ios" data-slider-max="30" data-slider-value="14"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>其他</legend>
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        需要另一起一页的章节
+                                        <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Value as item in newPageChapters">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+
+
+                                </div>
+
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">{{update ? '更新' : '创建'}}全宗库</h4>
+</div>
+
+<div class="modal-body ">
+    <form class="form-horizontal m-10" name="FormMaintain">
+        <div class="form-group">
+            <span class="col-sm-2 p-0"><label class="m-t-10">全宗号</label> </span>
+            <div class="col-sm-10 ">
+                <input class="form-control" type="text"
+                       name="Number" validator="required,maxlength=50"
+                       ng-class="{'form-white' : !update}"
+                       ng-readonly="update"
+                       ng-model="fonds.Number">
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="col-sm-2 p-0"><label class="m-t-10">名称</label> </span>
+            <div class="col-sm-10">
+                <input class="form-control form-white" type="text"
+                       name="Name" validator="required,maxlength=50"
+                       ng-model="fonds.Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="col-sm-2 p-0"><label class="m-t-10">备注</label> </span>
+            <div class="col-sm-10">
+                <input class="form-control form-white" type="text"
+                       name="note" 
+                       ng-model="fonds.Note">
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal-footer bg-aero">
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="save()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-save"></i>
+        保存
+    </button>
+</div>

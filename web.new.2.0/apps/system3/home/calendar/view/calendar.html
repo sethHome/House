@@ -1,0 +1,107 @@
+﻿<div class="panel">
+
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-3 col-xlg-2 p-0">
+                <div class="widget">
+                    <div class="widget-body">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <h2 class="text-white semi-bold" id="calender-current-day">日程管理</h2>
+                                <div id="external-events">
+
+                                    <div ng-repeat="item in externalEvents"
+                                         ng-class="item.color"
+                                         class="external-event "
+                                         mwl-draggable="true"
+                                         drop-data="{event: item}"
+                                         style="position: relative;">
+                                        <i class="fa fa-move"></i>{{item.title}}
+
+                                        <span class="pull-right">{{item.typeName}}</span>
+                                    </div>
+
+                                </div>
+                                <a class="btn btn-transparent add-category" ng-click="addEvent()"><i class="icon-plus"></i> 新建日程</a>
+                                <!--
+                            <p class="m-t-40">
+                                <label>
+                                    <input id="drop-remove" type="checkbox" data-checkbox="icheckbox_square-blue">拖动后删除该日程
+                                </label>
+                            </p>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 col-xlg-10 p-0 no-bd">
+                <div class="widget">
+                    <div class="widget-body">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+                                <div>
+                                    <h2 class="text-center">{{ calendarTitle }}</h2>
+
+                                    <div class="row">
+                                        <div class="col-md-6 text-center">
+                                            <div class="btn-group">
+                                                <button class="btn btn-primary"
+                                                        mwl-date-modifier
+                                                        date="viewDate"
+                                                        decrement="calendarView">
+                                                    前
+                                                </button>
+                                                <button class="btn btn-default"
+                                                        mwl-date-modifier
+                                                        date="viewDate"
+                                                        set-to-today>
+                                                    今天
+                                                </button>
+                                                <button class="btn btn-primary"
+                                                        mwl-date-modifier
+                                                        date="viewDate"
+                                                        increment="calendarView">
+                                                    后
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <br class="visible-xs visible-sm">
+                                        <div class="col-md-6 text-center">
+                                            <div class="btn-group">
+                                                <label class="btn btn-primary" ng-model="calendarView" uib-btn-radio="'year'">年</label>
+                                                <label class="btn btn-primary" ng-model="calendarView" uib-btn-radio="'month'">月</label>
+                                                <label class="btn btn-primary" ng-model="calendarView" uib-btn-radio="'week'">周</label>
+                                                <label class="btn btn-primary" ng-model="calendarView" uib-btn-radio="'day'">天</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <mwl-calendar events="events"
+                                                      view="calendarView"
+                                                      view-title="calendarTitle"
+                                                      view-date="viewDate"
+                                                      cell-is-open="isCellOpen"
+                                                      day-view-start="07:00"
+                                                      day-view-end="17:00"
+                                                      day-view-split="30"
+                                                      on-edit-event-click="eventEdited(calendarEvent)"
+                                                      on-delete-event-click="eventDeleted(calendarEvent)"
+                                                      on-event-times-changed="eventDropped(calendarEvent, calendarNewEventStart, calendarNewEventEnd)"
+                                                      edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+                                                      delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'">
+                                        </mwl-calendar>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

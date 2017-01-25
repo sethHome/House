@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E28B648E-9E26-4E52-BE60-CD2F29A3E2E3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BPM.Engine</RootNamespace>
+    <AssemblyName>BPM.Engine</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BPMDBService.cs" />
+    <Compile Include="AutoTaskInstance.cs" />
+    <Compile Include="ConditionExpression.cs" />
+    <Compile Include="EmptyTaskInstance.cs" />
+    <Compile Include="EndTaskInstance.cs" />
+    <Compile Include="Enum.cs" />
+    <Compile Include="ExclusiveGatewayInstance.cs" />
+    <Compile Include="GatewayInstance.cs" />
+    <Compile Include="IObservation.cs" />
+    <Compile Include="IOwner.cs" />
+    <Compile Include="ISubject.cs" />
+    <Compile Include="ITask.cs" />
+    <Compile Include="IToken.cs" />
+    <Compile Include="JointlySignGateway.cs" />
+    <Compile Include="JointlySignTaskInstance.cs" />
+    <Compile Include="ManualTaskInstance.cs" />
+    <Compile Include="ParallelGatewayInstance.cs" />
+    <Compile Include="ProcessEngine.cs" />
+    <Compile Include="ProcessInstance.cs" />
+    <Compile Include="ProcessModelCache.cs" />
+    <Compile Include="ProcessResouce.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SequenceInstance.cs" />
+    <Compile Include="StartTaskInstance.cs" />
+    <Compile Include="TaskInstance.cs" />
+    <Compile Include="TaskToken.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Api.Framework.Core\Api.Framework.Core.csproj">
+      <Project>{17f5c4be-6c0b-4cee-8681-f944417d77b2}</Project>
+      <Name>Api.Framework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BPM.DB\BPM.DB.csproj">
+      <Project>{311306e0-3e6a-4805-af0e-9497b58a6bce}</Project>
+      <Name>BPM.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BPM.ProcessModel\BPM.ProcessModel.csproj">
+      <Project>{17ea7624-1a03-479f-991d-626b26bb4fde}</Project>
+      <Name>BPM.ProcessModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

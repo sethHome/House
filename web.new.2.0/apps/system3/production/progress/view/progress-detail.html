@@ -1,0 +1,147 @@
+﻿<div class="modal-header bg-primary modal-dragable" visiable="{{maintainModel == 2}}" ng-show="maintainModel == 2">
+    {{local.global.info}}
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div ng-class="{'modal-body' : maintainModel == 2}">
+    <div fullheight="panelcontent" scroll="volumeScroll" calheight="-50">
+
+        <div class="row m-0">
+            <h3 class="m-t-30 m-b-20 m-l-10"><strong>卷册数据</strong></h3>
+            <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="panel bg-aero ">
+                    <div class="panel-content widget-info">
+                        <div class="row">
+                            <div class="left">
+                                <i class="fa fa-file-o bg-green"></i>
+                            </div>
+                            <div class="right">
+                                <p class="number countup" from="0" to="volumeStatistics.FileCount"  suffix="个"></p>
+                                <p class="text">上传文件</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="panel bg-aero">
+                    <div class="panel-content widget-info">
+                        <div class="row">
+                            <div class="left">
+                                <i class="fa fa-male bg-red"></i>
+                            </div>
+                            <div class="right">
+                                <p class="number countup" from="0" to="volumeStatistics.MuiltySignCount" suffix="人"></p>
+                                <p class="text">会签人数</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+            <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="panel bg-aero">
+                    <div class="panel-content widget-info">
+                        <div class="row">
+                            <div class="left">
+                                <i class="fa fa-calendar-o bg-red"></i>
+                            </div>
+                            <div class="right">
+                                <p class="number countup" from="0" to="volumeStatistics.DuringDay" suffix="天"></p>
+                                <p class="text">历时</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row m-0">
+            <div class="col-md-12">
+                <h3 class="m-t-30 m-b-20"><strong>校审错误</strong></h3>
+                <div class="widget-infobox">
+                    <div class="infobox"
+                         ng-repeat="item in volumeStatistics.VolumeCheckGroups">
+                        <div class="left">
+                            <i class="fa "
+                               ng-class="{'fa-info bg-green' : item.CheckType == 1,
+                                           'fa-rocket bg-blue' : item.CheckType == 2,
+                                           'fa-bug bg-purple' : item.CheckType == 3,
+                                           'icon-fire bg-red' : item.CheckType == 4}"></i>
+                        </div>
+                        <div class="right">
+                            <div>
+                           
+                                <span ng-class="{'c-green' : item.CheckType == 1,
+                                           'c-blue' : item.CheckType == 2,
+                                           'c-purple' : item.CheckType == 3,
+                                           'c-red' : item.CheckType == 4}"
+                                      class="pull-left countup number" to="item.CheckCount"></span>
+
+                                <span ng-class="{'c-green' : item.CheckType == 1,
+                                           'c-blue' : item.CheckType == 2,
+                                           'c-purple' : item.CheckType == 3,
+                                           'c-red' : item.CheckType == 4}"
+                                      class="pull-right countup number" to="item.Percent" suffix="%">{{item.Percent.toFixed(2)}}%</span>
+                            </div>
+                            <div class="txt">{{item.CheckType | enumMap:'CheckErrorType'}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row m-0 m-b-40">
+            <div class="col-md-12">
+
+                <h3 class="m-t-30 m-b-20"><strong>流程进度</strong></h3>
+
+                <div class="process-view ">
+                    <div ng-repeat="task in flowInfo.Tasks">
+                        <div class="task  "
+                             ng-class="{'bg-aero' : task.Status == 0,'bg-orange' : task.Status == 1,'bg-primary' : task.Status == 2}">
+                            <span class="bold c-dark">{{task.Name}}</span>
+                            <p class="text m-t-10 c-dark">
+                                {{task.UserID | enumMap:"user"}}
+                            </p>
+                        </div>
+
+                        <div ng-show="!$last" class="icon-arrow-right arrow">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row m-0 ">
+            <div class="col-md-12 ">
+
+
+                <div class="row   p-0 ">
+                    <label class="col-sm-1 m-0 p-0 p-l-20">序号</label>
+                    <label class="col-sm-1 m-0 p-0 p-l-20">任务</label>
+                    <label class="col-sm-1 m-0 p-0 p-l-20">负责人</label>
+                    <label class="col-sm-2 m-0 p-0 p-l-20">处理时间</label>
+                    <label class="col-sm-7 m-0 p-0 p-l-20">备注</label>
+                </div>
+                <hr />
+                <div ng-repeat="item in flowInfo.Logs"
+                     ng-repeat-end="volumeScroll.init()"
+                     class="row m-0 p-0 m-t-5">
+
+                    <span class="col-sm-1 m-0 p-0 p-l-10">
+                        <span class="label label-default">{{$index + 1}}</span>
+                    </span>
+                    <span class="col-sm-1 m-0 p-0 p-l-10">{{item.Name}}</span>
+                    <span class="col-sm-1 m-0 p-0 p-l-10">{{item.UserID | enumMap:"user"}}</span>
+                    <span class="col-sm-2 m-0 p-0 p-l-10">{{item.FinishDate | TDate:'yyyy/MM-dd hh:mm'}}</span>
+                    <span class="col-sm-7 m-0 p-0 p-l-20">{{item.Note }}</span>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

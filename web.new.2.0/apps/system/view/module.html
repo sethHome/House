@@ -1,0 +1,119 @@
+﻿
+<div class="panel" blockui="modulePanel">
+
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner p-10">
+
+                    <div class="form-group" >
+                        <input class="form-control form-white" type="text" placeholder="输入筛选" ng-model="modulesFilter">
+                    </div>
+
+                    <tree tree-data="scope"
+                          tree-model="modules"
+                          tree-api="treeApi"
+                          tree-plugins="wholerow,contextmenu,search,types"
+                          search="modulesFilter"
+                          changed="modulesChanged"></tree>
+
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="50%">
+                <div class="pretty-split-pane-component-inner p-20">
+
+
+                    <form class="form-horizontal" blockui="editPanel">
+
+                        <button class="btn btn-default btn-square" ng-click="updateModule()"><i class="fa fa-save"></i> 保存 </button>
+
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Name</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="currentModule.Text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">State</span>
+                            <div class="col-sm-10">
+                                <input class="form-control" ng-readonly="true" type="text" ng-model="currentModule.Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Param</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="currentModule.Param">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Src</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="currentModule.Src">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Tab</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="checkbox" icheck ng-model="currentModule.Tab">
+                            </div>
+                        </div>
+                        
+                    </form>
+
+                    <form class="form-horizontal" blockui="newPanel">
+
+                        <button class="btn btn-default btn-square" ng-click="createModule()"><i class="fa fa-save"></i> 添加 </button>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">上级模块</span>
+                            <div class="col-sm-10">
+                              {{currentModule.Text}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Name</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="newModule.Text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">State</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="newModule.Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Param</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="newModule.Param">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Src</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="newModule.Src">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">Tab</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="checkbox" icheck ng-model="newModule.Tab">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+

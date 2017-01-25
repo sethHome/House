@@ -1,0 +1,81 @@
+﻿<ul class="header-menu nav navbar-nav">
+    <li class="dropdown " id="messages-header">
+        <a class="ddropdown" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+            <i class="fa fa-book"></i>
+            <span class="badge badge-danger badge-header">
+                {{bookBorrowList.length}}
+            </span>
+        </a>
+        <ul class="dropdown-menu">
+            
+            <li class="dropdown-body">
+                <ul class="dropdown-menu-list withScroll" data-height="220">
+                    <li class="clearfix"
+                        ng-click="openNotifyWindow(n)"
+                        ng-repeat="n in bookBorrowList">
+                        <span class="pull-left p-r-5">
+                            <img src="assets/global/images/avatars/avatar3.png" alt="avatar 3">
+                        </span>
+                        <div class="clearfix">
+                            <div>
+                                <strong ng-show="n.SendUser == 0">系统</strong>
+                                <strong ng-show="n.SendUser > 0">{{n.SendUser | enumMap : 'user'}}</strong>
+                                <small class="pull-right text-muted">
+                                    <span class="glyphicon glyphicon-time p-r-5"></span> {{n.EffectDate | strDate}}
+                                </small>
+                            </div>
+                            <p>{{n.Title}}</p>
+                        </div>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="dropdown-footer clearfix">
+                <a ui-sref="docquery.bookborrow" class="pull-left">申请借阅以上图书</a>
+                <a class="pull-right">
+                    <i class="icon-arrow-right"></i>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="dropdown " id="messages-header">
+        <a class="ddropdown" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+            <i class="fa fa-shopping-cart"></i>
+            <span class="badge badge-danger badge-header">
+                {{archiveBorrowList.length}}
+            </span>
+        </a>
+        <ul class="dropdown-menu">
+            
+            <li class="dropdown-body">
+                <ul class="dropdown-menu-list withScroll" data-height="220">
+                    <li class="clearfix"
+                        ng-repeat="n in archiveBorrowList">
+
+                        <span class="pull-left p-r-5">
+                            <i class="fa fa-file"></i>
+                        </span>
+                        <div class="clearfix">
+                            <div>
+                                <span>{{n.name}}</span>
+                              
+                                <small class="pull-right text-muted">
+                                    <button class="close m-t-5 f-16" ng-click="removeArchiveItem(n)">×</button>
+                                </small>
+                            </div>
+                          
+                        </div>
+
+                    </li>
+
+                </ul>
+            </li>
+            <li class="dropdown-footer clearfix" >
+                <a ui-sref="docquery.archiveborrow" class="pull-left">申请借阅以上档案</a>
+                <a class="pull-right">
+                    <i class="icon-arrow-right"></i>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>

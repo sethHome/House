@@ -1,0 +1,168 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <i class="fa fa-pencil-square-o"></i> &nbsp;工程记事
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body">
+
+    <div class="nav-tabs" ng-init="currentIndex = 1">
+        <ul class="nav nav-tabs nav-red">
+            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">记事信息</a></li>
+            <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab"><i class="fa fa-paperclip"></i> 附件</a></li>
+        </ul>
+        <div class="tab-content p-r-0 ">
+            <div class="tab-pane" style="height:{{modalHeight}}px" scroll="tabPanelScl1" auto="true" ng-class="{active : currentIndex == 1}">
+                <form name="FormMaintain" >
+
+                    <div class="row" ng-show="!hasEngineering">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>
+                                    记事工程
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_engineering"></span>
+                               
+                                 <div class="append-icon">
+                                    <input type="text" ng-model="noteInfo.Engineering"
+                                           name="engineering" validator="required" message-id="msg_engineering"
+                                           placeholder="{{local.global.input}}{{local.eng.number}}、{{local.eng.name}}"
+                                           uib-typeahead="item as item.Name for item in loadEngineering($viewValue)"
+                                           typeahead-loading="loadingLocations"
+                                           typeahead-no-results="noResults"
+                                           typeahead-template-url="customTemplate.html"
+                                           class="form-control form-white">
+                                    <i class="fa fa-binoculars"></i>
+                                </div>
+
+                                <div ng-show="noResults">
+                                    <i class="glyphicon glyphicon-remove"></i> 没有找到工程
+                                </div>
+
+                                <script type="text/ng-template" id="customTemplate.html">
+                                    <a>
+                                        <span ng-bind-html="match.model.Name | uibTypeaheadHighlight:query"></span>
+                                    </a>
+                                </script>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>
+                                    接收人
+                                </label>
+
+                                <tags-input ng-model="noteInfo.ReceiveUsers"
+                                            class="user-tag"
+                                            template="userTagTemplate"
+                                            add-from-autocomplete-only="true"
+                                            display-property="Name"
+                                            placeholder="选择用户">
+                                    <auto-complete source="filterUsers($query)"
+                                                   template="userTagItemTemplate"
+                                                   min-length="0"
+                                                   load-on-focus="true"
+                                                   load-on-empty="true"
+                                                   max-results-to-show="20">
+                                    </auto-complete>
+                                </tags-input>
+
+                                <script type="text/ng-template" id="userTagTemplate">
+                                    <div class="tag-template">
+                                        <div>
+                                            <span><i class="fa fa-user"></i> {{$getDisplayText()}}</span>
+                                            <small class="hint-text fs-12">< {{data.Dept.Name}} ></small>
+                                            <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+                                        </div>
+                                    </div>
+                                </script>
+                                <script type="text/ng-template" id="userTagItemTemplate">
+                                    <div class="tag-template">
+                                        <span class="col-xs-height col-middle">
+                                            <span class="thumbnail-wrapper d32  ">
+                                                <img width="34" height="34" alt=""
+                                                     ng-src="assets/global/images/avatars/{{data.PhotoImg}}"
+                                                     class="col-top user-header">
+                                            </span>
+                                        </span>
+                                        <p class="p-l-10 col-xs-height col-middle col-xs-6">
+                                            <span class="text-master">{{data.Name}}</span>
+                                            <span class="block text-master hint-text fs-12">{{data.Dept.Name}}</span>
+                                        </p>
+                                    </div>
+                                </script>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>
+                                    {{local.note.type}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_NoteType"></span>
+
+                                <input class="hide" ng-model="noteInfo.NoteType"
+                                       message-id="msg_NoteType"
+                                       name="NoteType" validator="required">
+                               
+                                <div class="icheck-inline">
+                                    <span class="m-r-10" ng-repeat="item in getBaseData('NoteType')">
+                                        <input icheck type="radio" name="NoteType"
+                                               ng-disabled="view"
+                                               value="{{item.Key}}" ng-model="$parent.noteInfo.NoteType"> {{item.Text}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>
+                                    {{local.note.content}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_NoteType"></span>
+
+                                <textarea class="form-control form-white "
+                                          name="Content"  ng-model="noteInfo.Content"
+                                          validator="required,maxlength=500" message-id="msg_Content"
+                                          placeholder="{{local.global.input}}{{local.note.content}}"
+                                          rows="8"></textarea>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 2}">
+                <attach-upload name="attachCtl"
+                               obj-id="noteInfo.ID"
+                               obj-name="EngineeringNote">
+                </attach-upload>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer bg-aero">
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="save()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-save"></i>
+        {{local.global.save}}
+    </button>
+    <button type="button"
+            validation-reset="FormMaintain"
+            class="btn btn-danger btn-square ">
+        <i class="fa fa-refresh"></i>
+        {{local.global.reset}}
+    </button>
+</div>

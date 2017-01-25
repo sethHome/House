@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="../assets/global/css/style.css" rel="stylesheet">
+    <link href="../assets/global/css/ui.css" rel="stylesheet">
+    <style>
+        body {
+            font-size: 100%;
+            color: #999;
+            background: rgba(47,47,47,0.78);
+        }
+
+        .login-panel {
+            width: 300px;
+            margin-top: 5%;
+            margin-left: 10%;
+            /*margin-right: auto;*/
+            background: #2d3d54;
+            box-shadow: 0 0 20px rgb(47,47,47);
+            text-align: center;
+            padding: 20px;
+        }
+
+            .login-panel img {
+                width: 60%;
+            }
+
+        input {
+            outline: none;
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            color: whitesmoke;
+            background: none;
+            border-bottom: solid 1px gray;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+
+        .login-bg-panel {
+            background-image: url(images/1-1.jpg);
+            width: 100%;
+            background-origin: padding-box;
+            background-repeat: round;
+            position: absolute;
+            top: 20%;
+            bottom: 20%;
+        }
+
+        .cop-title {
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+           margin-top: 18%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-bg-panel">
+        <div class="t-center f-40 c-white" style="margin-top:-65px;">
+             辅助设计软件
+
+        </div>
+        <div class="login-panel">
+            <img src="images/colud.png" />
+
+            <form class="m-t-40">
+
+                <div class="prepend-icon">
+                    <input type="text" name="name" id="name" placeholder="账号" required>
+                    <i class="icon-user" style="line-height:50px; color:whitesmoke;"></i>
+                </div>
+
+                <div class="prepend-icon m-t-10">
+                    <input type="password" name="password" id="password" placeholder="密码" required>
+                    <i class="icon-lock" style="line-height:50px; color:whitesmoke;"></i>
+                </div>
+                <div class="social-btn m-t-20">
+                    <button type="submit" id="submit-form" class="btn-fb btn btn-lg btn-block btn-square f-10">登&nbsp;&nbsp;&nbsp;&nbsp;陆</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+    <p class="account-copyright">
+        <span>菏泽天润电力勘测设计有限公司、水杉数字科技</span>.<span>联合开发.</span> <br />
+ <span>Copyright © 2016 </span><span>菏泽天润电力勘测设计有限公司、水杉数字科技</span>.<span>版权所有.</span>
+    </p>
+
+    <script src="../assets/global/plugins/jquery/jquery-1.11.1.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#submit-form').click(function (e) {
+                e.preventDefault();
+
+                var username = $("#name").val();
+                var password = $("#password").val();
+
+                window.location.href = "../#/login/" + username + "/" + password;
+            });
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+﻿<div class="row m-0 p-0">
+    <div class="col-md-4">
+        <div class="panel">
+            <div class="panel-header bg-primary">
+                <h3><i class="icon-list"></i> 任务列表</h3>
+            </div>
+            <div class="panel-content p-0" fullheight="panelcontent" scroll="taskScroll">
+
+                <div class="widget-news">
+                    <a class="message-item media"
+                       ng-class="{' bg-aero' : task == currentTask }"
+                       ng-repeat="task in productionTasks.Source"
+                       ng-repeat-end="taskScroll.init()"
+                       ng-click="setCurrentTask(task)">
+                        <div class="media">
+                            <div class="media-body">
+                                <div class="pull-left p-r-10 p-t-10">
+                                    <span class="badge badge-primary pull-left">{{task.Name}}</span>
+                                </div>
+                                <div>
+                                    <small class="pull-right">{{task.ReceiveDate | TDate}}</small>
+                                    <h5 class="c-dark">{{task.Engineering.Name}}</h5>
+
+                                    <p class="f-12 c-gray">
+                                        {{task.Volume.SpecialtyID  | enumMap:"Specialty" }}，[{{task.Volume.Number}}]{{task.Volume.Name}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="panel ">
+            <div class="panel-header bg-primary">
+                <h3><i class="icon-list"></i> [{{currentTask.Engineering.Number }}]{{currentTask.Engineering.Name | subStr: 18}}</h3>
+            </div>
+            <div class="panel-content p-10">
+                <fieldset class="m-0 p-10 m-t-10 ">
+
+                    <process-control task-id="currentTask.ID"
+                                     next="check({callBack : callBack,flowInfo : taskInfo})">
+                    </process-control>
+
+                </fieldset>
+
+                <div class="user-list-header" style="width:100%;">
+                    <ul class="nav nav-tabs" ng-init="currentIndex = 1">
+                        <li ng-class="{'active' : currentIndex == 1}">
+                            <a ng-click="currentIndex = 1">
+                               
+                                <i class="fa fa-info-circle pull-left"></i>
+                                <span class="pull-left">工程卷册信息</span>
+                            </a>
+                        </li>
+                        <li ng-class="{'active' : currentIndex == 2}">
+                            <a ng-click="currentIndex = 2">
+                             
+                                <i class="fa fa-check-square pull-left"></i>
+                                <span class="pull-left">
+                                    校审意见
+                                </span>
+                                <span class="badge badge-danger m-l-5" style="border-radius:10px;">
+                                    {{checkItems.length}}
+                                </span>
+                            </a>
+                        </li>
+                        <li ng-class="{'active' : currentIndex == 3}">
+                            <a ng-click="currentIndex = 3">
+                                <i class="fa fa-file-text-o pull-left"></i>
+                                <span class="pull-left">设计文件</span>
+                                <span class="badge badge-danger m-l-5" style="border-radius:10px;">
+                                    {{attachIds.length}}
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="user-list-view"  >
+                    <div class="tab-content" >
+                        <div ng-class="{'active' : currentIndex == 1}" 
+                             class="tab-pane fade in">
+
+                            <fieldset class="m-0 p-l-30 p-r-30 ">
+                                <legend class="">{{local.business.engineering}}{{local.global.info}}</legend>
+
+                                <div class="row m-0  p-t-10">
+                                    <div class="col-sm-1 p-0"><label>{{local.eng.status}}</label></div>
+                                    <div class="col-sm-2">{{currentTask.Engineering.Status | enumMap:"EngineeringStatus"}}</div>
+                                    <div class="col-sm-1 p-0"><label>{{local.eng.phase}}</label></div>
+                                    <div class="col-sm-2">{{currentTask.Engineering.Phase | enumMap:"EngineeringPhase"}}</div>
+                                    <div class="col-sm-1 p-0"><label>{{local.eng.manager}}</label></div>
+                                    <div class="col-sm-2">
+                                        {{currentTask.Engineering.Manager | enumMap:"user"}}
+                                        <a class="btn btn-transparent msgChatBtn"
+                                           ng-click="openChat(currentTask.Engineering.Manager)">
+                                            <i class="fa fa-weixin"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-1 p-0"><label>{{local.eng.createdate}}</label></div>
+                                    <div class="col-sm-2">{{currentTask.Engineering.CreateDate | TDate}}</div>
+
+                                </div>
+                                <div class="row m-0  p-t-10">
+
+                                    <!--<div class="col-sm-1 p-0"><label>{{local.eng.tasktype}}</label></div>
+                                    <div class="col-sm-2">{{currentTask.Engineering.TaskType | enumMap:"TaskType"}}</div>-->
+                                    <div class="col-sm-1 p-0"><label>{{local.eng.type}}</label></div>
+                                    <div class="col-sm-2">{{currentTask.Engineering.Type | enumMap:"EngineeringType"}}</div>
+                                    <div class="col-sm-1 p-0"><label>{{local.eng.vollevel}}</label></div>
+                                    <div class="col-sm-2">{{currentTask.Engineering.VolLevel | enumMap:"VolLev"}}</div>
+                                    <div class="col-sm-1 p-0"><label>{{local.eng.deliverydate}}</label></div>
+                                    <div class="col-sm-2">{{currentTask.Engineering.DeliveryDate | TDate}}</div>
+                                </div>
+
+                            </fieldset>
+
+                            <fieldset class="m-0 p-l-30 p-r-30">
+                                <legend class="">{{local.business.volume}}{{local.global.info}}</legend>
+
+                                <div class="row m-0 ">
+                                    <div class="col-sm-1 p-0"><label>专业</label></div>
+                                    <div class="col-sm-2">
+                                        {{currentTask.Volume.SpecialtyID | enumMap : 'Specialty'}}
+                                    </div>
+                                    <div class="col-sm-1 p-0"> <label>卷册编号</label></div>
+                                    <div class="col-sm-2">{{currentTask.Volume.Number }}</div>
+                                    <div class="col-sm-1 p-0"> <label>卷册名称</label></div>
+                                    <div class="col-sm-2">{{currentTask.Volume.Name}}</div>
+                                    <div class="col-sm-1 p-0"><label>开始时间</label></div>
+                                    <div class="col-sm-2">{{currentTask.Volume.StartDate | TDate}}</div>
+
+                                </div>
+                                <div class="row m-0  p-t-10">
+                                    <div class="col-sm-1 p-0"> <label>校对人</label></div>
+                                    <div class="col-sm-2">
+                                        {{currentTask.Volume.Checker | enumMap : 'user'}}
+                                        <a class="btn btn-transparent msgChatBtn"
+                                           ng-click="openChat(currentTask.Volume.Checker)">
+                                            <i class="fa fa-weixin"></i>
+                                        </a>
+                                    </div>
+                                    <!--<div class="col-sm-1 p-0"><label>审核人</label></div>
+                                    <div class="col-sm-2">
+                                        {{currentTask.Volume.Checker | enumMap : 'user'}}
+                                        <a class="btn btn-transparent msgChatBtn"
+                                           ng-click="openChat(currentTask.Volume.Checker)">
+                                            <i class="fa fa-weixin"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-1 p-0"><label>批准人</label></div>
+                                    <div class="col-sm-2">
+                                        {{currentTask.Volume.Checker | enumMap : 'user'}}
+                                        <a class="btn btn-transparent msgChatBtn"
+                                           ng-click="openChat(currentTask.Volume.Checker)">
+                                            <i class="fa fa-weixin"></i>
+                                        </a>
+                                    </div>-->
+                                    <div class="col-sm-1 p-0"><label>结束时间</label></div>
+                                    <div class="col-sm-2">{{currentTask.Volume.EndDate | TDate}}</div>
+                                </div>
+
+                            </fieldset>
+
+                            <fieldset class="m-0 p-l-30 p-r-30">
+                                <legend class="">流程信息</legend>
+
+                                <div class="row m-0 m-b-40">
+                                    <div class="col-md-12">
+                                        <div class="process-view ">
+                                            <div ng-repeat="task in flowInfo.Tasks">
+                                                <div class="task  "
+                                                     ng-class="{'bg-aero' : task.Status == 0,'bg-orange' : task.Status == 1,'bg-primary' : task.Status == 2}">
+                                                    <span class="bold c-dark">{{task.Name}}</span>
+                                                    <p class="text m-t-10 c-dark">
+                                                        {{task.UserID | enumMap:"user"}}
+                                                    </p>
+                                                </div>
+
+                                                <div ng-show="!$last" class="icon-arrow-right arrow">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row m-0 " data-height="160" scroll="flowScroll" auto="true">
+                                    <div class="col-md-12 ">
+
+
+                                        <div class="row   p-0 ">
+                                            <label class="col-sm-1 m-0 p-0 p-l-20">序号</label>
+                                            <label class="col-sm-1 m-0 p-0 p-l-20">任务</label>
+                                            <label class="col-sm-1 m-0 p-0 p-l-20">负责人</label>
+                                            <label class="col-sm-2 m-0 p-0 p-l-20">处理时间</label>
+                                            <label class="col-sm-7 m-0 p-0 p-l-20">备注</label>
+                                        </div>
+                                        <hr />
+                                        <div ng-repeat="item in flowInfo.Logs"
+                                             class="row m-0 p-0 m-t-5">
+
+                                            <span class="col-sm-1 m-0 p-0 p-l-10">
+                                                <span class="label label-default">{{$index + 1}}</span>
+                                            </span>
+                                            <span class="col-sm-1 m-0 p-0 p-l-10">{{item.Name}}</span>
+                                            <span class="col-sm-1 m-0 p-0 p-l-10">{{item.UserID | enumMap:"user"}}</span>
+                                            <span class="col-sm-2 m-0 p-0 p-l-10">{{item.FinishDate | TDate:'yyyy/MM-dd hh:mm'}}</span>
+                                            <span class="col-sm-7 m-0 p-0 p-l-20">{{item.Note }}</span>
+
+
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </div>
+                        <div ng-class="{'active' : currentIndex == 2}" class="tab-pane fade in">
+                            <div class="form-group m-0 m-b-10 p-b-10 row border-bottom ">
+                                <label class="col-sm-6 m-0 p-l-30">{{local.check.context}}</label>
+                                <label class="col-sm-1 m-0 p-0">{{local.check.type}}</label>
+                                <label class="col-sm-1 m-0 p-0">{{local.check.user}}</label>
+                                <label class="col-sm-1 m-0 p-l-10">{{local.check.date}}</label>
+                                <label class="col-sm-3 m-0 p-l-30">
+                                    {{local.check.isCorrect}}
+                                    <span class="m-l-30 p-l-10">
+                                        {{local.check.pass}}
+                                    </span>
+                                    
+                                </label>
+                               
+                            </div>
+
+                            <div ng-repeat="item in checkItems" class="form-group m-0 p-0 m-t-5"
+                                 ng-repeat-end="workScroll.init()">
+                                <div class="row" ng-show="!item.edit">
+
+                                    <span class="col-sm-6  "><span class="label label-default">{{$index + 1}}</span>&nbsp; {{item.Context}}</span>
+                                    <span class="col-sm-1 m-0 p-0 ">{{item.Type | enumMap:"CheckErrorType"}}</span>
+                                    <span class="col-sm-1 m-0 p-0 ">
+                                        {{item.UserID | enumMap:"user"}}
+                                        <a class="btn btn-transparent msgChatBtn m-0 p-0"
+                                           ng-click="openChat(item.UserID)">
+                                            <i class="fa fa-weixin"></i>
+                                        </a>
+                                    </span>
+                                    <span class="col-sm-1 m-0 p-0 ">{{item.Date | TDate}}</span>
+                                    <span class="col-sm-1 m-0 p-l-30">
+                                        <input type="checkbox" ng-change="updateCheckInfo(item)" 
+                                               ng-disabled="!isDesignModel" 
+                                               ng-model="item.IsCorrect" icheck>
+                                    </span>
+                                    <div class="col-sm-1 m-0 p-l-30">
+                                        <input type="checkbox" ng-change="updateCheckInfo(item)"
+                                               ng-disabled="!item.IsCorrect || isDesignModel || item.UserID != currentUser.Account.ID"
+                                               ng-model="item.IsPass" icheck>
+                                    </div>
+                                    <div class="col-sm-1 m-0 p-l-30">
+                                        <a class="btn btn-transparent pull-right m-0 p-0"
+                                           ng-show="!isDesignModel && item.UserID == currentUser.Account.ID"
+                                           ng-click="deleteCheckInfo(item)"
+                                           style="height:auto;">
+                                            <i class="fa fa-close"></i>
+                                        </a>
+                                        <a class="btn btn-transparent pull-right m-0 p-0"
+                                           ng-show="!isDesignModel && item.UserID == currentUser.Account.ID"
+                                           ng-click="item.edit = true"
+                                           style="height:auto;">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-group row m-0 p-0" ng-show="item.edit">
+                                    <div class="col-sm-9 p-0 m-0">
+                                        <textarea rows="3"
+                                                  ng-model="item.Context"
+                                                  placeholder="{{local.check.context}}"
+                                                  class="form-control form-white"></textarea>
+                                    </div>
+                                    <div class="col-sm-2 ">
+                                        <ui-select ng-model="item.Type" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="{{local.check.type}}">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Value as item in getBaseData('CheckErrorType')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-sm-1 ">
+                                        <button class="btn btn-primary btn-square btn-sm m-0 "
+                                                ng-click="updateCheckInfo(item)">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group row m-0 p-0" ng-show="!isDesignModel">
+                                <div class="col-sm-9 p-0 m-0">
+                                    <textarea rows="3"
+                                              ng-model="newCheckInfo.Context"
+                                              placeholder="{{local.check.context}}"
+                                              class="form-control form-white"></textarea>
+                                </div>
+                                <div class="col-sm-2 ">
+                                    <ui-select ng-model="newCheckInfo.Type" theme="select2" search-enabled="false" class="form-control form-white">
+                                        <ui-select-match placeholder="{{local.check.type}}">{{$select.selected.Text}}</ui-select-match>
+                                        <ui-select-choices repeat="item.Value as item in getBaseData('CheckErrorType')">
+                                            <div ng-bind-html="item.Text"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="col-sm-1 ">
+                                    <button class="btn btn-primary btn-square btn-sm m-0 "
+                                            ng-click="addCheckInfo(newCheckInfo)">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-class="{'active' : currentIndex == 3}" class="tab-pane fade in">
+                            
+                            <attach-upload name="attachCtl"
+                                           attach-ids="attachIds"
+                                           ng-show="isDesignModel"
+                                           obj-id="currentTask.Volume.ID"
+                                           obj-name="Volume">
+                            </attach-upload>
+
+                            <attach-preview name="attachCtl"
+                                            ng-show="!isDesignModel"
+                                            obj-id="currentTask.Volume.ID"
+                                            obj-name="Volume">
+                            </attach-preview>
+                        </div>
+                    </div>
+                </div>
+                <!--<div fullheight="panelcontent" calheight="-200" scroll="workScroll">
+                    <fieldset class=" m-0 p-0 p-l-30 p-r-30 p-t-10 m-t-10" ng-show="isDesignModel">
+                        <button type="button"
+                                class="btn btn-primary btn-square ">
+                            <i class="fa fa-files-o"></i>
+                            提资
+                        </button>
+                        <button type="button"
+                                class="btn btn-primary btn-square ">
+                            <i class="fa fa-users"></i>
+                            会签
+                        </button>
+                        <button type="button"
+                                ng-click="closeMaintain()"
+                                class="btn btn-primary btn-square ">
+                            <i class="fa fa-file-text"></i>
+                            记事
+                        </button>
+                    </fieldset>
+
+                </div>-->
+
+            </div>
+        </div>
+    </div>
+</div>

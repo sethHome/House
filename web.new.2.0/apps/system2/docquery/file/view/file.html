@@ -1,0 +1,239 @@
+﻿<div class="panel ">
+    <div class="panel-content " style="min-height:{{panelHeight}}px">
+
+        <div style="width:40%; margin:auto; margin-top:{{panelHeight / 2 - 200}}px;" ng-show="!listResult">
+            <p class="f-40 text-center"><i class="fa fa-search"></i> 文件搜索</p>
+            <div class="m-t-40">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <input class="form-control form-white " ng-model="searchKey" placeholder="搜索下一吧！！" />
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button"
+                                ng-click="search()"
+                                class="btn btn-primary btn-square ">
+                            搜索
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+          
+            <div class="m-t-20" ng-repeat="f in fonds">
+
+                <p>
+                    全宗名称：{{f.Name}}， 在以下内容中搜索
+                </p>
+
+                <div class="selectbox pull-left"
+                     ng-class="{'bg-blue' : archive.choose }"
+                     ng-click="archive.choose = !archive.choose"
+                     ng-repeat="archive in f.Archives">{{archive.Name}}</div>
+
+            </div>
+
+        </div>
+
+        <div ng-show="listResult">
+            <div class="row m-0">
+                <div class="pull-left f-20 c-blue" ng-click="listResult = false;" style="cursor:pointer;"><i class="fa fa-search"></i> 文件搜索</div>
+                <div class="pull-left m-r-10 m-l-10" style="width:30%;"><input class="form-control form-white " ng-model="searchKey" placeholder="搜索下一吧！！" /> </div>
+                <button type="button"
+                        ng-click="search()"
+                        class="btn btn-primary btn-square pull-left ">
+                    搜索
+                </button>
+            </div>
+
+            <div style="height:{{panelHeight - 80}}px">
+
+                <div data-split-pane>
+                    <div data-split-pane-component>
+
+                        <div class="pretty-split-pane-component-inner">
+
+                            <div class="widget-news ">
+                                <a class="message-item media"
+                                   ng-click="setCurrentItem(item)"
+                                   ng-repeat="item in searchResult">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <div class="pull-left p-r-10">
+                                                <i class="fa fa-file"></i>
+                                            </div>
+                                            <div>
+                                               
+                                                
+                                                <span class="label label-info">{{item.Datas.ArchiveTypeName}}</span>
+
+                                                <p class="f-12 c-gray" style="overflow:auto; word-break:break-all; height:auto;">
+                                                    <span class="m-r-5" ng-repeat="f in fields track by $index">
+                                                        <span>{{fieldsMap[f]}} : </span>
+                                                        <span ng-bind-html="item.Datas[f]"></span>
+                                                        &nbsp; |
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div data-split-pane-divider data-width="5px"></div>
+                    <div data-split-pane-component data-width="30%">
+                        <div class="pretty-split-pane-component-inner">
+
+                            <div class="nav-tabs no-border" ng-init="currentIndex=1">
+                                <ul class="nav nav-tabs nav-red no-border">
+                                    <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">文件预览</a></li>
+                                    <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab">档案信息</a></li>
+                                    <li ng-click="currentIndex = 3" ng-class="{active : currentIndex == 3}"><a data-toggle="tab">档案日志</a></li>
+                                </ul>
+                                <div class="tab-content p-0 ">
+
+                                    <div class="tab-pane p-10" ng-class="{active : currentIndex == 1}">
+
+                                        <p ng-bind-html="$sce.trustAsHtml(currentItem.Datas.content) "></p>
+
+                                    </div>
+
+                                    <div class="tab-pane" ng-class="{active : currentIndex == 2}">
+
+                                        <table class="item-table" border="1" cellpadding="0" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <td width="18px">&nbsp;</td>
+                                                    <td width="30%">项</td>
+                                                    <td>值</td>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr class="item-head">
+                                                    <td><i class="fa fa-info"></i> </td>
+                                                    <td colspan="2"> 基础信息</td>
+                                                </tr>
+                                                <tr class="item-row" ng-repeat="item in archiveFields">
+                                                    <td class="item-head"></td>
+                                                    <td>{{item.Name}}</td>
+                                                    <td>{{getFiledValue(volumeInfo,item)}}</td>
+                                                </tr>
+                                                <tr class="item-head">
+                                                    <td><i class="fa fa-info"></i> </td>
+                                                    <td colspan="2"> 其他信息</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>全宗号</td>
+                                                    <td>{{volumeInfo.FondsNumber}}</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>状态</td>
+                                                    <td class="c-blue">{{volumeInfo.Status | enumMap : 'ArchiveStatus'}}</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>访问级别</td>
+                                                    <td class="c-blue">{{volumeInfo.AccessLevel | enumMap : 'AccessLevel'}}</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>创建人</td>
+                                                    <td>{{volumeInfo.CreateUser | enumMap : 'user'}}</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>创建时间</td>
+                                                    <td>{{volumeInfo.CreateDate | TDate}}</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>最近修改时间</td>
+                                                    <td>{{volumeInfo.ModifyDate | TDate}}</td>
+                                                </tr>
+                                                <tr class="item-row">
+                                                    <td class="item-head"></td>
+                                                    <td>最近修改人</td>
+                                                    <td>{{volumeInfo.ModifyUser | enumMap : 'user'}}</td>
+                                                </tr>
+                                                <tr class="item-head" ng-show="volumeInfo.ProjectID > 0">
+                                                    <td><i class="fa fa-info"></i> </td>
+                                                    <td colspan="2"> 项目信息</td>
+                                                </tr>
+                                                <tr class="item-row" ng-repeat="item in projectFields" ng-show="volumeInfo.ProjectID > 0">
+                                                    <td class="item-head"></td>
+                                                    <td>{{item.Name}}</td>
+                                                    <td>{{getFiledValue(projInfo,item)}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                    
+
+                                    <div class="tab-pane p-10 c-gray f-12" ng-class="{active : currentIndex == 3}">
+
+                                        <div class="m-b-5">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案上架
+                                        </div>
+                                        <div class="m-b-5">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案上架
+                                        </div>
+                                        <div class="m-b-5">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案上架
+                                        </div>
+                                        <div class="m-b-5">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案上架
+                                        </div>
+                                        <div class="m-b-5 c-blue">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案下载
+                                        </div>
+                                        <div class="m-b-5">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案上架
+                                        </div>
+                                        <div class="m-b-5 c-red">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案数据修改
+                                        </div>
+                                        <div class="m-b-5">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案上架
+                                        </div>
+                                        <div class="m-b-5">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案上架
+                                        </div>
+                                        <div class="m-b-5">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案上架
+                                        </div>
+                                        <div class="m-b-5">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案上架
+                                        </div>
+                                        <div class="m-b-5">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案上架
+                                        </div>
+                                        <div class="m-b-5">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案上架
+                                        </div>
+                                        <div class="m-b-5">
+                                            <i class="fa fa-calendar"></i> 2016/01/01 10:12 张三 档案上架
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+

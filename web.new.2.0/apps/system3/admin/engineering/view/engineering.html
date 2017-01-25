@@ -1,0 +1,52 @@
+﻿<div class="row">
+
+    <div class="col-md-3">
+        <div class="panel ">
+            <div class="panel-header panel-controls">
+                <div class="form-group" style="margin-top:10px;">
+                    <input class="form-control form-white" type="text" placeholder="筛选" ng-model="EngFilter">
+                </div>
+
+            </div>
+
+            <div class="panel-content widget-news" blockui="listPanel" fullheight="panelcontent" scroll="EngScroller" auto="true">
+
+                <div class="message-item media relative"
+                     ng-click="EngChanged(Eng)"
+                     ng-init="setCurrent(Eng)"
+                   
+                     ng-class="{'border-left m-l-10': currentEng.ID == Eng.ID}"
+                     ng-repeat="Eng in engineeringList | orderBy : 'ProjectID' | filter:EngFilter track by Eng.ID "
+                     ng-repeat-end="EngScroller.init()">
+
+                    <div class="percentbox" value="{{Eng.TaskProcessPercent}}"></div>
+
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="pull-left c-dark  head-boxed boxsize-60 m-r-10 {{Eng.Status | phasebg}}">
+                                {{Eng.DuringDay}}天
+                            </div>
+                            <div class="relative">
+                                <small class="pull-right">
+                                    计划完成：{{Eng.DeliveryDate | TDate}}<br />
+                                    <span ng-show="Eng.Status == 4">实际完成：{{Eng.FinishDate | TDate}}</span>
+                                </small>
+
+                                <h5 class="c-dark"> {{Eng.Name}}&nbsp;<span class="badge badge-danger" ng-show="Eng.IsTimeOut">超期</span></h5>
+                                <p class="f-12 c-gray">
+                                    编号：{{Eng.Number}} ,负责人： {{Eng.Manager | enumMap:"user"}} ,阶段：{{Eng.Phase | enumMap:"EngineeringPhase"}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+
+    <div class="col-md-9" ui-view>
+        
+    </div>
+</div>

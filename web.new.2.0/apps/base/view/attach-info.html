@@ -1,0 +1,12 @@
+﻿<div>
+    <div ng-show="attach.Type != 1 ">
+        <div>
+            <i class="fa fa-file"></i>
+            {{attach.Name}}&nbsp;{{attach.Size | fileSize}}&nbsp;
+            <a href="{{attachDownloadUrl}}{{attach.ID}}"><i class="fa fa-download"></i> 下载</a>
+        </div>
+    </div>
+    <div ng-show="attach.Type == 1 ">
+        <img style="max-width:100%;" ng-src="{{imagePreviewUrl + attach.ID}}" />
+    </div>
+</div>

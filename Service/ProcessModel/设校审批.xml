@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<definitions id="P1" name="设校审批" >
+
+  <!--设校审批流程-->
+  <process id="P1-1" isClosed="false" isExecutable="true" processType="None">
+
+    <!--开始-->
+    <startEvent id="_1" name="开始" >
+      <outgoing>_2</outgoing>
+    </startEvent>
+
+    <sequenceFlow id="_2" sourceRef="_1" targetRef="_3"/>
+
+    <!--设计-->
+    <userTask id="_3" name="设计">
+      <incoming>_2</incoming>
+      <outgoing>_4</outgoing>
+      <potentialOwner resourceRef="DesignUser" type="user">
+      </potentialOwner>
+    </userTask>
+
+    <sequenceFlow id="_4" sourceRef="_3" targetRef="_5"/>
+
+    <!--校对-->
+    <userTask id="_5" name="校对" >
+      <incoming>_4</incoming>
+      <outgoing>_6</outgoing>
+      <potentialOwner resourceRef="CheckUser" type="user">
+      </potentialOwner>
+    </userTask>
+
+    <sequenceFlow id="_6" sourceRef="_5" targetRef="_7"/>
+
+    <exclusiveGateway id="_7" name="是否同意" default="_8"  >
+      <incoming>_6</incoming>
+      <outgoing>_8</outgoing>
+      <outgoing>_9</outgoing>
+    </exclusiveGateway>
+
+    <!--同意-->
+    <sequenceFlow id="_8" sourceRef="_7" targetRef="_10">
+      <conditionExpression>bool_CheckResult</conditionExpression>
+    </sequenceFlow>
+    <!--不同意-->
+    <sequenceFlow id="_9" sourceRef="_7" targetRef="_3">
+      <conditionExpression>!bool_CheckResult</conditionExpression>
+    </sequenceFlow>
+
+    <!--审批-->
+    <userTask id="_10" name="审核">
+      <incoming>_8</incoming>
+      <outgoing>_11</outgoing>
+      <potentialOwner resourceRef="ApproveUser" type="group">
+      </potentialOwner>
+    </userTask>
+
+    <sequenceFlow id="_11" sourceRef="_10" targetRef="_12"/>
+    
+    <!--是否同意-->
+    <exclusiveGateway id="_12" name="是否同意" default="_13"  >
+      <incoming>_11</incoming>
+      <outgoing>_13</outgoing>
+      <outgoing>_14</outgoing>
+    </exclusiveGateway>
+
+    <!--同意-->
+    <sequenceFlow id="_13" sourceRef="_12" targetRef="_15">
+      <conditionExpression>bool_ApproveResult</conditionExpression>
+    </sequenceFlow>
+    <!--不同意-->
+    <sequenceFlow id="_14" sourceRef="_12" targetRef="_3">
+      <conditionExpression>!bool_ApproveResult</conditionExpression>
+    </sequenceFlow>
+
+    <!--批准-->
+    <userTask id="_15" name="批准">
+      <incoming>_13</incoming>
+      <outgoing>_16</outgoing>
+      <potentialOwner resourceRef="AgreeUser" type="group">
+      </potentialOwner>
+    </userTask>
+
+    <sequenceFlow id="_16" sourceRef="_15" targetRef="_17"/>
+
+    <!--是否同意-->
+    <exclusiveGateway id="_17" name="是否同意" default="_18" >
+      <incoming>_16</incoming>
+      <outgoing>_18</outgoing>
+      <outgoing>_19</outgoing>
+    </exclusiveGateway>
+
+    <!--同意-->
+    <sequenceFlow id="_18" sourceRef="_17" targetRef="_20">
+      <conditionExpression>bool_AgreeResult</conditionExpression>
+    </sequenceFlow>
+    <!--不同意-->
+    <sequenceFlow id="_19" sourceRef="_17" targetRef="_3">
+      <conditionExpression>!bool_AgreeResult</conditionExpression>
+    </sequenceFlow>
+
+    <!--结束-->
+    <endEvent id="_20" name="结束">
+      <incoming>_18</incoming>
+    </endEvent>
+
+  </process>
+
+  <ob name="ProductionOB"></ob>
+
+  <!--流程资源-->
+  <resource id="DesignUser">
+    
+  </resource>
+  <resource id="CheckUser">
+    
+  </resource>
+  <resource id="ApproveUser">
+    <user id="9"></user>
+  </resource>
+  <resource id="AgreeUser">
+    <user id="9"></user>
+  </resource>
+  
+  
+</definitions>
+

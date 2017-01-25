@@ -1,0 +1,40 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <!-- BEGIN TIMELINE CONTENT -->
+        <!--<div class="timeline-btn-day">
+            <i class="icon-custom-left"></i>
+            <button type="button" class="btn btn-primary f-16"><strong>Tomorrow</strong></button>
+        </div>-->
+        <section id="timeline">
+            <div class="timeline-block"
+                 ng-repeat="note in notes">
+                <div class="timeline-icon bg-dark">
+                    <i class="icon-pencil"></i>
+                </div>
+                <div class="timeline-content">
+                    <div class="timeline-heading clearfix">
+                        <h2 class="pull-left">{{note.NoteType | enumMap:"NoteType"}} </h2>
+                        <div class="pull-right">
+                            <div class="pull-left">
+                                <div class="timeline-day-number">{{note.NoteDate | TDate:'d'}}</div>
+                            </div>
+                            <div class="pull-left">
+                                <div class="timeline-day">&nbsp;</div>
+                                <div class="timeline-month c-gray">{{note.NoteDate | TDate:'yyyy年M月'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p >
+                       
+                        {{note.Content}}
+                      
+                    </p>
+                  <p class="text pull-right">
+                     记录人： {{note.UserID | enumMap:"user"}}
+                  </p>
+                </div>
+            </div>
+        </section>
+        <!-- END TIMELINE CONTENT -->
+    </div>
+</div>

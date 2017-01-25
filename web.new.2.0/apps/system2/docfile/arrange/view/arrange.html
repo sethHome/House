@@ -1,0 +1,124 @@
+﻿
+
+
+<div class="panel">
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner">
+
+                    <div class="nav-tabs no-border" ng-init="currentTabIndex = 1">
+                        <ul class="nav nav-tabs nav-red no-border">
+                            <li ng-click="currentTabIndex = 1" ng-class="{active : currentTabIndex == 1}"><a data-toggle="tab">整编库</a></li>
+                            <li ng-click="currentTabIndex = 2" ng-class="{active : currentTabIndex == 2}"><a data-toggle="tab">分类表[{{archiveCategoryTreeNode.length}}]</a></li>
+                        </ul>
+                        <div class="tab-content p-0 ">
+                            <div class="tab-pane" ng-class="{active : currentTabIndex == 1}">
+                                <tree tree-data="scope"
+                                      tree-model="documentsArchive"
+                                      tree-api="treeApi"
+                                      changed="archive_changed"
+                                      tree-plugins="wholerow,types"></tree>
+                            </div>
+
+                            <div class="tab-pane" ng-class="{active : currentTabIndex == 2}">
+                                <tree tree-data="scope"
+                                      tree-model="archiveCategoryTreeNode"
+                                      tree-api="categoryTreeApi"
+                                      changed="category_changed"
+                                      tree-plugins="wholerow,types"></tree>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="80%">
+                
+                <div data-split-pane>
+                    <div data-split-pane-component>
+                        <div class="pretty-split-pane-component-inner p-10">
+                            <div class="row m-0">
+                                <button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="addArchiveVolume()">
+                                    <i class="fa fa-plus"></i>新建{{currentArchive.HasVolume ? '案卷' : '盒'}}
+                                </button>
+
+                                <button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="deleteArchiveVolume()">
+                                    <i class="fa fa-close"></i>删除{{currentArchive.HasVolume ? '案卷' : '盒'}}
+                                </button>
+                                <button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="setArchiveStatus()">
+                                    <i class="fa fa-plane"></i>加入正式库
+                                </button>
+                                <button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="addCondition()">
+                                    <i class="fa fa-filter"></i>数据筛选
+                                </button>
+
+                                <button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="batchUpdate()">
+                                    <i class="fa fa-pencil-square-o"></i>批量修改
+                                </button>
+
+                                <button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="displayColumns()">
+                                    <i class="fa fa-th-list"></i>字段显示
+                                </button>
+
+                                <button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="exprotExcel()">
+                                    <i class="fa fa-file-excel-o"></i>数据导出
+                                </button>
+
+                            </div>
+                            <div style="height:{{gridHeight - 50}}px" class="m-t-5"
+                                 ui-grid-pinning
+                                 ui-grid-pagination
+                                 ui-grid-selection
+                                 ui-grid-auto-resize
+                                 ui-grid-resize-columns
+                                 ui-grid-move-columns
+                                 ui-grid="archiveGridOptions"></div>
+                        </div>
+                        
+
+                    </div>
+                    <div data-split-pane-divider data-width="5px"></div>
+                    <div data-split-pane-component data-width="30%">
+
+                        <div class="pretty-split-pane-component-inner p-10 ">
+
+                            <div class="row m-0">
+                            
+                                <button type="button" class="btn btn-primary btn-square m-0 "
+                                        ng-click="addArchiveFile()">
+                                    <i class="fa fa-plus"></i>新建文件
+                                </button>
+
+                                <span class="pull-right m-t-5">{{currentArchive.HasVolume ? '案卷' : '盒'}}内文件</span>
+                            </div>
+
+                            <div style="height:{{gridHeight - 50}}px" class="m-t-5"
+                                 ui-grid-pinning
+                                 ui-grid-auto-resize
+                                 ui-grid-resize-columns
+                                 ui-grid-move-columns
+                                 ui-grid="archiveFileGridOptions"></div>
+
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

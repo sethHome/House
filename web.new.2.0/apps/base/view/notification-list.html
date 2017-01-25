@@ -1,0 +1,53 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">我的通知列表</h4>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-sm-4 p-0">
+            <div class="panel">
+                <div class="panel-content widget-news" scroll="notifyScroll" data-height="530">
+                    <a class="message-item media"
+                       ng-repeat="notify in notifications.Source"
+                       ng-class="{' bg-aero' : notify.ID == currentNotify.ID }"
+                       ng-click="setCurrentNotify(notify)"
+                       
+                       ng-repeat-end="notifyScroll.init()">
+                        <div class="media">
+                            <div class="media-body">
+                                <div class="pull-left m-r-5 ">
+                                   <h6><span class="badge  pull-left">{{$index+1}}</span></h6> 
+                                </div>
+                                <div>
+                                    <small class="pull-right">{{notify.EffectDate | TDate}}</small>
+                                    <h6 class="c-dark"
+                                        ng-class="{'line-through' : notify.IsRead}">{{notify.SourceName | enumMap:'Object'}} 
+                                        <span class="label label-danger" ng-show="!notify.IsRead">未读</span>
+                                    </h6>
+
+                                    <!--<p class="f-12 c-gray">{{notify.Title | subStr:10}}</p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="panel" ng-show="currentNotify">
+                <div class="panel-content p-0">
+                   
+                    
+                    <span class="caption-subject bold uppercase">{{currentNotify.Title}}</span>
+                    <div class="caption-helper m-t-10">发布者：{{currentNotify.SendUser | enumMap:'user'}} &nbsp; 发布时间：{{currentNotify.CreateDate | TDate: 'yyyy/MM/dd'}}</div>
+                    <hr />
+                    <div class="text-gray" ng-bind-html="currentNotify.Info">
+                    </div>
+                    <button class="btn btn-sm btn-square btn-info m-0" ng-click="viewObject()">查看</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

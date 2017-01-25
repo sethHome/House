@@ -1,0 +1,56 @@
+﻿<div class="modal-header bg-primary modal-dragable" >
+   流程详细
+    <button type="button" ng-click="closeModal()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal  m-0 p-0"
+          name="FormMaintain">
+       
+        <div class="row m-0 m-b-60 ">
+            <div class="col-md-12">
+                <div class="process-view ">
+                    <div ng-repeat="task in flowInfo.Tasks">
+                        <div class="task  "
+                             ng-class="{'bg-aero' : task.Status == 0,'bg-orange' : task.Status == 1,'bg-primary' : task.Status == 2}">
+                            <span class="bold c-dark">{{task.Name}}</span>
+                            <p class="text m-t-10 c-dark">
+                                {{task.UserID | enumMap:"user"}}
+                            </p>
+                        </div>
+
+                        <div ng-show="!$last" class="icon-arrow-right arrow">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row m-0 ">
+            <div class="col-md-12 ">
+               
+
+                <div class="row   p-0 ">
+                    <label class="col-sm-1 m-0 p-0 p-l-20">序号</label>
+                    <label class="col-sm-2 m-0 p-0 p-l-20">任务</label>
+                    <label class="col-sm-1 m-0 p-0 p-l-20">负责人</label>
+                    <label class="col-sm-2 m-0 p-0 p-l-20">处理时间</label>
+                    <label class="col-sm-6 m-0 p-0 p-l-20">备注</label>
+                </div>
+                <hr />
+                <div ng-repeat="item in flowInfo.Logs"
+                     class="row m-0 p-0 m-t-5">
+
+                    <span class="col-sm-1 m-0 p-0 p-l-10">
+                        <span class="label label-default">{{$index + 1}}</span>
+                    </span>
+                    <span class="col-sm-2 m-0 p-0 p-l-10">{{item.Name}}</span>
+                    <span class="col-sm-1 m-0 p-0 p-l-10">{{item.UserID | enumMap:"user"}}</span>
+                    <span class="col-sm-2 m-0 p-0 p-l-10">{{item.FinishDate | TDate:'yyyy/MM-dd hh:mm'}}</span>
+                    <span class="col-sm-6 m-0 p-0 p-l-20">{{item.Note }}</span>
+
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

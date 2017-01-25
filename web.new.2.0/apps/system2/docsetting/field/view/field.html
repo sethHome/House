@@ -1,0 +1,79 @@
+﻿<div class="panel" blockui="panel1">
+    <div class="panel-header ">
+        <div class="form-group m-0" >
+            <div class="row">
+                <div class="col-sm-2 ">
+                    <ui-select ng-model="currentItem.Key" theme="select2" search-enabled="false" class="form-control form-white">
+                        <ui-select-match placeholder="">{{$select.selected.Text}}</ui-select-match>
+                        <ui-select-choices repeat="item.Value as item in items">
+                            <div ng-bind-html="item.Text"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button"
+                            ng-click="addField()"
+                            class="btn btn-primary btn-square m-0 ">
+                        <i class="fa fa-plus"></i>
+                        添加字段
+                    </button>
+
+                    
+                </div>
+                <div class="col-sm-1"  ng-show="currentItem.Key == 'Project'">
+
+                    <button type="button"
+                            ng-click="createTable()"
+                            class="btn btn-primary btn-square m-0 ">
+                        <i class="fa fa-database"></i>
+                        创建项目库
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="panel-content widget-news" style="height:{{panelHeight - 50}}px">
+        
+        <div class="message-item media bold bg-white">
+            <div class="media">
+                <div class="media-body row">
+                    <div class="col-sm-2">名称</div>
+                    <div class="col-sm-1">类型</div>
+                    <div class="col-sm-1">长度</div>
+                    <div class="col-sm-1">排序</div>
+                    <div class="col-sm-1">必填</div>
+                    <div class="col-sm-1">搜索</div>
+                    <div class="col-sm-1">主名</div>
+                    <div class="col-sm-1">默认值</div>
+                    <div class="col-sm-2">操作</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="message-item media"
+             ng-repeat="f in fieldList ">
+
+            <div class="media">
+                <div class="media-body">
+                    <div class="media-body row">
+                        <div class="col-sm-2">{{f.Name}}</div>
+                        <div class="col-sm-1">{{f.DataType | enumMap : 'FieldType'}}</div>
+                        <div class="col-sm-1">{{f.Length}}</div>
+                        <div class="col-sm-1">{{f.Index}}</div>
+                        <div class="col-sm-1">{{f.NotNull ? "√" : ""}}</div>
+                        <div class="col-sm-1">{{f.ForSearch ? "√" : ""}}</div>
+                        <div class="col-sm-1">{{f.Main ? "√" : ""}}</div>
+                        <div class="col-sm-1">{{f.Default}}</div>
+                        <div class="col-sm-2">
+                            <a class="btn btn-sm" style="padding-left:0 !important;" ng-click="remove(f)"><i class="fa fa-trash-o"></i> 删除</a>
+                            <a class="btn btn-sm" style="padding-left:0 !important;" ng-click="update(f)"><i class="fa fa-edit"></i> 更新</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

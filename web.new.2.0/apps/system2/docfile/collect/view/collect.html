@@ -1,0 +1,106 @@
+﻿<div class="panel">
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner p-10">
+                    <div class="row m-0">
+                        <div class="col-sm-3"><label class="m-t-5">部门：</label></div>
+                        <div class="col-md-9">
+                            <ui-select ng-model="filter.dept" theme="select2" search-enabled="false" class="form-control form-white">
+                                <ui-select-match placeholder="选择部门">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="item.key as item in depts">
+                                    <div ng-bind-html="item.name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <hr class="m-b-5 m-t-10" />
+                    <tree tree-data="scope"
+                          tree-model="documents"
+                          tree-api="treeApi"
+                          changed="file_changed"
+                          tree-plugins="wholerow,types"></tree>
+
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="70%">
+                <div class="pretty-split-pane-component-inner p-10">
+
+                    <div class="panel ">
+                        <div class="panel-header p-l-0 ">
+                            <button type="button" class="btn btn-primary btn-square m-0 "
+                                    ng-click="addFile()">
+                                <i class="fa fa-plus"></i>新增
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-square m-0 "
+                                    ng-click="deleteFile()">
+                                <i class="fa fa-close"></i>删除
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-square m-0 "
+                                    ng-click="addCondition()">
+                                <i class="fa fa-filter"></i>数据筛选
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-square m-0 "
+                                    ng-click="batchUpload()">
+                                <i class="fa fa-file"></i>批量挂接
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-square m-0 "
+                                    ng-click="batchUpdate()">
+                                <i class="fa fa-pencil-square-o"></i>批量修改
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-square m-0 "
+                                    ng-click="displayColumns()">
+                                <i class="fa fa-th-list"></i>字段显示
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-square m-0 "
+                                    ng-click="exprotExcel()">
+                                <i class="fa fa-file-excel-o"></i>数据导出
+                            </button>
+
+                            <div class="btn-group ">
+                                <button type="button" class="btn btn-primary btn-square dropdown-toggle m-0" data-toggle="dropdown">
+                                    <i class="fa fa-navicon"></i>数据范围 <span class="caret"></span>
+                                </button>
+                                <span class="dropdown-arrow"></span>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a ng-click="setStatus(0)">全部 &nbsp;&nbsp; {{ filter.status == 0 ? "√" : "" }}</a>
+                                    </li>
+                                    <li ng-repeat="item in getBaseData('FileStatus') track by item.Value">
+                                        <a ng-click="setStatus(item.Value)">{{item.Text}} &nbsp;&nbsp; {{ item.Value == filter.status.toString() ? "√" : "" }}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="panel-content p-0" blockui="listPanel">
+
+                            <div class="width-100p"
+                                 style="height:{{gridHeight - 80}}px"
+                                 ui-grid-pagination
+                                 ui-grid-selection
+                                 ui-grid-auto-resize
+                                 ui-grid-resize-columns
+                                 ui-grid-move-columns
+                                 ui-grid="fileGridOptions"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

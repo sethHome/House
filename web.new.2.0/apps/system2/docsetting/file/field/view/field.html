@@ -1,0 +1,48 @@
+﻿<div class="panel" blockui="panel1">
+    <div class="panel-header ">
+        <button type="button"
+                ng-click="addField()"
+                class="btn btn-primary btn-square m-0 ">
+            <i class="fa fa-plus"></i>
+            添加字段
+        </button>
+    </div>
+    <div class="panel-content widget-news" >
+       
+        <div class="message-item media bold bg-white ">
+            <div class="media">
+                <div class="media-body row">
+                    <div class="col-sm-2">名称</div>
+                    <div class="col-sm-2">类型</div>
+                    <div class="col-sm-2">长度</div>
+                    <div class="col-sm-1">必填</div>
+                    <div class="col-sm-1">搜索</div>
+                    <div class="col-sm-2">默认值</div>
+                    <div class="col-sm-2">操作</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="message-item media"
+             ng-repeat="f in fieldList ">
+
+            <div class="media">
+                <div class="media-body">
+                    <div class="media-body row">
+                        <div class="col-sm-2">{{f.Name}}</div>
+                        <div class="col-sm-2">{{f.DataType | enumMap : 'FieldType'}}</div>
+                        <div class="col-sm-2">{{f.Length}}</div>
+                        <div class="col-sm-1">{{f.NotNull ? "√" : ""}}</div>
+                        <div class="col-sm-1">{{f.ForSearch ? "√" : ""}}</div>
+                        <div class="col-sm-2">{{f.Default}}</div>
+                        <div class="col-sm-2">
+                            <a class="btn btn-sm" style="padding-left:0 !important;" ng-click="remove(f)"><i class="fa fa-trash-o"></i> 删除</a>
+                            <a class="btn btn-sm" style="padding-left:0 !important;" ng-click="update(f)"><i class="fa fa-edit"></i> 更新</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,133 @@
+﻿<div class="modal-header bg-primary modal-dragable modal-block">
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">{{maintainService.update ? '文件信息' : '新增文件'}}</h4>
+</div>
+
+<div class="modal-body ">
+    <form name="FormMaintain" scroll="maintainScroll" data-height="500">
+        <fieldset class="m-t-0" >
+            <legend>文件信息</legend>
+           
+            <div class="row"
+                 ng-repeat="fieldItem in fields track by $index"
+                 ng-repeat-end="maintainScroll.init()">
+                <div ng-class="{'col-sm-12' : field.Length >= 500,'col-sm-6' : field.Length < 500}"
+                     ng-repeat="field in fieldItem.fields track by field.ID">
+                    <div class="form-group">
+                        <label class="control-label ">
+                            {{field.Name}}
+                        </label>
+                        <span class="pull-right" id="msg{{field.ID}}"></span>
+                        <div ng-switch="field.DataType">
+                            <div ng-switch-when="1">
+                                <input ng-model="field.Value" type="text" name="n{{field.ID}}" class="form-control form-white"
+                                       message-id="msg{{field.ID}}"
+                                       validator="number">
+                            </div>
+                            <div ng-switch-when="3">
+                                <input ng-model="field.Value"  type="text" name="n{{field.ID}}" class="form-control form-white" date-picker
+                                       message-id="msg{{field.ID}}"
+                                       validator="{{field.NotNull ? 'required' : ''}}">
+                            </div>
+                            <div ng-switch-when="4">
+                                <ui-select ng-model="field.Value" theme="select2" search-enabled="false" class="form-control form-white">
+                                    <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                    <ui-select-choices repeat="item.Value as item in getBaseData(field.BaseData)">
+                                        <div ng-bind-html="item.Text"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="field.Value"
+                                       message-id="msg{{field.ID}}"
+                                       name="n{{field.ID}}" validator="{{field.NotNull ? 'required' : ''}}">
+                            </div>
+                            <div ng-switch-default>
+
+                                <input ng-if="field.Length < 500" ng-model="field.Value" type="text" name="n{{field.ID}}" class="form-control form-white"
+                                       message-id="msg{{field.ID}}"
+                                       validator="{{field.NotNull ? 'required' : ''}},{{field.Length > 0 ? 'maxlength=' + field.Length : ''}}">
+
+                                <textarea ng-if="field.Length >= 500" ng-model="field.Value" class="form-control form-white"
+                                          name="n{{field.ID}}" message-id="msg{{field.ID}}"
+                                          validator="{{field.NotNull ? 'required' : ''}},{{field.Length > 0 ? 'maxlength=' + field.Length : ''}}"
+                                          rows="5"></textarea>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+        <fieldset class="p-0">
+            <legend class="m-l-20">电子文件</legend>
+            <attach-upload name="attachCtl"
+                           obj-id="fileInfo.ID"
+                           obj-name="FileDoc_{{maintainService.fondsNumber}}_{{maintainService.fileNumber}}"
+                           uploaded="attachUploaded($attachID,$changeCB)">
+            </attach-upload>
+        </fieldset>
+       
+    </form>
+</div>
+
+<div class="modal-footer bg-aero">
+    <div ng-show="maintainService.update">
+        <button type="button" class="btn btn-primary btn-square "
+                ng-disabled="maintainService.fileInfo.ROWNUMBER == 1"
+                ng-click="first()">
+            <i class="fa fa-angle-double-left"></i>
+            第一条
+        </button>
+        <button type="button" class="btn btn-primary btn-square "
+                ng-disabled="maintainService.fileInfo.ROWNUMBER == 1"
+                ng-click="sub()">
+            <i class="fa fa-angle-left"></i>
+            上一条
+        </button>
+        <button type="button" class="btn btn-primary btn-square "
+                ng-disabled="maintainService.fileInfo.ROWNUMBER == maintainService.allCount"
+                ng-click="next()">
+            下一条
+            <i class="fa fa-angle-right"></i>
+        </button>
+        <button type="button" class="btn btn-primary btn-square "
+                 ng-disabled="maintainService.fileInfo.ROWNUMBER == maintainService.allCount"
+                ng-click="last()">
+            最后一条
+            <i class="fa fa-angle-double-right"></i>
+        </button>
+        <button type="button"
+                ng-click="save(false)"
+                validation-submit="FormMaintain"
+                class="btn btn-primary btn-square ">
+            <i class="fa fa-save"></i>
+            保存
+        </button>
+        <button type="button"
+                ng-click="save(true)"
+                validation-submit="FormMaintain"
+                class="btn btn-primary btn-square ">
+            <i class="fa fa-save"></i>
+            保存并退出
+        </button>
+    </div>
+   <div ng-show="!maintainService.update">
+
+       <button type="button"
+               ng-click="save(false,FormMaintain)"
+               validation-submit="FormMaintain"
+               
+               class="btn btn-primary btn-square ">
+           <i class="fa fa-refresh"></i>
+           保存并新增
+       </button>
+       <button type="button"
+               ng-click="save(true)"
+               validation-submit="FormMaintain"
+               class="btn btn-primary btn-square ">
+           <i class="fa fa-save"></i>
+           保存并退出
+       </button>
+   </div>
+    
+</div>

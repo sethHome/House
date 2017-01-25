@@ -1,0 +1,68 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">{{update ? '修改' : '添加'}}字段</h4>
+</div>
+
+<div class="modal-body ">
+    <form class="form-horizontal m-10" name="FormMaintain">
+        <div class="form-group">
+            <span class="col-sm-2 p-0"><label class="m-t-10">名称</label> </span>
+            <div class="col-sm-10 ">
+                <input class="form-control form-white" type="text"
+                       name="Name" validator="required,maxlength=50"
+                       ng-model="field.Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="col-sm-2 p-0"><label class="m-t-10">类型</label> </span>
+            <div class="col-sm-10 ">
+                <ui-select ng-model="field.DataType" theme="select2" search-enabled="false" class="form-control form-white">
+                    <ui-select-match placeholder="选择字段类型">{{$select.selected.Text}}</ui-select-match>
+                    <ui-select-choices repeat="item.Value as item in getBaseData('FieldType')">
+                        <div ng-bind-html="item.Text"></div>
+                    </ui-select-choices>
+                </ui-select>
+                <input class="hide" ng-model="field.DataType"
+                       name="Type" validator="required">
+            </div>
+        </div>
+        <div class="form-group"  ng-show="field.DataType == 4">
+            <span class="col-sm-2 p-0"><label class="m-t-10">数据</label> </span>
+            <div class="col-sm-10 ">
+                <ui-select ng-model="field.BaseData" theme="select2" search-enabled="false" class="form-control form-white">
+                    <ui-select-match placeholder="选择字段类型">{{$select.selected.Text}}</ui-select-match>
+                    <ui-select-choices repeat="item.Value as item in getBaseData('FieldType')">
+                        <div ng-bind-html="item.Text"></div>
+                    </ui-select-choices>
+                </ui-select>
+                <input class="hide" ng-model="field.BaseData"
+                       name="Type" validator="required">
+            </div>
+        </div>
+        <div class="form-group" ng-show="field.DataType == 2">
+            <span class="col-sm-2 p-0"><label class="m-t-10">长度</label> </span>
+            <div class="col-sm-10 ">
+                <input class="form-control form-white" type="text"
+                       name="Length" validator="number"
+                       ng-model="field.Length">
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="col-sm-2 p-0"><label class="m-t-10">&nbsp;</label> </span>
+            <div class="col-sm-10">
+                <input type="checkbox" ng-model="field.NotNull" icheck> 必填
+
+            </div>
+        </div>
+       
+    </form>
+</div>
+
+<div class="modal-footer bg-aero">
+    <button type="button"
+            ng-click="save()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-save"></i>
+        保存
+    </button>
+</div>

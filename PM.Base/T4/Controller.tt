@@ -1,0 +1,123 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Data" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+
+<#@include file="Manager.tt"#> 
+<#@include file="DBSql.tt"#> 
+<# var manager = Manager.Create(Host, GenerationEnvironment); #>
+
+<# manager.StartHeader(); #>
+
+using System.Collections;
+using System.Collections.Generic;
+using System.Web.Http;
+
+using Microsoft.Practices.Unity;
+
+using Api.Framework.Core;
+using Api.Framework.Core.Safe;
+using Api.Framework.Core.DBAccess;
+namespace PM.Base
+{   
+<# manager.EndBlock(); #>
+
+<#        
+	var schema = GetSchema();
+    foreach(System.Data.DataRow row in schema)
+    {    
+        string tb_name = row["TABLE_NAME"].ToString();        
+        manager.StartNewFile(tb_name+"Controller.cs");
+#>
+    /// <summary>
+    /// <#=tb_name#> Controlle
+    /// </summary>
+    public partial class <#=tb_name#>Controller : ApiController
+    {   
+		[Dependency]
+		public I<#=tb_name#>Service _I<#=tb_name#>Service { get; set; }
+
+		[Route("api/v1/<#=tb_name.ToLower()#>")]
+        [HttpGet]
+        public PageSource<<#=tb_name#>Info> All(
+			int pagesize = 1000,
+            int pageindex = 1,
+            string orderby = "ID",
+			string orderdirection = "desc",
+			string txtfilter = "")
+        {
+			var param = new PageQueryParam()
+            {
+                PageSize = pagesize,
+                PageIndex = pageindex,
+                IsAllowPage = pagesize > 0 && pageindex > 0,
+                OrderFiled = orderby,
+				IsDesc = orderdirection.ToLower().Equals("desc"),
+                TextCondtion = txtfilter,
+                FilterCondtion = new Hashtable(),
+            };
+
+            //param.FilterCondtion.Add("Kind", kind);
+
+            return _I<#=tb_name#>Service.GetPagedList(param);
+        }
+
+		[Route("api/v1/<#=tb_name.ToLower()#>/{ID}")]
+        [HttpGet]
+        public <#=tb_name#>Entity One(int ID)
+        {
+            return this._I<#=tb_name#>Service.Get(ID);
+        }
+
+		[Route("api/v1/<#=tb_name.ToLower()#>")]
+        [HttpPost]
+        public int Create(<#=tb_name#>Info Info)
+        {
+           return this._I<#=tb_name#>Service.Add(Info);
+        }
+
+		[Route("api/v1/<#=tb_name.ToLower()#>/{ID}")]
+        [HttpPut]
+        public void Update(int ID,<#=tb_name#>Entity Entity)
+        {
+            this._I<#=tb_name#>Service.Update(ID, Entity);
+        }
+
+		[Route("api/v1/<#=tb_name.ToLower()#>/{ID}")]
+        [HttpDelete]
+        public void Delete(string ID)
+        {
+			if (ID.Contains(","))
+            {
+                this._I<#=tb_name#>Service.Delete(ID);
+            }
+            else
+            {
+                this._I<#=tb_name#>Service.Delete(int.Parse(ID));
+            }
+        }
+
+		[Route("api/v1/<#=tb_name.ToLower()#>")]
+        [Route("api/v1/<#=tb_name.ToLower()#>/{ID}")]
+        [HttpOptions]
+        public void Option()
+        { }
+		
+    } 
+<#
+        manager.EndBlock();    
+    }            
+    
+#>
+
+
+
+<# manager.StartFooter(); #>
+}
+<# manager.EndBlock(); #>
+
+<# manager.Process(true); #>

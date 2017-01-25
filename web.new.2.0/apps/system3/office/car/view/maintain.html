@@ -1,0 +1,89 @@
+﻿<form name="newsForm" >
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <button type="button"
+                    ng-click="new()"
+                    class="btn btn-primary btn-square">
+                <i class="fa fa-plus"></i>{{local.global.add}}
+            </button>
+            <button type="button"
+                    ng-click="save()"
+                    class="btn btn-primary btn-square">
+                <i class="fa fa-save"></i>
+                {{local.global.save}}
+            </button>
+            <button type="button"
+                    ng-show="carInfo.ID > 0 && carInfo.Status == 1"
+                    ng-click="maintain()"
+                    class="btn btn-primary btn-square">
+                <i class="fa fa-edit"></i>
+                保养、维修
+            </button>
+            <button type="button"
+                    ng-show="carInfo.ID > 0 && carInfo.Status == 3"
+                    ng-click="normal()"
+                    class="btn btn-primary btn-square">
+                <i class="fa fa-edit"></i>
+                正常可用
+            </button>
+            <button type="button"
+                    ng-show="carInfo.ID > 0 && carInfo.Status == 1"
+                    ng-click="scrap()"
+                    class="btn btn-danger btn-square">
+                <i class="fa fa-edit"></i>
+                报废
+            </button>
+            <button type="button"
+                    ng-show="carInfo.ID > 0 && carInfo.Status == 1"
+                    ng-click="delete()"
+                    class="btn btn-danger btn-square">
+                <i class="fa fa-trash-o"></i>
+                {{local.global.remove}}
+            </button>
+        </div>
+       
+    </div>
+    <div class="row">
+        <span class="col-sm-1 "><label class="m-t-10">车辆名称</label> </span>
+        <div class="col-sm-11 ">
+            <input class="form-control form-white"
+                   name="Name"
+                   validator="maxlength=50"
+                   placeholder="{{local.global.input}}"
+                   ng-model="carInfo.Name" />
+        </div>
+    </div>
+    <div class="row m-t-10 m-b-10">
+        <span class="col-sm-1 "><label>车辆牌照</label> </span>
+        <div class="col-sm-11 ">
+            <input class="form-control form-white"
+                   name="LicensePlate"
+                   validator="maxlength=10"
+                   placeholder="{{local.global.input}}"
+                   ng-model="carInfo.LicensePlate" />
+        </div>
+    </div>
+    <div class="row m-t-10 m-b-10">
+        <span class="col-sm-1 "><label>限坐人数</label> </span>
+        <div class="col-sm-11 ">
+            <input class="form-control form-white"
+                   name="PersonCount"
+                   validator="maxlength=10"
+                   placeholder="{{local.global.input}}"
+                   ng-model="carInfo.PersonCount" />
+        </div>
+    </div>
+    <div class="row m-t-10 m-b-10">
+        <span class="col-sm-1 "><label>车辆等级</label> </span>
+        <div class="col-sm-11 ">
+            <div class="icheck-inline">
+                <span class="m-r-10 " ng-repeat="item in getBaseData('CarLevel')">
+                    <input icheck type="radio" name="Level"
+                           ng-disabled="view"
+                           value="{{item.Key}}" ng-model="$parent.carInfo.Level"> {{item.Text}}
+                </span>
+            </div>
+        </div>
+    </div>
+</form>

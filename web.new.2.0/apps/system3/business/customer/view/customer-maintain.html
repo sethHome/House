@@ -1,0 +1,149 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <i class="fa fa-pencil-square-o"></i> &nbsp;{{local.business.customer}}{{local.global.info}}
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body">
+
+    <div class="nav-tabs" ng-init="currentIndex = 1">
+        <ul class="nav nav-tabs nav-red">
+            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">客户信息</a></li>
+            <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab"><i class="fa fa-user-plus"></i> 联系人</a></li>
+        </ul>
+        <div class="tab-content p-r-0 ">
+            <div class="tab-pane" style="height:{{modalHeight}}px" scroll="tabPanelScl1" auto="true" ng-class="{active : currentIndex == 1}">
+                <form class="m-r-10" name="FormMaintain">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.cust.name}}</label>
+                                <span class="pull-right vad-msg" id="msg_name"></span>
+                                <input class="form-control form-white" type="text"
+                                       name="name" validator="required,maxlength=50" message-id="msg_name"
+                                       placeholder="{{local.global.input}}{{local.cust.name}}"
+                                       ng-model="custInfo.Name">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>客户星级</label>
+                                <div class="m-t-5">
+                                    <ng-rate-it ng-model="custInfo.LevelRate"
+                                                min="1" max="6" step="1" resetable="false">
+                                    </ng-rate-it>
+
+                                    <span class="m-l-10">{{custInfo.LevelRate}}分</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.cust.address}}</label>
+                                <span class="pull-right vad-msg" id="msg_address"></span>
+                                <input class="form-control form-white" type="text"
+                                       name="address" validator="required,maxlength=50" message-id="msg_address"
+                                       placeholder="{{local.global.input}}{{local.cust.address}}"
+                                       ng-model="custInfo.Address">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.cust.tel}}</label>
+                                <span class="pull-right vad-msg" id="msg_tel"></span>
+                                <input class="form-control form-white" type="text"
+                                       name="tel" validator="required,maxlength=20" message-id="msg_tel"
+                                       placeholder="{{local.global.input}}{{local.cust.tel}}"
+                                       ng-model="custInfo.Tel">
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 2}">
+
+                <div class="row">
+
+                    <div class="col-sm-2">
+                        <input type="text" ng-model="personInfo.Name"
+                               name="Name" validator="required,maxlength=50"
+                               placeholder="{{local.person.name}}"
+                               class="form-control form-white" />
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="text" ng-model="personInfo.Position"
+                               name="Position" validator="maxlength=10"
+                               placeholder="职位"
+                               class="form-control form-white" />
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" ng-model="personInfo.Phone"
+                               name="Phone" validator="maxlength=20"
+                               placeholder="{{local.person.phone}}"
+                               class="form-control form-white" />
+
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" ng-model="personInfo.Email"
+                               name="Emal" validator="maxlength=50"
+                               placeholder="{{local.person.email}}"
+                               class="form-control form-white" />
+                    </div>
+                    <div class="col-sm-2 ">
+                        <button ng-click="addPerson()"
+                                class="btn btn-primary btn-square">
+                            <i class="fa fa-plus"></i>&nbsp; {{local.global.insert}}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6"
+                         ng-repeat="p in custInfo.Persons">
+                        <div class="panel widget-member3 a-box">
+                            <div class="row ">
+                                <div class="col-xs-4">
+                                    <img src="../assets/global/images/avatars/avatar11_big.png" alt="profil 4" class="img-responsive">
+                                </div>
+                                <div class="col-xs-8">
+                                    <h3 class="m-t-0 member-name"><strong>{{p.Name}}</strong></h3>
+                                    <p class="member-job">{{p.Position}}</p>
+                                    <div class="row">
+                                        <div class="col-xlg-12">
+
+                                            <p><i class="fa fa-phone c-gray-light p-r-10"></i> {{p.Phone}}</p>
+
+                                            <p><i class="icon-envelope c-gray-light p-r-10"></i> {{p.Email}}</p>
+                                        </div>
+                                    </div>
+                                    
+
+                                    <button class="close up-right-corner m-r-5 " ng-click="deletePerson(p)">×</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer bg-aero">
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="save()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-save"></i>
+        {{local.global.save}}
+    </button>
+    <button type="button"
+            validation-reset="FormMaintain"
+            class="btn btn-danger btn-square ">
+        <i class="fa fa-refresh"></i>
+        {{local.global.reset}}
+    </button>
+</div>

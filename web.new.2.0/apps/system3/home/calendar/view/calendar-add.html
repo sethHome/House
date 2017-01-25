@@ -1,0 +1,55 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    添加日程 &nbsp; {{ start.format('hh:mm')}} 到 {{ end.format('hh:mm')}}
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+
+<div class="modal-body ">
+
+    <form ng-submit="submit()">
+        <div class='row'>
+            <div class='col-md-6'>
+                <div class='form-group'>
+                    <label class='control-label'>名称</label>
+                    <input class='form-control form-white' placeholder='输入日程名称' type='text' name='title' ng-model="event.Title" />
+                </div>
+            </div>
+            <div class='col-md-6'>
+                <div class='form-group'>
+                    <label class='control-label'>类型</label>
+
+                    <ui-select ng-model="event.TypeInfo" theme="select2" search-enabled="false" class="form-control form-white">
+                        <ui-select-match placeholder="{{local.global.choose}}">{{$select.selected.Text}}</ui-select-match>
+                        <ui-select-choices repeat="item as item in getBaseData('DayEventType')">
+                            <div ng-bind-html="item.Text"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+        </div>
+        <div class='row'>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">开始时间</label>
+
+                    <uib-timepicker ng-model="event.time_start" ng-change="changed()" 
+                                    hour-step="1" minute-step="10" 
+                                    show-meridian="ismeridian"></uib-timepicker>
+
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">结束时间</label>
+                    <uib-timepicker ng-model="event.time_end" ng-change="changed()"
+                                    hour-step="1" minute-step="10"
+                                    show-meridian="ismeridian"></uib-timepicker>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary btn-square" type="submit" ng-click="add()"><i class='fa fa-plus'></i> 添加</button>
+    <button class="btn btn-default btn-square" type="button" ng-click="close()"><i class='fa fa-close'></i> 关闭</button>
+</div>

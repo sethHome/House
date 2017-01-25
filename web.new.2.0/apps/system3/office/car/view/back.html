@@ -1,0 +1,22 @@
+﻿<div class="modal-header bg-primary modal-dragable " visiable="{{modelType == 'window'}}" ng-show="modelType == 'window'">
+    <button type="button" ng-click="closeModal()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">用车申请</h4>
+</div>
+<div ng-class="{'modal-body' : modelType == 'window'}" blockui="panel">
+
+    <div ng-controller="carBackCtl">
+        <div class="bg-white"
+             fullheight="panelGrid"
+             ui-grid-selection
+             ui-grid-pagination
+             ui-grid-exporter
+             ui-grid-auto-resize
+             ui-grid-grouping
+             ui-grid-resize-columns
+             ui-grid-move-columns
+             ui-grid-pinning
+             ui-grid-cellNav
+             ui-grid="gridOptions"></div>
+    </div>
+
+</div>

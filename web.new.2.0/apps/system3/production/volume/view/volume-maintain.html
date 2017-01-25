@@ -1,0 +1,99 @@
+﻿<div class="modal-header bg-primary modal-dragable" visiable="{{maintainModel == 2}}" ng-show="maintainModel == 2">
+    {{planVolume.Specialty.SpecialtyID | enumMap:'Specialty'}} &nbsp; {{local.global.plan}}
+    <button type="button" ng-click="closeMaintain()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div ng-class="{'modal-body' : maintainModel == 2}">
+    <form class="form-horizontal  m-0 p-0"
+          name="FormMaintain">
+
+        <fieldset class="m-0 p-l-30 p-r-30">
+            <legend>{{local.business.planVolume.Engineering}}{{local.global.info}}</legend>
+
+            <div class="row m-0 ">
+                <div class="col-sm-1 p-0"> <label>{{local.eng.number}}</label></div>
+                <div class="col-sm-5">{{planVolume.Engineering.Number}}</div>
+                <div class="col-sm-1 p-0"> <label>{{local.eng.name}}</label></div>
+                <div class="col-sm-5">{{planVolume.Engineering.Name  | subStr: 18}}</div>
+            </div>
+            <div class="row m-0  p-t-10">
+                <div class="col-sm-1 p-0"><label>{{local.eng.status}}</label></div>
+                <div class="col-sm-2">{{planVolume.Engineering.Status | enumMap:"EngineeringStatus"}}</div>
+                <div class="col-sm-1 p-0"><label>{{local.eng.phase}}</label></div>
+                <div class="col-sm-2">{{planVolume.Engineering.Phase | enumMap:"EngineeringPhase"}}</div>
+                <div class="col-sm-1 p-0"><label>{{local.eng.manager}}</label></div>
+                <div class="col-sm-2">
+                    {{planVolume.Engineering.Manager | enumMap:"user"}}
+                    <a class="btn btn-transparent msgChatBtn m-0 p-0"
+                       ng-click="openChat(planVolume.Engineering.Manager)">
+                        <i class="fa fa-weixin"></i>
+                    </a>
+                </div>
+                <div class="col-sm-1 p-0"><label>{{local.eng.vollevel}}</label></div>
+                <div class="col-sm-2">{{planVolume.Engineering.VolLevel | enumMap:"VolLev"}}</div>
+            </div>
+            <div class="row m-0  p-t-10">
+                <div class="col-sm-1 p-0"><label>{{local.eng.tasktype}}</label></div>
+                <div class="col-sm-2">{{planVolume.Engineering.TaskType | enumMap:"TaskType"}}</div>
+                <div class="col-sm-1 p-0"><label>{{local.eng.type}}</label></div>
+                <div class="col-sm-2">{{planVolume.Engineering.Type | enumMap:"EngineeringType"}}</div>
+                <div class="col-sm-1 p-0"><label>{{local.eng.createdate}}</label></div>
+                <div class="col-sm-2">{{planVolume.Engineering.CreateDate | TDate}}</div>
+                <div class="col-sm-1 p-0"><label>{{local.eng.deliverydate}}</label></div>
+                <div class="col-sm-2">{{planVolume.Engineering.DeliveryDate | TDate}}</div>
+            </div>
+
+
+        </fieldset>
+        <div class="row m-0 p-0 m-t-5 ">
+            <button class="btn btn-square btn-sm btn-info" ng-click="addVolume()"><i class="fa fa-plus"></i> 添加</button>
+            <button class="btn btn-square btn-sm btn-danger" ng-click="removeVolume()"><i class="fa fa-close"></i> 删除</button>
+        </div>
+
+        <div ui-grid="volOptions"
+             ui-grid-edit
+             ui-grid-selection
+             style="height:300px;"></div>
+
+        <script type="text/ng-template" id="uiSelect">
+            <ui-select-wrap>
+                <ui-select ng-model="MODEL_COL_FIELD" theme="select2" search-enabled="false" append-to-body="true" class="form-control form-white">
+                    <ui-select-match placeholder="Choose...">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="item.ID as item in col.colDef.editDropdownOptionsArray | taskuser:col.colDef">
+                        <div ng-bind-html="item.Name"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </ui-select-wrap>
+        </script>
+        <script type="text/ng-template" id="datepicker">
+            <date-picker-wrap>
+                <input ng-model="MODEL_COL_FIELD"
+                       placeholder="选择"
+                       class="form-control form-white"
+                       date-picker />
+            </date-picker-wrap>
+
+        </script>
+
+        <fieldset class="m-0 p-0 p-l-30 p-r-30 ">
+
+            <legend>{{local.global.operate}}</legend>
+
+            <button type="button"
+                    validation-submit="FormMaintain"
+                    ng-click="updateVolumes()"
+                    class="btn btn-info btn-square  pull-right">
+                <i class="fa fa-save"></i>
+                {{local.global.save}}
+            </button>
+            <button type="button" ng-show="maintainModel == 2"
+                    validation-submit="FormMaintain"
+                    ng-click="closeMaintain()"
+                    class="btn btn-danger btn-square  pull-right">
+                <i class="fa fa-remove"></i>
+                {{local.global.close}}
+            </button>
+
+        </fieldset>
+
+    </form>
+</div>

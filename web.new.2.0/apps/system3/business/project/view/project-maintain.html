@@ -1,0 +1,246 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <i class="fa fa-pencil-square-o"></i> &nbsp;{{local.business.proj}}{{local.global.info}}
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body">
+
+    <div class="nav-tabs" ng-init="currentIndex = 1">
+        <ul class="nav nav-tabs nav-red">
+            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">项目信息</a></li>
+            <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab"><i class="fa fa-paperclip"></i> 附件</a></li>
+        </ul>
+        <div class="tab-content p-r-0 " >
+            <div class="tab-pane" style="height:{{modalHeight}}px" scroll="tabPanelScl1" auto="true" ng-class="{active : currentIndex == 1}">
+                <form name="FormMaintain" class="m-r-10"  >
+                    
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.proj.number}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_number"></span>
+                                <input ng-model="projInfo.Number" type="text" name="projInfo.Number" 
+                                       class="form-control " placeholder="{{local.global.input}}{{local.proj.number}}"
+                                       message-id="msg_number"
+                                       validator="required,maxlength=50">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.proj.name}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_name"></span>
+                                <input ng-model="projInfo.Name" type="text" name="projInfo.Name" 
+                                       class="form-control" placeholder="{{local.global.input}}{{local.proj.name}}"
+                                       message-id="msg_name"
+                                       validator="required,maxlength=50">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.proj.kind}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_kind"></span>
+
+                                <ui-select ng-model="projInfo.Kind" theme="select2" search-enabled="false" class="form-control ">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.proj.kind}}">{{$select.selected.Text}}</ui-select-match>
+                                    <ui-select-choices repeat="item.Value as item in getBaseData('ProjectKind')">
+                                        <div ng-bind="item.Text"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+
+                                <input class="hide" ng-model="projInfo.Kind" name="projInfo.Kind"
+                                       message-id="msg_kind"
+                                       validator="required">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.proj.vollevel}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_volLevel"></span>
+
+                                <ui-select ng-model="projInfo.VolLevel" theme="select2" search-enabled="false" class="form-control ">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.proj.vollevel}}">{{$select.selected.Text}}</ui-select-match>
+                                    <ui-select-choices repeat="item.Value as item in getBaseData('VolLev')">
+                                        <div ng-bind="item.Text"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="projInfo.VolLevel" name="projInfo.VolLevel"
+                                       message-id="msg_volLevel"
+                                       validator="required">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.proj.type}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_type"></span>
+
+                                <ui-select ng-model="projInfo.Type" theme="select2" search-enabled="false" class="form-control ">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.proj.type}}">{{$select.selected.Text}}</ui-select-match>
+                                    <ui-select-choices repeat="item.Value as item in getBaseData('ProjectType')">
+                                        <div ng-bind="item.Text"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="projInfo.Type" name="projInfo.Type"
+                                       message-id="msg_type"
+                                       validator="required">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.proj.secretlevel}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_secretlevel"></span>
+
+                                <ui-select ng-model="projInfo.SecretLevel" theme="select2" search-enabled="false" class="form-control ">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.proj.secretlevel}}">{{$select.selected.Text}}</ui-select-match>
+                                    <ui-select-choices repeat="item.Value as item in getBaseData('SecretLevel')">
+                                        <div ng-bind="item.Text"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="projInfo.SecretLevel" name="projInfo.SecretLevel"
+                                       message-id="msg_secretlevel"
+                                       validator="required">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label ">
+                                    {{local.proj.manager}}
+                                </label>
+                                <span class="pull-right" id="msg_mgr"></span>
+
+                                <ui-select ng-model="projInfo.Manager" theme="select2" search-enabled="false" class="form-control ">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.proj.manager}}">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="item.ID as item in user_item | role:'R2'">
+                                        <div ng-bind-html="item.Name"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="projInfo.Manager"
+                                       message-id="msg_mgr"
+                                       name="Manager" validator="required">
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.proj.customer}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_customer"></span>
+
+                                <customer model="customers" type="1"></customer>
+                                <div class="append-icon">
+                                    <input type="text" ng-model="projInfo.Customer"
+                                           name="Customer" validator="required" message-id="msg_customer"
+                                           placeholder="{{local.proj.choosecustomer}}"
+                                           uib-typeahead="item as item.Name for item in customers.Source | filter:$viewValue | limitTo:8"
+                                           class="form-control ">
+                                    <i class="fa fa-binoculars"></i>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.proj.createdate}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_createdate"></span>
+                                <div class="append-icon">
+                                    <input type="text" ng-model="projInfo.CreateDate"
+                                           name="CreateDate" validator="required" message-id="msg_createdate"
+                                           placeholder="{{local.global.choose}}{{local.proj.createdate}}"
+                                           class="form-control "
+                                           date-picker />
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.proj.deliverydate}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_deliverydate"></span>
+                                <div class="append-icon">
+                                    <input type="text" ng-model="projInfo.DeliveryDate"
+                                           name="DeliveryDate" validator="required" message-id="msg_deliverydate"
+                                           placeholder="{{local.global.choose}}{{local.proj.deliverydate}}"
+                                           class="form-control "
+                                           date-picker />
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>
+                                    {{local.proj.note}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_note"></span>
+
+                                <textarea class="form-control "
+                                          name="Note"
+                                          validator="maxlength=500" message-id="msg_note"
+                                          placeholder="{{local.global.input}}{{local.proj.note}}"
+                                          ng-model="projInfo.Note" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 2}">
+                <div >
+                    <attach-upload name="attachCtl"
+                                   obj-id="projInfo.ID"
+                                   obj-name="Project">
+                    </attach-upload>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer bg-aero">
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="save()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-save"></i>
+        {{local.global.save}}
+    </button>
+    <button type="button"
+            validation-reset="FormMaintain"
+            class="btn btn-danger btn-square ">
+        <i class="fa fa-refresh"></i>
+        {{local.global.reset}}
+    </button>
+</div>

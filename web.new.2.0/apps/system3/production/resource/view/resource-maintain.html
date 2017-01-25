@@ -1,0 +1,112 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <i class="fa fa-pencil-square-o"></i> &nbsp;工程收资
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body">
+
+    <div class="nav-tabs" ng-init="currentIndex = 1">
+        <ul class="nav nav-tabs nav-red">
+            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">收资信息</a></li>
+            <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab"><i class="fa fa-paperclip"></i> 附件</a></li>
+        </ul>
+        <div class="tab-content p-r-0 ">
+            <div class="tab-pane" style="height:{{modalHeight}}px" scroll="tabPanelScl1" auto="true" ng-class="{active : currentIndex == 1}">
+                <form name="FormMaintain">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>
+                                    收资工程
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_engineering"></span>
+
+                                <div class="append-icon">
+                                    <input type="text" ng-model="resourceInfo.Engineering"
+                                           name="engineering" validator="required" message-id="msg_engineering"
+                                           placeholder="{{local.global.input}}{{local.eng.number}}、{{local.eng.name}}"
+                                           uib-typeahead="item as item.Name for item in loadEngineering($viewValue)"
+                                           typeahead-loading="loadingLocations"
+                                           typeahead-no-results="noResults"
+                                           typeahead-template-url="customTemplate.html"
+                                           class="form-control form-white">
+                                    <i class="fa fa-binoculars"></i>
+                                </div>
+
+                                <div ng-show="noResults">
+                                    <i class="glyphicon glyphicon-remove"></i> 没有找到工程
+                                </div>
+
+                                <script type="text/ng-template" id="customTemplate.html">
+                                    <a>
+                                        <span ng-bind-html="match.model.Name | uibTypeaheadHighlight:query"></span>
+                                    </a>
+                                </script>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>
+                                    {{local.resource.name}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_name"></span>
+
+                                <input class="form-control form-white"
+                                       name="name"
+                                       validator="required,maxlength=50" message-id="msg_name"
+                                       placeholder="{{local.global.input}}{{local.resource.name}}"
+                                       ng-model="resourceInfo.Name" />
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>
+                                    {{local.resource.content}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_content"></span>
+
+                                <textarea class="form-control form-white m-t-5"
+                                          name="content"
+                                          validator="required,maxlength=500" message-id="msg_content"
+                                          placeholder="{{local.global.input}}{{local.resource.content}}"
+                                          ng-model="resourceInfo.Content" rows="8"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 2}">
+                <attach-upload name="attachCtl"
+                               obj-id="resourceInfo.ID"
+                               obj-name="EngineeringResource">
+                </attach-upload>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer bg-aero">
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="save()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-save"></i>
+        {{local.global.save}}
+    </button>
+    <button type="button"
+            validation-reset="FormMaintain"
+            class="btn btn-danger btn-square ">
+        <i class="fa fa-refresh"></i>
+        {{local.global.reset}}
+    </button>
+</div>
+

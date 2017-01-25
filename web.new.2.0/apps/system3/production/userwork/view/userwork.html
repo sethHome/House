@@ -1,0 +1,85 @@
+﻿<div class="row">
+    <div class="col-md-2" ng-show="DATA_AllUserWork != 1 || DATA_DeptUserWork != 1">
+        <div class="panel " model="thisUserPanel">
+            <div class="panel-header p-0">
+                <div class="form-group" >
+                    <input class="form-control form-white" type="text" placeholder="输入筛选用户" ng-model="userFilter">
+                </div>
+            </div>
+            <div class="panel-content  p-0" fullheight="panelcontent" scroll="userScroller" scroll-to="top">
+                <div class="form-group">
+                    <ul class="list-group ">
+                        <li class="list-group-item no-border"
+                            ng-class="{'active': currentEmp.ID == user.ID}"
+                            ng-click="userChanged(user)"
+                            ng-repeat="user in user_item  | filter:userFilter | mydept: DATA_DeptUserWork != 1 && DATA_AllUserWork == 1  track by user.ID "
+                            ng-repeat-end="userScroller.init()">
+                            <div class="row">
+                                <div class="col-xs-6">{{user.Name}}</div>
+                                
+                                <div class="col-xs-6  color-gray hint-text fs-12">{{user.Dept.Name}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-class="{'col-md-10' : DATA_AllUserWork != 1 || DATA_DeptUserWork != 1,'col-md-12' : DATA_AllUserWork == 1 && DATA_DeptUserWork == 1 }">
+        <div class="panel"  model="thisTaskPanel">
+            <div class="panel-content p-0   "
+                 ng-class="{'bg-aero' : isSearch }">
+
+                <div class="bg-aero bus-tool-bar row m-0 p-0 ">
+                    <div class="col-sm-4 m-0 p-0">
+                       
+                    </div>
+
+                    <div class="col-sm-8 p-0 m-0">
+                        <button type="button"
+                                ng-click="isSearch = !isSearch"
+                                class="btn btn-primary btn-square pull-right m-0 m-b-0 hidden-sm hidden-xs">
+                            <i class="fa fa-filter"></i> {{local.global.filter}}
+                        </button>
+                        <button type="button"
+                                ng-click="loadSource()"
+                                class="btn btn-primary btn-square pull-right m-0 m-b-0 ">
+                            <i class="fa fa-search"></i> {{local.global.query}}
+                        </button>
+                        <div class=" prepend-icon pull-right m-b-0">
+                            <input type="text"
+                                   ng-model="filter.txtfilter"
+                                   enter-press="loadSource()"
+                                   ng-click="loadSource()"
+                                   class="form-control form-white filterbox " placeholder="{{local.proj.number}}、{{local.proj.name}}">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-class="{
+                        'width-100p' : !isSearch ,
+                        'width-70p':isSearch}"
+                     fullheight="panelGrid"
+                     ui-grid-selection
+                     ui-grid-pagination
+                     ui-grid-exporter
+                     ui-grid-auto-resize
+                     ui-grid-grouping
+                     ui-grid-resize-columns
+                     ui-grid-move-columns
+                     ui-grid-pinning
+                     ui-grid="gridOptions"></div>
+
+                <div class="bus-preview width-30p p-10 animated hidden-sm hidden-xs"
+                     ng-class="{'fadeOutRight' : !isSearch,'fadeInRight':isSearch}"
+                     ng-show="isSearch"
+                     ng-include="'apps/business/engineering/view/engineering-filter.html'">
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,40 @@
+﻿
+<div class="panel">
+
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner p-10">
+
+                    <label> <i class="fa fa-folder-o"></i> 我的任务</label>
+                    
+                    <tree tree-data="scope"
+                          tree-model="tasks"
+                          tree-api="treeApi"
+                          changed="selected_changed"
+                          tree-plugins="wholerow,types"></tree>
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="70%">
+                <div class="pretty-split-pane-component-inner p-20" >
+
+                    <label> <i class="fa fa-file-word-o"></i> 上传文档 {{currentTask.SpecilID | enumMap : 'Specialty'}}</label>
+                   
+                    <attach-upload name="attachCtl"
+                                   pl-filters-model="filters"
+                                   obj-id="currentTask.ID"
+                                   obj-name="MergeProjectDoc"
+                                   before-upload="beforeUpload($file)"
+                                   uploaded="attachUploaded($attachID)">
+                    </attach-upload>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+</div>

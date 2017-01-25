@@ -1,0 +1,381 @@
+﻿<div class="panel">
+
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px;" >
+        
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div data-split-pane>
+                    <div data-split-pane-component>
+                        <div class="pretty-split-pane-component-inner p-t-10">
+
+
+                            <process-control task-id="currentTaskID"
+                                             simple="true"
+                                             next="check({callBack : callBack,flowInfo : taskInfo})">
+                            </process-control>
+
+                            <hr class="m-0" />
+
+                            <attach-upload name="attachCtl"
+                                           obj-id="volumeInfo.ID"
+                                           obj-name="Volume">
+                            </attach-upload>
+                        </div>
+                    </div>
+                    <div data-split-pane-divider data-height="5px"></div>
+                    <div data-split-pane-component data-height="50%">
+                        <div class="pretty-split-pane-component-inner">
+                            <div class="nav-tabs no-border" ng-init="currentIndex1=1">
+                                <ul class="nav nav-tabs nav-red">
+                                    <li ng-click="currentIndex1 = 1" ng-class="{active : currentIndex1 == 1}"><a data-toggle="tab">进度</a></li>
+                                    <li ng-click="currentIndex1 = 2" ng-class="{active : currentIndex1 == 2}"><a data-toggle="tab">校审</a></li>
+                                    <li ng-click="currentIndex1 = 3" ng-class="{active : currentIndex1 == 3}"><a data-toggle="tab">记事</a></li>
+                                    <li ng-click="currentIndex1 = 4" ng-class="{active : currentIndex1 == 4}"><a data-toggle="tab">提资</a></li>
+                                    <li ng-click="currentIndex1 = 5" ng-class="{active : currentIndex1 == 5}"><a data-toggle="tab">表单</a></li>
+                                </ul>
+                                <div class="tab-content p-0">
+                                    <div class="tab-pane" ng-class="{active : currentIndex1 == 1}">
+
+                                        <div class="process-view m-20">
+                                            <div class="row ">
+                                                <div class="task bg-primary" style="width:80px;">
+                                                    <span class="bold c-dark">电气一次</span>
+                                                    <p class="text m-t-5 c-dark">
+                                                        张婉娜
+                                                    </p>
+                                                </div>
+                                                <div class="icon-arrow-right arrow">
+                                                </div>
+                                                <div class="task bg-red">
+                                                    <span class="bold c-dark">卷册A</span>
+
+                                                </div>
+                                                <div class="icon-arrow-right arrow">
+                                                </div>
+                                                <div class="task bg-primary">
+                                                    <span class="bold c-dark">设计</span>
+                                                    <p class="text m-t-5 c-dark">
+                                                        张婉娜
+                                                    </p>
+                                                </div>
+                                                <div class="icon-arrow-right arrow">
+                                                </div>
+                                                <div class="task bg-primary">
+                                                    <span class="bold c-dark">校对</span>
+                                                    <p class="text m-t-5 c-dark">
+                                                        张婉娜
+                                                    </p>
+                                                </div>
+                                                <div class="icon-arrow-right arrow">
+                                                </div>
+                                                <div class="task bg-orange">
+                                                    <span class="bold c-dark">审核</span>
+                                                    <p class="text m-t-5 c-dark">
+                                                        张婉娜
+                                                    </p>
+                                                </div>
+                                                <div class="icon-arrow-right arrow">
+                                                </div>
+                                                <div class="task bg-aero">
+                                                    <span class="bold c-dark">批准</span>
+                                                    <p class="text m-t-5 c-dark">
+                                                        张婉娜
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row m-t-20" style="margin-left:100px;">
+                                                <div class="task bg-red">
+                                                    <span class="bold c-dark">卷册A</span>
+
+                                                </div>
+                                                <div class="icon-arrow-right arrow">
+                                                </div>
+                                                <div class="task bg-primary">
+                                                    <span class="bold c-dark">设计</span>
+                                                    <p class="text m-t-5 c-dark">
+                                                        张婉娜
+                                                    </p>
+                                                </div>
+                                                <div class="icon-arrow-right arrow">
+                                                </div>
+                                                <div class="task bg-primary">
+                                                    <span class="bold c-dark">校对</span>
+                                                    <p class="text m-t-5 c-dark">
+                                                        张婉娜
+                                                    </p>
+                                                </div>
+                                                <div class="icon-arrow-right arrow">
+                                                </div>
+                                                <div class="task bg-orange">
+                                                    <span class="bold c-dark">审核</span>
+                                                    <p class="text m-t-5 c-dark">
+                                                        张婉娜
+                                                    </p>
+                                                </div>
+                                                <div class="icon-arrow-right arrow">
+                                                </div>
+                                                <div class="task bg-aero">
+                                                    <span class="bold c-dark">批准</span>
+                                                    <p class="text m-t-5 c-dark">
+                                                        张婉娜
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row m-t-20 " style="margin-left:100px;">
+                                                <div class="task bg-primary">
+                                                    <span class="bold c-dark">卷册A</span>
+
+                                                </div>
+                                                <div class="icon-arrow-right arrow">
+                                                </div>
+                                                <div class="task bg-primary">
+                                                    <span class="bold c-dark">设计</span>
+                                                    <p class="text m-t-5 c-dark">
+                                                        张婉娜
+                                                    </p>
+                                                </div>
+                                                <div class="icon-arrow-right arrow">
+                                                </div>
+                                                <div class="task bg-primary">
+                                                    <span class="bold c-dark">校对</span>
+                                                    <p class="text m-t-5 c-dark">
+                                                        张婉娜
+                                                    </p>
+                                                </div>
+                                                <div class="icon-arrow-right arrow">
+                                                </div>
+                                                <div class="task bg-orange">
+                                                    <span class="bold c-dark">审核</span>
+                                                    <p class="text m-t-5 c-dark">
+                                                        张婉娜
+                                                    </p>
+                                                </div>
+                                                <div class="icon-arrow-right arrow">
+                                                </div>
+                                                <div class="task bg-aero">
+                                                    <span class="bold c-dark">批准</span>
+                                                    <p class="text m-t-5 c-dark">
+                                                        张婉娜
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" ng-class="{active : currentIndex1 == 2}">
+
+                                        {{volumeInfo | json}}
+                                    </div>
+                                    <div class="tab-pane" ng-class="{active : currentIndex1 == 3}">
+
+                                        333
+                                    </div>
+                                    <div class="tab-pane" ng-class="{active : currentIndex1 == 4}">
+
+                                        444
+                                    </div>
+                                    <div class="tab-pane" ng-class="{active : currentIndex1 == 5}">
+
+                                        55555
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="25%">
+                <div class="pretty-split-pane-component-inner">
+
+                    <div class="nav-tabs no-border" ng-init="currentIndex=1">
+                        <ul class="nav nav-tabs nav-red no-border">
+                            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">工程信息</a></li>
+                            <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab">项目要求</a></li>
+                            <li ng-click="currentIndex = 3" ng-class="{active : currentIndex == 3}"><a data-toggle="tab">工程联系人</a></li>
+                        </ul>
+                        <div class="tab-content p-0 ">
+                            <div class="tab-pane" ng-class="{active : currentIndex == 1}">
+
+                                <table class="item-table" border="1" cellpadding="0" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <td width="18px">&nbsp;</td>
+                                            <td width="30%">项</td>
+                                            <td>值</td>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr class="item-head">
+                                            <td><i class="fa fa-info"></i> </td>
+                                            <td colspan="2"> 基础信息</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>工程编号</td>
+                                            <td>{{volumeInfo.Engineering.Number}}</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>工程名称</td>
+                                            <td>{{volumeInfo.Engineering.Name}}</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>电压等级</td>
+                                            <td>{{volumeInfo.Engineering.VolLevel | enumMap:'VolLev'}}</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>工程类型</td>
+                                            <td>{{volumeInfo.Engineering.Type | enumMap:'EngineeringType'}}</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>工程阶段</td>
+                                            <td>{{volumeInfo.Engineering.Phase | enumMap:'EngineeringPhase'}}</td>
+                                        </tr>
+                                        <tr class="item-head">
+                                            <td><i class="fa fa-calendar"></i></td>
+                                            <td colspan="2"> 工程时间</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>登记日期</td>
+                                            <td>{{volumeInfo.Engineering.CreateDate | TDate}}</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>启动日期</td>
+                                            <td>{{volumeInfo.Engineering.StartDate | TDate}}</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>计划完成</td>
+                                            <td>{{volumeInfo.Engineering.DeliveryDate | TDate}}</td>
+                                        </tr>
+                                        <tr class="item-head">
+                                            <td><i class="fa fa-file-text"></i> </td>
+                                            <td colspan="2">备注</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>备注</td>
+                                            <td>{{volumeInfo.Engineering.Note}}</td>
+                                        </tr>
+                                        <tr class="item-head">
+                                            <td><i class="fa fa-heart"></i></td>
+                                            <td colspan="2"> 关注</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>是否关注</td>
+                                            <td> <a href="#"> <i class="fa fa-heart"></i> 关注此工程</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                            <div class="tab-pane" ng-class="{active : currentIndex == 2}">
+                                111
+
+                            </div>
+                            <div class="tab-pane" ng-class="{active : currentIndex == 3}">
+
+                                <div class="list-view ">
+
+                                    <ul>
+                                        <li class="chat-user-list clearfix">
+
+                                            <a ng-click="openChat(user)">
+                                                <span class="col-xs-height col-middle ">
+                                                    <span class="thumbnail-wrapper d32  ">
+                                                        <img width="34" height="34" alt=""
+                                                             ng-src="assets/global/images/avatars/10x.jpg"
+                                                             class="col-top user-header">
+                                                    </span>
+                                                </span>
+                                                <p class="p-l-10 col-xs-height col-middle col-xs-6">
+                                                    <span>张三</span>
+                                                    <span class="block text-master hint-text fs-12">
+                                                        项目经理 &nbsp;在线
+                                                    </span>
+                                                </p>
+                                                <p class="p-l-10 col-xs-height col-middle col-xs-6">
+
+                                                </p>
+                                            </a>
+
+                                            <a ng-click="openChat(user)">
+                                                <span class="col-xs-height col-middle ">
+                                                    <span class="thumbnail-wrapper d32  ">
+                                                        <img width="34" height="34" alt=""
+                                                             ng-src="assets/global/images/avatars/10x.jpg"
+                                                             class="col-top user-header">
+                                                    </span>
+                                                </span>
+                                                <p class="p-l-10 col-xs-height col-middle col-xs-6">
+                                                    <span>张三</span>
+                                                    <span class="block text-master hint-text fs-12">
+                                                        项目经理，工程经理
+                                                    </span>
+                                                </p>
+                                                <p class="p-l-10 col-xs-height col-middle col-xs-6">
+
+                                                </p>
+                                            </a>
+
+                                            <a ng-click="openChat(user)">
+                                                <span class="col-xs-height col-middle ">
+                                                    <span class="thumbnail-wrapper d32  ">
+                                                        <img width="34" height="34" alt=""
+                                                             ng-src="assets/global/images/avatars/10x.jpg"
+                                                             class="col-top user-header">
+                                                    </span>
+                                                </span>
+                                                <p class="p-l-10 col-xs-height col-middle col-xs-6">
+                                                    <span>张三</span>
+                                                    <span class="block text-master hint-text fs-12">
+                                                        项目经理 ，专业经理
+                                                    </span>
+                                                </p>
+                                                <p class="p-l-10 col-xs-height col-middle col-xs-6">
+
+                                                </p>
+                                            </a>
+
+                                            <a ng-click="openChat(user)">
+                                                <span class="col-xs-height col-middle ">
+                                                    <span class="thumbnail-wrapper d32  ">
+                                                        <img width="34" height="34" alt=""
+                                                             ng-src="assets/global/images/avatars/10x.jpg"
+                                                             class="col-top user-header">
+                                                    </span>
+                                                </span>
+                                                <p class="p-l-10 col-xs-height col-middle col-xs-6">
+                                                    <span>张三</span>
+                                                    <span class="block text-master hint-text fs-12">
+                                                        项目经理 &nbsp;在线
+                                                    </span>
+                                                </p>
+                                                <p class="p-l-10 col-xs-height col-middle col-xs-6">
+
+                                                </p>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,6 @@
+﻿
+<div ng-repeat="page in modules.docfile"
+     ui-view="{{'docfile.content.' + page.Name}}"
+     ng-show="$state.includes('docfile.'+ page.Name)">
+
+</div>

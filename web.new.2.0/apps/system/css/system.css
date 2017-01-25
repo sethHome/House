@@ -1,0 +1,52 @@
+﻿.tree-level-0 {
+    padding-left:0px !important;
+}
+.tree-level-1 {
+    padding-left:20px !important;
+}
+.tree-level-2 {
+    padding-left:40px !important;
+}
+.tree-level-3 {
+    padding-left:60px !important;
+}
+
+.sys-grid-cell {
+    font-weight:normal !important;
+}
+
+.inheritTag {
+    margin-left:20px;
+    font-size:5px;
+}
+
+.user-checkbox {
+    min-width:100px;
+    max-width:150px;
+}
+
+.list-group-item:hover {
+        background-color: lightblue;
+        cursor: pointer;
+    }
+
+.color-gray {
+    color: #626262;
+}
+.active .color-gray {
+    color:#fff ;
+}
+
+
+.selectbox {
+    border:solid 1px #ededed;
+    min-width :80px;
+    min-height:30px;
+    line-height:30px;
+    text-align:center;
+    cursor:pointer;
+    margin-right:10px;
+    padding-left:10px;
+    padding-right:10px;
+    margin-bottom:10px;
+}

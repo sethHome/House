@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<definitions id="F1" name="提资审批" >
+
+  <!--设校审批流程-->
+  <process id="F1-1" isClosed="false" isExecutable="true" processType="None">
+
+    <!--开始-->
+    <startEvent id="_1" name="开始" >
+      <outgoing>_2</outgoing>
+    </startEvent>
+
+    <sequenceFlow id="_2" sourceRef="_1" targetRef="_3"/>
+
+    <!--提资-->
+    <userTask id="_3" name="提资">
+      <incoming>_2</incoming>
+      <outgoing>_4</outgoing>
+      <potentialOwner resourceRef="ProvideUser" type="user">
+      </potentialOwner>
+    </userTask>
+
+    <sequenceFlow id="_4" sourceRef="_3" targetRef="_5"/>
+
+    <!--审核-->
+    <userTask id="_5" name="审核" >
+      <incoming>_4</incoming>
+      <outgoing>_6</outgoing>
+      <potentialOwner resourceRef="ApproveUser" type="user">
+      </potentialOwner>
+    </userTask>
+
+    <sequenceFlow id="_6" sourceRef="_5" targetRef="_7"/>
+
+    <exclusiveGateway id="_7" name="是否同意" default="_8"  >
+      <incoming>_6</incoming>
+      <outgoing>_8</outgoing>
+      <outgoing>_9</outgoing>
+    </exclusiveGateway>
+
+    <!--同意-->
+    <sequenceFlow id="_8" sourceRef="_7" targetRef="_10">
+      <conditionExpression>bool_ApproveResult</conditionExpression>
+    </sequenceFlow>
+    <!--不同意-->
+    <sequenceFlow id="_9" sourceRef="_7" targetRef="_3">
+      <conditionExpression>!bool_ApproveResult</conditionExpression>
+    </sequenceFlow>
+
+    <!--结束-->
+    <endEvent id="_10" name="结束">
+      <incoming>_9</incoming>
+    </endEvent>
+
+  </process>
+  
+  <ob name="ProvideOB"></ob>
+
+  <!--流程资源-->
+  <resource id="ApproveUser">
+
+    <user id="9"></user>
+    <IOwner name="Provide"></IOwner>
+  </resource>
+  <resource id="ProvideUser">
+
+  </resource>
+</definitions>
+

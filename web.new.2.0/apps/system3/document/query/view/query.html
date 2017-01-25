@@ -1,0 +1,189 @@
+﻿<div class="row">
+
+    <div class="col-md-4">
+        <div class="panel">
+            <div class="panel-header panel-controls">
+
+                <div class="form-group">
+                    <input class="form-control form-white" type="text"
+                           placeholder="输入筛选" ng-model="filter.text">
+                </div>
+            </div>
+            <div class="panel-content" blockui="treePanel" fullheight="panelcontent" scroll="treeScroll" auto="true">
+
+                <tree tree-data="scope"
+                      tree-model="documents"
+                      tree-api="treeApi"
+                      tree-plugins="wholerow,contextmenu,search,types"
+                      search="menusFilter"
+                      changed="nodeChange"
+                      ready="treeReady"></tree>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="panel">
+            <div class="panel-header">
+
+                <div class="form-group">
+                    <input class="form-control form-white" type="text"
+                           placeholder="输入筛选" ng-model="fileText">
+                </div>
+            </div>
+
+            <div class="panel-content widget-news"
+                 scroll="newsScroll" fullheight="panelcontent" blockui="filePanel">
+                <div class="p-20">
+
+                    <a href="{{attachDownloadUrl}}?ids={{getSelecedIDs()}}"
+                       class="btn btn-sm btn-primary btn-square ">
+                        <i class="fa fa-download"></i>&nbsp;下载选择文档
+                    </a>
+                    
+
+                    <a class="btn btn-sm btn-primary btn-square "
+                       pl-upload
+                       pl-progress-model="percent"
+                       pl-auto-upload="true"
+                       pl-files-model="upFiles"
+                       on-file-uploaded="uploaded($response, $file)">
+                        <i class="fa fa-upload"></i>&nbsp;上传文档
+                    </a>
+
+                    <a ng-click="removeFiles()"
+                       class="btn btn-sm btn-danger btn-square ">
+                        <i class="fa fa-trash-o"></i>&nbsp;删除选择文档
+                    </a>
+
+                </div>
+                <div class="p-20" ng-show="currentNode.ObjectKey=='EngineeringResource'">
+
+                    <p><label>资料名称</label> : {{currentNode.Name}}</p>
+                    <p><label>资料内容</label> : {{currentNode.Content}}</p>
+
+                </div>
+                <div class="p-20" ng-show="currentNode.ObjectKey=='FormChange'">
+
+                    <p><label>变更原因</label> : {{currentNode.Reason}}</p>
+                    <p><label>变更内容</label> : {{currentNode.Content}}</p>
+
+                </div>
+
+                <div class="p-20" ng-show="currentNode.ObjectKey=='VolumeCheck'">
+
+                    <div class="form-group m-0 m-b-10 p-b-10 row border-bottom ">
+                        <label class="col-sm-6 m-0 p-l-30">{{local.check.context}}</label>
+                        <label class="col-sm-1 m-0 p-0">{{local.check.type}}</label>
+                        <label class="col-sm-1 m-0 p-0">{{local.check.user}}</label>
+                        <label class="col-sm-1 m-0 p-l-10">{{local.check.date}}</label>
+                        <label class="col-sm-1 m-0 p-l-30">
+                            {{local.check.isCorrect}}
+                        </label>
+                        <label class="col-sm-1 m-0 p-l-30">
+                            {{local.check.pass}}
+                        </label>
+                    </div>
+
+                    <div ng-repeat="item in currentNode.CheckItems" class="form-group m-0 p-0 m-t-5">
+                        <div class="row" >
+
+                            <span class="col-sm-6  "><span class="label label-default">{{$index + 1}}</span>&nbsp; {{item.Context}}</span>
+                            <span class="col-sm-1 m-0 p-0 ">{{item.Type | enumMap:"CheckErrorType"}}</span>
+                            <span class="col-sm-1 m-0 p-0 ">
+                                {{item.UserID | enumMap:"user"}}
+                                <a class="btn btn-transparent msgChatBtn m-0 p-0"
+                                   ng-click="openChat(item.UserID)">
+                                    <i class="fa fa-weixin"></i>
+                                </a>
+                            </span>
+                            <span class="col-sm-1 m-0 p-0 ">{{item.Date | TDate}}</span>
+                            <span class="col-sm-1 m-0 p-l-30">
+                                <input type="checkbox" ng-disabled="true"
+                                       ng-model="item.IsCorrect" icheck>
+                            </span>
+                            <div class="col-sm-1 m-0 p-l-30">
+                                <input type="checkbox" ng-disabled="true"
+                                       ng-model="item.IsPass" icheck>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="message-item media"
+                     ng-class="{' bg-aero' : file.selected }"
+                     ng-click="file.selected = !file.selected"
+                     ng-repeat="file in upFiles | filter:fileText track by file.id"
+                     attach-type-setter="file"
+                     ng-repeat-end="newsScroll.init()">
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="pull-left m-10">
+
+                                <div style="width:45px; height:45px; " class="file-{{file.typeID}}"
+                                     ng-show="file.typeID != 1">
+                                </div>
+
+                                <img style="width:45px; height:45px; " ng-show="file.typeID == 1" ng-src="{{imagePreviewUrl + file.id}}" />
+                            </div>
+                            <div>
+                                <small class="pull-right">
+                                    <span>刚刚</span>
+                                </small>
+                                <h5 class="c-dark ">
+                                    {{file.name}}
+                                </h5>
+                                <p class="f-12 c-gray">
+                                    上传人：{{currentUser.Account.Name}} &nbsp;| &nbsp;大小：{{file.size | fileSize}} &nbsp; | &nbsp;
+                                    <a href="{{attachDownloadUrl}}{{file.id}}">
+                                        <i class="fa fa-download"></i>下载
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="message-item media"
+                     ng-class="{' bg-aero' : file.selected }"
+                     ng-click="file.selected = !file.selected"
+                     ng-repeat="file in files | filter:fileText track by file.ID"
+                     ng-repeat-end="newsScroll.init()">
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="pull-left m-10">
+
+                                <div style="width:45px; height:45px; " class="file-{{file.Type}}"
+                                     ng-show="file.Type != 1">
+                                </div>
+                                <img style="width:45px; height:45px; " ng-show="file.Type == 1" ng-src="{{imagePreviewUrl + file.ID}}" />
+                            </div>
+                            <div>
+                                <small class="pull-right">{{file.UploadDate | TDate}}</small>
+                                <h5 class="c-dark ">
+                                    {{file.Name}}&nbsp;
+
+                                    <span class="label label-info "
+                                          ng-class="{'m-l-5':!$first}"
+                                          ng-repeat="tag in file.Tags">{{tag.TagName}}</span>
+                                </h5>
+
+                                <p class="f-12 c-gray">
+                                    上传人：{{file.UploadUser | enumMap:"user" }} &nbsp;| &nbsp;大小：{{file.Size | fileSize}} &nbsp; | &nbsp;
+                                    <a href="{{attachDownloadUrl}}{{file.ID}}">
+                                        <i class="fa fa-download"></i>下载
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>

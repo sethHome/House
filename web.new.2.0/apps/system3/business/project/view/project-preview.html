@@ -1,0 +1,76 @@
+﻿<div>
+    <fieldset class=" m-t-10 m-l-10 m-r-10 p-0 p-l-20 p-r-20">
+
+        <legend>{{local.business.project}}</legend>
+
+        <div class="row m-0 p-t-10">
+            <div class="col-sm-2 p-0"> <label>{{local.proj.number}}</label></div>
+            <div class="col-sm-10">{{currentProject.Number}}</div>
+        </div>
+        <div class="row  m-0  p-t-10">
+            <div class="col-sm-2 p-0"><label>{{local.proj.name}}</label></div>
+            <div class="col-sm-10">{{currentProject.Name}}</div>
+        </div>
+        <div class="row m-0  p-t-10">
+            <div class="col-sm-2 p-0"><label>{{local.proj.customer}}</label></div>
+            <div class="col-sm-10">{{currentProject.Customer.Name}}</div>
+        </div>
+        <div class="row m-0  p-t-10">
+            <div class="col-sm-2 p-0"><label>{{local.proj.manager}}</label></div>
+            <div class="col-sm-4">{{currentProject.Manager | enumMap:"user"}}
+                <a class="btn btn-transparent msgChatBtn"
+                   ng-click="openChat(currentProject.Manager)">
+                    <i class="fa fa-weixin"></i>
+                </a>
+            </div>
+            <div class="col-sm-2 p-0"><label>{{local.proj.vollevel}}</label></div>
+            <div class="col-sm-4">{{currentProject.VolLevel | enumMap:"VolLev"}}</div>
+        </div>
+        <div class="row m-0  p-t-10">
+            <div class="col-sm-2 p-0"><label>{{local.proj.kind}}</label></div>
+            <div class="col-sm-4">{{currentProject.Kind | enumMap:"ProjectKind"}}</div>
+            <div class="col-sm-2 p-0"><label>{{local.proj.type}}</label></div>
+            <div class="col-sm-4">{{currentProject.Type | enumMap:"ProjectType"}}</div>
+        </div>
+        <div class="row m-0  p-t-10">
+            <div class="col-sm-2 p-0"><label>{{local.proj.createdate}}</label></div>
+            <div class="col-sm-4">{{currentProject.CreateDate | TDate}}</div>
+            <div class="col-sm-2 p-0"><label>{{local.proj.deliverydate}}</label></div>
+            <div class="col-sm-4">{{currentProject.DeliveryDate | TDate}}</div>
+        </div>
+        <div class="row m-0  p-t-10 h-70">
+            <div class="col-sm-2 p-0"><label>{{local.proj.note}}</label></div>
+            <div class="col-sm-10" style="word-wrap:break-word;">{{currentProject.Note}}</div>
+        </div>
+        
+    </fieldset>
+
+    <fieldset class="m-t-10 m-l-10 m-r-10 p-0 p-l-20 p-r-20">
+        <legend>{{local.business.attach}}</legend>
+        
+        <attach-preview obj-id="currentProject.ID"
+                        obj-name="Project"></attach-preview>
+    </fieldset>
+
+
+    <fieldset class="m-t-10 m-l-10 m-r-10 p-0 p-l-20 p-r-20">
+
+        <legend>{{local.business.engineering}} &nbsp;&nbsp;
+        </legend>
+
+        <div class="row m-0  p-t-10" 
+             ng-repeat="eng in currentProject.Engineerings"
+             ng-repeat-end="previewScroll.init()">
+            <div class="col-sm-1 p-5 ">
+            <span class="  label label-default" >{{$index + 1}}</span></div>
+            
+            <div class="col-sm-11 ">
+                <p>{{eng.Name}}</p>
+                <span>{{eng.Number}}</span>
+                <span class="label label-info ">{{eng.Status| enumMap:"EngineeringStatus"}}</span>
+                <span class="label label-primary ">{{eng.Phase | enumMap:"EngineeringPhase"}}</span>
+            </div>
+        </div>
+    </fieldset>
+
+</div>

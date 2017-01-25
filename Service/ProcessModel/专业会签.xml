@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<definitions id="JoinSign" name="专业会签" >
+
+  <!--专业会签-->
+  <process id="JS1-1" isClosed="false" isExecutable="true" processType="None">
+
+    <!--开始-->
+    <startEvent id="_1" name="开始" >
+      <outgoing>_2</outgoing>
+    </startEvent>
+
+    <sequenceFlow id="_2" sourceRef="_1" targetRef="_3"/>
+
+    <!--专业会签-->
+    <jointlySign id="_5" name="专业会签" >
+      <incoming>_4</incoming>
+      <outgoing>_6</outgoing>
+      <potentialOwner resourceRef="JoinSignUsers" type="user">
+      </potentialOwner>
+    </jointlySign>
+
+    <sequenceFlow id="_6" sourceRef="_5" targetRef="_7"/>
+
+    <!--结束-->
+    <endEvent id="_25" name="结束">
+      <incoming>_24</incoming>
+    </endEvent>
+
+  </process>
+  
+  <ob name="FormOB"></ob>
+
+  <!--流程资源-->
+  <resource id="CheckUser">
+    <IOwner name="Change"></IOwner>
+  </resource>
+  <resource id="ApproveUser">
+    <IOwner name="Change"></IOwner>
+  </resource>
+  <resource id="AgreeUser">
+    <IOwner name="Change"></IOwner>
+  </resource>
+</definitions>
+

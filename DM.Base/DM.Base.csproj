@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0554741C-69FA-4909-9DAB-41CD7DFDAD6E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DM.Base</RootNamespace>
+    <AssemblyName>DM.Base</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Words, Version=15.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Aspose.Words.15.11\Aspose.Words.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="PanGu, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.Analysis.PanGu.2.4.1\lib\PanGu.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PanGu.HighLight, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.Analysis.PanGu.2.4.1\lib\PanGu.HighLight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PanGu.Lucene.Analyzer, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.Analysis.PanGu.2.4.1\lib\PanGu.Lucene.Analyzer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConstValue.cs" />
+    <Compile Include="Controller\ArchiveBorrowController.cs" />
+    <Compile Include="Controller\ArchiveDataController.cs" />
+    <Compile Include="Controller\ArchiveLibraryController.cs" />
+    <Compile Include="Controller\ArchiveLogController.cs" />
+    <Compile Include="Controller\ArchiveNodeController.cs" />
+    <Compile Include="Controller\ArgumentSettingController.cs" />
+    <Compile Include="Controller\BookController.cs" />
+    <Compile Include="Controller\FieldController.cs" />
+    <Compile Include="Controller\FileDataController.cs" />
+    <Compile Include="Controller\FileLibraryController.cs" />
+    <Compile Include="Controller\FondsController.cs" />
+    <Compile Include="Entity\ArchiveBorrowEntity.cs" />
+    <Compile Include="Entity\ArchiveBorrowEntityMap.cs" />
+    <Compile Include="Entity\ArchiveBorrowItemEntity.cs" />
+    <Compile Include="Entity\ArchiveBorrowItemEntityMap.cs" />
+    <Compile Include="Entity\ArchiveLogEntity.cs" />
+    <Compile Include="Entity\ArchiveLogEntityMap.cs" />
+    <Compile Include="Entity\BookEntity.cs" />
+    <Compile Include="Entity\BookEntityMap.cs" />
+    <Compile Include="Entity\BookItemEntity.cs" />
+    <Compile Include="Entity\BookItemEntityMap.cs" />
+    <Compile Include="Entity\DMContext.cs" />
+    <Compile Include="Entity\ObjectProcessEntityMap.cs" />
+    <Compile Include="Entity\UserTaskEntityMap.cs" />
+    <Compile Include="Permission\DMPermissionCheck.cs" />
+    <Compile Include="Permission\IDMPermissionCheck.cs" />
+    <Compile Include="Service\ArchiveLibrary\ArchiveInfo.cs" />
+    <Compile Include="Service\ArchiveLibrary\ArchiveLibraryService.cs" />
+    <Compile Include="Service\ArchiveLibrary\ArchiveQueryInfo.cs" />
+    <Compile Include="Service\ArchiveLibrary\AutoCreateArchiveInfo.cs" />
+    <Compile Include="Service\ArchiveLibrary\CategoryInfo.cs" />
+    <Compile Include="Service\ArchiveLibrary\EnumArchiveName.cs" />
+    <Compile Include="Service\ArchiveLibrary\IndexData.cs" />
+    <Compile Include="Service\ArchiveLibrary\LuceneIndexService.cs" />
+    <Compile Include="Service\ArchiveLibrary\SearchData.cs" />
+    <Compile Include="Service\ArchiveLibrary\StringSplitHelper.cs" />
+    <Compile Include="Service\ArchiveNode\ArchiveNodeInfo.cs" />
+    <Compile Include="Service\ArchiveNode\ArchiveNodeService.cs" />
+    <Compile Include="Service\ArchiveNode\ArchiveNodeType.cs" />
+    <Compile Include="Service\ArchiveNode\Condition.cs" />
+    <Compile Include="Service\ArchiveLibrary\ArchiveDataService.cs" />
+    <Compile Include="Service\ArgumentSetting\ArgumentSettingService.cs" />
+    <Compile Include="Service\ArgumentSetting\FieldMapping.cs" />
+    <Compile Include="Service\ArchiveLibrary\EnumArchiveStatus.cs" />
+    <Compile Include="Service\Book\BookInfo.cs" />
+    <Compile Include="Service\Book\BookService.cs" />
+    <Compile Include="Service\Borrow\BorrowInfo.cs" />
+    <Compile Include="Service\Borrow\BorrowService.cs" />
+    <Compile Include="Service\Borrow\MyArchiveBorrowInfo.cs" />
+    <Compile Include="Service\BPMTask\BPMHighArchiveEx.cs" />
+    <Compile Include="Service\BPMTask\BPMLowArchiveEx.cs" />
+    <Compile Include="Service\DMEnums.cs" />
+    <Compile Include="Service\Field\FieldDataTypeEnum.cs" />
+    <Compile Include="Service\Field\FieldInfo.cs" />
+    <Compile Include="Service\Field\FieldMappingTypeEnum.cs" />
+    <Compile Include="Service\Field\FieldService.cs" />
+    <Compile Include="Service\FileLibrary\BatchUpdateInfo.cs" />
+    <Compile Include="Service\FileLibrary\FileDataInfo.cs" />
+    <Compile Include="Service\FileLibrary\FileDataService.cs" />
+    <Compile Include="Service\FileLibrary\FileLibraryInfo.cs" />
+    <Compile Include="Service\FileLibrary\FileLibraryService.cs" />
+    <Compile Include="Service\FileLibrary\FileMatchInfo.cs" />
+    <Compile Include="Service\Fond\FondInfo.cs" />
+    <Compile Include="Service\IArchiveDataService.cs" />
+    <Compile Include="Service\IArchiveLibraryService.cs" />
+    <Compile Include="Service\IArchiveLogService.cs" />
+    <Compile Include="Service\IArchiveNodeService.cs" />
+    <Compile Include="Service\IArgumentSettingService.cs" />
+    <Compile Include="Service\IBookService.cs" />
+    <Compile Include="Service\IBorrowService.cs" />
+    <Compile Include="Service\IFieldService.cs" />
+    <Compile Include="Service\IFileDataService.cs" />
+    <Compile Include="Service\IFileLibraryService.cs" />
+    <Compile Include="Service\IFondService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Fond\FondService.cs" />
+    <Compile Include="Service\ILuceneIndexService.cs" />
+    <Compile Include="Service\IDMUserTaskService.cs" />
+    <Compile Include="Service\Log\ArchiveLogService.cs" />
+    <Compile Include="Service\UserTask\ArchiveBorrowOb.cs" />
+    <Compile Include="Service\UserTask\ObjectProcessInfo.cs" />
+    <Compile Include="Service\UserTask\ObjectProcessService.cs" />
+    <Compile Include="Service\UserTask\UserTaskCountInfo.cs" />
+    <Compile Include="Service\UserTask\UserTaskInfo.cs" />
+    <Compile Include="Service\UserTask\DMUserTaskService.cs" />
+    <Compile Include="Service\UserTask\UserTaskStatusEnum.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Api.Framework.Core\Api.Framework.Core.csproj">
+      <Project>{17f5c4be-6c0b-4cee-8681-f944417d77b2}</Project>
+      <Name>Api.Framework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Api.System\Api.System.csproj">
+      <Project>{0acd9472-ebfb-4c9e-b0ef-3a674ffc5801}</Project>
+      <Name>Api.System</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BPM.DB\BPM.DB.csproj">
+      <Project>{311306e0-3e6a-4805-af0e-9497b58a6bce}</Project>
+      <Name>BPM.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BPM.Engine\BPM.Engine.csproj">
+      <Project>{e28b648e-9e26-4e52-be60-cd2f29a3e2e3}</Project>
+      <Name>BPM.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BPM.ProcessModel\BPM.ProcessModel.csproj">
+      <Project>{17ea7624-1a03-479f-991d-626b26bb4fde}</Project>
+      <Name>BPM.ProcessModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

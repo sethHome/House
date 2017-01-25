@@ -1,0 +1,215 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <i class="fa fa-pencil-square-o"></i> &nbsp;{{local.business.eng}}{{local.global.info}}
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body">
+
+    <div class="nav-tabs" ng-init="currentIndex = 1">
+        <ul class="nav nav-tabs nav-red">
+            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">合同信息</a></li>
+            <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab"><i class="fa fa-list"></i>工程</a></li>
+            <li ng-click="currentIndex = 3" ng-class="{active : currentIndex == 3}"><a data-toggle="tab"><i class="fa fa-paperclip"></i> 附件</a></li>
+        </ul>
+        <div class="tab-content p-r-0 ">
+            <div class="tab-pane" style="height:{{modalHeight}}px" scroll="tabPanelScl1" auto="true" ng-class="{active : currentIndex == 1}">
+                <form class="m-r-10" name="FormMaintain">
+
+                    <div class="row">
+                        <div class="col-sm-6 ">
+                            <div class="form-group">
+                                <label>{{local.con.number}}</label>
+                                <span class="pull-right vad-msg" id="msg_number"></span>
+                                <input class="form-control" type="text"
+                                       name="Number" validator="required,maxlength=50" message-id="msg_number"
+                                       placeholder="{{local.global.input}}{{local.con.number}}"
+                                       ng-model="conInfo.Number">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.con.name}}</label>
+                                <span class="pull-right vad-msg" id="msg_name"></span>
+                                <input class="form-control" type="text"
+                                       name="Name" validator="required,maxlength=50" message-id="msg_name"
+                                       placeholder="{{local.global.input}}{{local.con.name}}"
+                                       ng-model="conInfo.Name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.con.type}}</label>
+                                <span class="pull-right vad-msg" id="msg_type"></span>
+                                <ui-select ng-model="conInfo.Type" theme="select2" search-enabled="false" class="form-control">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.con.type}}">{{$select.selected.Text}}</ui-select-match>
+                                    <ui-select-choices repeat="item.Value as item in getBaseData('ContractType')">
+                                        <div ng-bind-html="item.Text"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="conInfo.Type" message-id="msg_type"
+                                       name="Type" validator="required">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.con.status}}</label>
+                                <span class="pull-right vad-msg" id="msg_status"></span>
+                                <ui-select ng-model="conInfo.Status" theme="select2" search-enabled="false" class="form-control">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.con.status}}">{{$select.selected.Text}}</ui-select-match>
+                                    <ui-select-choices repeat="item.Value as item in getBaseData('ContractStatus')">
+                                        <div ng-bind-html="item.Text"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="conInfo.Status" message-id="msg_status"
+                                       name="Status" validator="required">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>{{local.con.signdate}}</label>
+                                <span class="pull-right vad-msg" id="msg_signDate"></span>
+                                <div class="append-icon">
+                                    <input type="text" ng-model="conInfo.SignDate"
+                                           name="SignDate" validator="required" message-id="msg_signDate"
+                                           placeholder="{{local.global.choose}}{{local.con.signdate}}"
+                                           class="form-control"
+                                           date-picker />
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6 ">
+                            <div class="form-group">
+                                <label>{{local.con.fee}}</label>
+                                <span class="pull-right vad-msg" id="msg_fee"></span>
+                                <div class="append-icon">
+                                    <input type="text" ng-model="conInfo.Fee"
+                                           name="Fee" validator="required,money" message-id="msg_fee"
+                                           placeholder="{{local.global.input}}{{local.con.fee}}"
+                                           class="form-control money-input" />
+                                    <i>{{local.global.unit}}</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>{{local.con.customer}}</label>
+                                <span class="pull-right vad-msg" id="msg_customer"></span>
+                                <customer model="customers" type="1"></customer>
+                                <div class="append-icon">
+                                    <input type="text" ng-model="conInfo.Customer"
+                                           name="Customer" validator="required" message-id="msg_customer"
+                                           placeholder="{{local.proj.choosecustomer}}"
+                                           uib-typeahead="item as item.Name for item in customers.Source | filter:$viewValue | limitTo:8"
+                                           class="form-control">
+                                    <i class="fa fa-binoculars"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>{{local.con.note}}</label>
+                                <span class="pull-right vad-msg" id="msg_note"></span>
+                                <textarea class="form-control"
+                                          name="Note" message-id="msg_note"
+                                          validator="maxlength=500"
+                                          placeholder="{{local.global.input}}{{local.con.note}}"
+                                          ng-model="conInfo.Note" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 2}">
+                <div class="append-icon">
+                    <input type="text" ng-model="chooseEngineeringInfo"
+                           placeholder="{{local.global.input}}{{local.eng.number}}、{{local.eng.name}}"
+                           uib-typeahead="item as item.Name for item in loadEngineering($viewValue)"
+                           typeahead-loading="loadingLocations"
+                           typeahead-no-results="noResults"
+                           typeahead-template-url="customTemplate.html"
+                           class="form-control form-white">
+                    <i class="fa fa-binoculars"></i>
+                </div>
+
+
+                <div ng-show="noResults">
+                    <i class="glyphicon glyphicon-remove"></i> 没有找到工程
+                </div>
+
+                <script type="text/ng-template" id="customTemplate.html">
+                    <a>
+                        <span ng-bind-html="match.model.Name | uibTypeaheadHighlight:query"></span>
+                    </a>
+                </script>
+                <div class="widget-news ">
+                    <a class="message-item media"
+                       ng-repeat="eng in conInfo.Engineerings"
+                       ng-repeat-end="tabPanelScl2.init()">
+                        <div class="media">
+                            <div class="media-body">
+                                <div class="pull-left p-r-10">
+                                    <span class="label label-default">{{$index + 1}}</span>
+                                </div>
+                                <div>
+                                    <small class="pull-right">{{eng.CreateDate | TDate}}</small>
+                                    <span class="c-dark ">
+                                        {{eng.Name}}
+                                    </span>
+
+                                    <p class="f-12 c-gray">
+                                        负责人：{{eng.Manager | enumMap:"user" }} &nbsp;| &nbsp;电压等级：{{eng.VolLevel | enumMap:"VolLev"}} &nbsp; | &nbsp;
+
+                                        <span class="c-blue" style="cursor:pointer;" ng-click="removeEngineering(eng)"><i class="fa fa-close "></i>&nbsp;移除</span>
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 3}">
+                <div>
+                    <attach-upload name="attachCtl"
+                                   obj-id="conInfo.ID"
+                                   obj-name="Contract">
+                    </attach-upload>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer bg-aero">
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="save()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-save"></i>
+        {{local.global.save}}
+    </button>
+    <button type="button"
+            ng-click="reset()"
+            validation-reset="FormMaintain"
+            class="btn btn-danger btn-square ">
+        <i class="fa fa-refresh"></i>
+        {{local.global.reset}}
+    </button>
+</div>
+
+

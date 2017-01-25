@@ -1,0 +1,210 @@
+﻿<div class="panel ">
+    <div class="panel-content " style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner" >
+
+                    <p class="bold f-20 t-center m-20">
+                        已借阅档案
+                    </p>
+                    <div class="borrow-item" 
+                         ng-repeat="item in myBorrowList track by $index"
+                         ng-class="{timeout : item.IsTimeOut}"
+                         ng-click="setCurrentItem(item)">
+                        <p> <i class="fa fa-file-zip-o "></i> {{item.Name}}</p>
+                        <span class="f-12 c-gray">【{{item.ArchiveTypeName}}】 借阅份数： {{item.BorrowCount}} 归还日期： <span ng-class="{'c-blue' : item.IsTimeOut}">{{item.BorrowInfo.BackDate | TDate}}</span> </span>
+
+                        <button ng-if="item.Status == 1" type="button" class="btn btn-sm btn-warning btn-square ">审核中</button>
+                        <button ng-if="item.Status == 2" type="button" class="btn btn-sm btn-primary btn-square " ng-click="giveBack(item)" >归还</button>
+                        <button ng-if="item.Status == 3" type="button" class="btn btn-sm btn-danger btn-square ">申请拒绝</button>
+                        <button ng-if="item.Status == 4" type="button" class="btn btn-sm btn-info btn-square ">已归还</button>
+
+                        <a ng-if="item.Status == 2" class="btn btn-sm btn-info btn-square btn-download"
+                           href="{{downloadUrl}}/archiveborrow/{{item.BorrowID}}/download" > 
+                            下载
+                        </a>
+                        
+                    </div>
+                    
+
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="70%">
+
+                <div data-split-pane>
+                    <div data-split-pane-component>
+
+                        <div data-split-pane>
+                            <div data-split-pane-component>
+
+                                <div class="pretty-split-pane-component-inner">
+
+                                    <table class="item-table" border="1" cellpadding="0" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <td width="18px">&nbsp;</td>
+                                                <td width="30%">项</td>
+                                                <td>值</td>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr class="item-head">
+                                                <td><i class="fa fa-info"></i> </td>
+                                                <td colspan="2"> 借阅信息</td>
+                                            </tr>
+                                            <tr class="item-row">
+                                                <td class="item-head"></td>
+                                                <td>借阅部门</td>
+                                                <td>{{currentItem.BorrowInfo.BorrowDept | enumMap : 'Dept'}}</td>
+                                            </tr>
+                                            <tr class="item-row">
+                                                <td class="item-head"></td>
+                                                <td>借阅日期</td>
+                                                <td>{{currentItem.BorrowInfo.BorrowDate | TDate}}</td>
+                                            </tr>
+                                            <tr class="item-row">
+                                                <td class="item-head"></td>
+                                                <td>归还日期</td>
+                                                <td>{{currentItem.BorrowInfo.BackDate | TDate}}</td>
+                                            </tr>
+                                            <tr class="item-row">
+                                                <td class="item-head"></td>
+                                                <td>借阅份数</td>
+                                                <td>{{currentItem.BorrowCount}}</td>
+                                            </tr>
+                                            <tr class="item-row">
+                                                <td class="item-head"></td>
+                                                <td>借阅理由</td>
+                                                <td>{{currentItem.BorrowInfo.Note}}</td>
+                                            </tr>
+                                        
+                                            <tr class="item-head">
+                                                <td><i class="fa fa-info"></i> </td>
+                                                <td colspan="2"> {{currentItem.ArchiveTypeName}}信息</td>
+                                            </tr>
+                                            <tr class="item-row" ng-repeat="item in archiveFields">
+                                                <td class="item-head"></td>
+                                                <td>{{item.Name}}</td>
+                                                <td>{{getFiledValue(volumeInfo,item)}}</td>
+                                            </tr>
+                                            <tr class="item-head">
+                                                <td><i class="fa fa-info"></i> </td>
+                                                <td colspan="2"> 其他信息</td>
+                                            </tr>
+                                            <tr class="item-row">
+                                                <td class="item-head"></td>
+                                                <td>全宗号</td>
+                                                <td>{{volumeInfo.FondsNumber}}</td>
+                                            </tr>
+                                            <tr class="item-row">
+                                                <td class="item-head"></td>
+                                                <td>状态</td>
+                                                <td class="c-blue">{{volumeInfo.Status | enumMap : 'ArchiveStatus'}}</td>
+                                            </tr>
+                                            <tr class="item-row">
+                                                <td class="item-head"></td>
+                                                <td>访问级别</td>
+                                                <td class="c-blue">{{volumeInfo.AccessLevel | enumMap : 'AccessLevel'}}</td>
+                                            </tr>
+                                            <tr class="item-row">
+                                                <td class="item-head"></td>
+                                                <td>归档份数</td>
+                                                <td class="c-blue">{{volumeInfo.Copies}}</td>
+                                            </tr>
+                                            <tr class="item-row">
+                                                <td class="item-head"></td>
+                                                <td>创建人</td>
+                                                <td>{{volumeInfo.CreateUser | enumMap : 'user'}}</td>
+                                            </tr>
+                                            <tr class="item-row">
+                                                <td class="item-head"></td>
+                                                <td>创建时间</td>
+                                                <td>{{volumeInfo.CreateDate | TDate}}</td>
+                                            </tr>
+                                            <tr class="item-row">
+                                                <td class="item-head"></td>
+                                                <td>最近修改时间</td>
+                                                <td>{{volumeInfo.ModifyDate | TDate}}</td>
+                                            </tr>
+                                            <tr class="item-row">
+                                                <td class="item-head"></td>
+                                                <td>最近修改人</td>
+                                                <td>{{volumeInfo.ModifyUser | enumMap : 'user'}}</td>
+                                            </tr>
+                                            <tr class="item-head" ng-show="volumeInfo.ProjectID > 0">
+                                                <td><i class="fa fa-info"></i> </td>
+                                                <td colspan="2"> 项目信息</td>
+                                            </tr>
+                                            <tr class="item-row" ng-repeat="item in currentItem.ArchiveInfo.ProjectFields" ng-show="currentItem.ArchiveInfo.HasProject">
+                                                <td class="item-head"></td>
+                                                <td>{{item.Name}}</td>
+                                                <td>{{getFiledValue(projInfo,item)}}</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+                            <div data-split-pane-divider data-width="5px"></div>
+                            <div data-split-pane-component data-width="40%">
+                                <div class="pretty-split-pane-component-inner">
+
+                                    <div class="widget-news ">
+                                        <a class="message-item media"
+                                           ng-repeat="item in archiveFiles">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <div class="pull-left p-r-10">
+                                                        <i class="fa fa-file"></i>
+                                                    </div>
+                                                    <div>
+                                                        <small class="pull-right">{{item.CreateDate | TDate}}</small>
+                                                        <span class="c-dark ">
+                                                            {{getMainFileName(item)}}
+                                                        </span>
+
+                                                        <p class="f-12 c-gray">
+                                                            <span ng-repeat="f in currentItem.ArchiveInfo.FileFields">
+                                                                {{f.Name}}:{{item['_f'+f.ID]}} &nbsp;|
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div data-split-pane-divider data-height="5px"></div>
+                    <div data-split-pane-component data-height="30%">
+                        <div class="pretty-split-pane-component-inner p-10">
+
+                            <div class="m-b-5" ng-repeat="item in currentArchiveLogs track by $index">
+                                <i class="fa fa-calendar"></i>  {{item.LogDate | TDate : 'yyyy/MM/dd hh:mm'}}  <span class="c-blue">{{item.LogType == 1 ? "系统" : "用户"}}</span> {{item.LogUser | enumMap : 'user'}} {{item.LogContent}}
+                            </div>
+                            
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

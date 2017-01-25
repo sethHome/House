@@ -1,0 +1,259 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <i class="fa fa-pencil-square-o"></i> &nbsp; {{local.business.eng}}{{local.global.info}}
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body">
+
+    <div class="nav-tabs" ng-init="currentIndex = 1">
+        <ul class="nav nav-tabs nav-red">
+            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">工程信息</a></li>
+            <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab"><i class="fa fa-paperclip"></i> 附件</a></li>
+        </ul>
+        <div class="tab-content p-r-0 ">
+            <div class="tab-pane" style="height:{{modalHeight}}px" scroll="tabPanelScl1" auto="true" ng-class="{active : currentIndex == 1}">
+                <form name="FormMaintain" class="m-r-10">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.proj.number}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_proj_number"></span>
+
+                                <div class="append-icon">
+                                    <input type="text" ng-model="chooseProjectInfo"
+                                           placeholder="{{local.global.input}}{{local.proj.number}}"
+                                           uib-typeahead="item as item.Number for item in loadProjectByNumber($viewValue)"
+                                           typeahead-loading="loadingLocations"
+                                           typeahead-no-results="noResults"
+                                           typeahead-template-url="customTemplate.html"
+                                           class="form-control">
+                                    <i class="fa fa-binoculars"></i>
+                                </div>
+                                <div ng-show="noResults">
+                                    <i class="glyphicon glyphicon-remove"></i> 没有找到项目
+                                </div>
+                                <input class="hide" ng-model="chooseProjectInfo.ID"
+                                       message-id="msg_proj_number" validator="required"
+                                       name="chooseProjectInfo1">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.proj.name}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_proj_name"></span>
+                                <div class="append-icon">
+                                    <input type="text" ng-model="chooseProjectInfo"
+                                           placeholder="{{local.global.input}}{{local.proj.name}}"
+                                           uib-typeahead="item as item.Name for item in loadProjectByName($viewValue)"
+                                           typeahead-loading="loadingLocations"
+                                           typeahead-no-results="noResults"
+                                           typeahead-template-url="customTemplate.html"
+                                           class="form-control">
+                                    <i class="fa fa-binoculars"></i>
+                                </div>
+                                <input class="hide" ng-model="chooseProjectInfo.ID"
+                                       message-id="msg_proj_name" validator="required"
+                                       name="chooseProjectInfo2">
+                            </div>
+                        </div>
+
+                        <script type="text/ng-template" id="customTemplate.html">
+                            <a>
+                                <span ng-bind-html="match.model.Name | uibTypeaheadHighlight:query"></span>
+                            </a>
+                        </script>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.eng.number}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_number"></span>
+                                <input ng-model="engInfo.Number" type="text" name="engInfo.Number"
+                                       class="form-control " placeholder="{{local.global.input}}{{local.eng.number}}"
+                                       message-id="msg_number"
+                                       validator="required,maxlength=50">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.eng.name}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_name"></span>
+                                <input ng-model="engInfo.Name" type="text" name="engInfo.Name"
+                                       class="form-control" placeholder="{{local.global.input}}{{local.eng.name}}"
+                                       message-id="msg_name"
+                                       validator="required,maxlength=50">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.eng.type}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_kind"></span>
+
+                                <ui-select ng-model="engInfo.Type" theme="select2" search-enabled="false" class="form-control">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.eng.type}}">{{$select.selected.Text}}</ui-select-match>
+                                    <ui-select-choices repeat="item.Value as item in getBaseData('EngineeringType')">
+                                        <div ng-bind-html="item.Text"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="engInfo.Type"
+                                       name="eng.type" validator="required" message-id="msg_kind">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.eng.vollevel}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_volLevel"></span>
+
+                                <ui-select ng-model="engInfo.VolLevel" theme="select2" search-enabled="false" class="form-control">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.proj.vollevel}}">{{$select.selected.Text}}</ui-select-match>
+                                    <ui-select-choices repeat="item.Value as item in getBaseData('VolLev')">
+                                        <div ng-bind-html="item.Text"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="engInfo.VolLevel"
+                                       name="VolLevel" validator="required" message-id="msg_volLevel">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.eng.phase}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_phase"></span>
+
+                                <ui-select ng-model="engInfo.Phase" theme="select2" search-enabled="false" class="form-control" ng-disabled="true">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.eng.phase}}">{{$select.selected.Text}}</ui-select-match>
+                                    <ui-select-choices repeat="item.Value as item in getBaseData('EngineeringPhase')">
+                                        <div ng-bind-html="item.Text"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="engInfo.Phase"
+                                       name="Type" validator="required" message-id="msg_phase">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.eng.manager}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_manager"></span>
+
+                                <ui-select ng-model="engInfo.Manager" theme="select2" search-enabled="false" class="form-control">
+                                    <ui-select-match placeholder="{{local.global.choose}}{{local.eng.manager}}">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="item.ID as item in user_item | role:'R3'">
+                                        <div ng-bind-html="item.Name"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <input class="hide" ng-model="engInfo.Manager"
+                                       name="Manager" validator="required" message-id="msg_manager">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.eng.createdate}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_createdate"></span>
+
+                                <div class="append-icon">
+                                    <input type="text" ng-model="engInfo.CreateDate"
+                                           name="CreateDate" validator="required" message-id="msg_createdate"
+                                           placeholder="{{local.global.choose}}{{local.eng.createdate}}"
+                                           class="form-control "
+                                           date-picker />
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>
+                                    {{local.eng.deliverydate}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_deliverydate"></span>
+                                <div class="append-icon">
+                                    <input type="text" ng-model="engInfo.DeliveryDate"
+                                           name="DeliveryDate" validator="required" message-id="msg_deliverydate"
+                                           placeholder="{{local.global.choose}}{{local.eng.deliverydate}}"
+                                           class="form-control "
+                                           date-picker />
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>
+                                    {{local.eng.note}}
+                                </label>
+                                <span class="pull-right vad-msg" id="msg_note"></span>
+
+                                <textarea class="form-control "
+                                          name="Note"
+                                          validator="maxlength=500" message-id="msg_note"
+                                          placeholder="{{local.global.input}}{{local.proj.note}}"
+                                          ng-model="engInfo.Note" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 2}">
+                <div>
+                    <attach-upload name="attachCtl"
+                                   obj-id="engInfo.ID"
+                                   obj-name="Engineering">
+                    </attach-upload>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer bg-aero">
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="save()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-save"></i>
+        {{local.global.save}}
+    </button>
+    <button type="button"
+            validation-reset="FormMaintain"
+            class="btn btn-danger btn-square ">
+        <i class="fa fa-refresh"></i>
+        {{local.global.reset}}
+    </button>
+</div>

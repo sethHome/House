@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8">
+    <title>Themes Lab - Creative Laborator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="" name="description" />
+    <meta content="themes-lab" name="author" />
+    <link rel="shortcut icon" href="../assets/global/images/favicon.png">
+    <link href="../assets/global/css/style.css" rel="stylesheet">
+    <link href="../assets/global/css/ui.css" rel="stylesheet">
+    <link href="../assets/global/plugins/bootstrap-loading/lada.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Microsoft YaHei' !important;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+        }
+        .login-panel {
+            background-image: url(images/login-bg.jpg);
+            width: 100%;
+            background-origin: padding-box;
+            background-repeat: round;
+            position: absolute;
+            top: 20%;
+            bottom: 20%;
+        }
+
+        .login-paper {
+            height:400px;
+            width: 25%;
+            float: left;
+            margin-left: 5%;
+            margin-top: 5%;
+            cursor: pointer;
+            -moz-box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.2);
+            -webkit-box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-paper-content {
+            height: inherit;
+            background-color: whitesmoke;
+            padding: 10px;
+            position: relative;
+        }
+
+            .login-paper-content .page-number {
+                position: absolute;
+                bottom: 0;
+                left: 45%;
+            }
+
+        .login-paper:hover:before, .login-paper:hover:after {
+            height: 0px;
+        }
+
+        .login-paper:before {
+            -webkit-transform: skew(-15deg) rotate(-15deg);
+            -moz-transform: skew(-15deg) rotate(-15deg);
+            -o-transform: skew(-15deg) rotate(-15deg);
+            transform: skew(-15deg) rotate(-15deg);
+            left: 8px;
+        }
+
+        .login-paper:after {
+            -webkit-transform: skew(15deg) rotate(15deg);
+            -moz-transform: skew(15deg) rotate(15deg);
+            -o-transform: skew(15deg) rotate(15deg);
+            transform: skew(15deg) rotate(15deg);
+            right: 8px;
+        }
+
+         .login-paper:after {
+            width: 80%;
+            height: 20%;
+            content: ' ';
+            -webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            -moz-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            position: absolute;
+            bottom: 48px;
+            z-index: -1;
+            transition: height 0.1s;
+            -webkit-transition: height 0.5s; /* Safari and Chrome */
+        }
+    </style>
+</head>
+<body class="sidebar-light account2" data-page="login">
+
+    <div class="login-panel">
+        <div class="login-paper">
+            <div class="login-paper-content">
+                <form class="form-signin" role="form">
+                    <h3>用户登陆</h3>
+                    
+                    <div class="append-icon">
+                        <input type="text" name="name" id="name" class="form-control form-white username" placeholder="账号" required>
+                        <i class="icon-user"></i>
+                    </div>
+                    
+                    <div class="append-icon m-b-20">
+                        <input type="password" name="password" id="password" class="form-control form-white password" placeholder="密码" required>
+                        <i class="icon-lock"></i>
+                    </div>
+                    <div class="social-btn">
+                        <button type="button" class="btn-fb btn btn-lg btn-block btn-square">登陆</button>
+                    </div>
+                   
+                </form>
+            </div>
+        </div>
+        
+
+
+    </div>
+    <p class="account-copyright">
+        <span>Copyright © 2015 </span><span>THEMES LAB</span>.<span>All rights reserved.</span>
+    </p>
+    <script src="../assets/global/plugins/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../assets/global/plugins/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script src="../assets/global/plugins/gsap/main-gsap.min.js"></script>
+    <script src="../assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/global/plugins/backstretch/backstretch.min.js"></script>
+    <script src="../assets/global/plugins/bootstrap-loading/lada.min.js"></script>
+    <!--<script src="../assets/global/js/pages/login-v2.js"></script>-->
+    <script src="../assets/admin/layout3/js/layout.js"></script>
+</body>
+</html>

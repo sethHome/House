@@ -1,0 +1,74 @@
+﻿<div class="row m-0 p-0 ">
+
+    <div class="col-sm-6">
+        <div class="row ">
+            <div class="col-sm-4">
+                <button type="button"
+                        ng-click="flowNext(true)"
+                        class="btn btn-primary btn-square ">
+                    <!--{{flowNodeInfo.CurrentTaskName}}-->
+                    {{taskId > 0 ? "同意" : "申请"}}
+                    <i ng-class="{'fa-spinner faa-spin animated' : !flowNodeInfo.CurrentTaskName ,'fa-arrow-circle-right' : flowNodeInfo.CurrentTaskName}" class="fa "></i>
+                </button>
+            </div>
+
+            <div class="col-sm-8" ng-if="!simple">
+                <span ng-show="!flowNodeInfo.NextName">流程结束</span>
+                <span>{{flowNodeInfo.NextName }} </span>
+                <span ng-show="flowNodeInfo.NextUser > 0"> &nbsp; <i class="fa fa-user"></i>{{flowNodeInfo.NextUser | enumMap:"user"}}</span>
+
+                <ui-select ng-model="taskInfo.user" ng-show="!flowNodeInfo.NextUser && flowNodeInfo.NextName && !flowNodeInfo.NextIsJoinSign"
+                           theme="select2" search-enabled="false" class="form-white">
+                    <ui-select-match>{{$select.selected  | enumMap:"user" }}</ui-select-match>
+                    <ui-select-choices repeat="user  in flowNodeInfo.NextUsers">
+                        <div>{{user | enumMap:"user"}}</div>
+                    </ui-select-choices>
+                </ui-select>
+
+            </div>
+        </div>
+        <div class="row" ng-show="flowNodeInfo.NextIsJoinSign" ng-if="!simple">
+            <div class="col-sm-12">
+                <user-choose class="pull-left" text="选择会签用户" 
+                             ng-show="!flowNodeInfo.NextJoinSignUsers.length"
+                             users="taskInfo.joinUsers_obj"></user-choose>
+                <span class="pull-left">会签人员:&nbsp;&nbsp;</span>
+                <label class="label label-dark pull-left m-r-5 p-5"
+                       ng-repeat="u in taskInfo.joinUsers_obj">
+                    <i class="fa fa-user"></i>&nbsp;{{u.name}}
+                </label>
+                <label class="label label-dark pull-left m-r-5 p-5"
+                       ng-repeat="u in flowNodeInfo.NextJoinSignUsers">
+                    <i class="fa fa-user"></i>&nbsp;{{u | enumMap:'user'}}
+                </label>
+            </div>
+           
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div ng-show="canBack" class="pull-left">
+                    <button type="button"
+                            ng-click="flowNext(false)"
+                            class="btn btn-danger btn-square ">
+                        驳回 <i class="fa fa-arrow-circle-left"></i>
+                    </button>
+                </div>
+                <div ng-show="flowNodeInfo.ProcessID" class="pull-left" ng-if="!simple">
+                    <button type="button"
+                            ng-click="openFlow()"
+                            class="btn btn-info btn-square ">
+                        进度 <i class="fa fa-flag-o"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6" ng-if="!simple">
+        
+        <textarea class="form-control form-white "
+                  placeholder="输入流程流转信息" ng-show="taskId"
+                  name="note" ng-model="taskInfo.note"
+                  validator="maxlength=500" rows="5"></textarea>
+    </div>
+</div>

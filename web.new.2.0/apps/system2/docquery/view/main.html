@@ -1,0 +1,6 @@
+﻿
+<div ng-repeat="page in modules.docquery"
+     ui-view="{{'docquery.content.' + page.Name}}"
+     ng-show="$state.includes('docquery.'+ page.Name)">
+
+</div>

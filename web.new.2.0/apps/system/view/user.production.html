@@ -1,0 +1,72 @@
+﻿<div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="panel">
+            <div class="panel-header panel-controls">
+                <div class="control-btn" reload="permissionPanel">
+                   
+                </div>
+            </div>
+            <div class="panel-content" fullheight="panelcontent">
+                <div class="form-group">
+                    <h4>专业</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item"
+                            ng-click="setCurrentSpec(spec)"
+                            ng-class="{'active': currentSpecialty.Key == spec.Key}"
+                            ng-repeat="spec in getBaseData('Specialty') track by spec.Key ">
+
+                            <div class="row">
+                                <div class="col-xs-6">{{spec.Text}}</div>
+                                <div class="col-xs-6">
+                                    
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="panel" blockui="flowPanel">
+            <div class="panel-header panel-controls">
+                <div class="control-btn" reload="permissionPanel">
+                    <a ng-click="save()"><i class="icon-reload"></i></a>
+                </div>
+            </div>
+            <div class="panel-content" fullheight="panelcontent">
+
+                <h4>流程</h4>
+
+                <ul class="list-group">
+                    <li class="list-group-item"
+                        ng-click="setCurrentProcess(pro)"
+                        ng-class="{'active': currentProcess.Key == pro.Key}"
+                        ng-repeat="pro in ProcessModel_item track by pro.Key ">
+
+                        <div class="row">
+                            <div class="col-xs-6">{{pro.Value}}</div>
+                            <div class="col-xs-6">
+                                {{pro.Tasks.length}}
+                                <!--<input type="checkbox" icheck ng-model="spec.Seleced" />-->
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <h4>节点</h4>
+                <div class="input-group">
+                    <div class="icheck-inline">
+                        <label ng-repeat="task in ProcessModel_enum[currentProcess.Key].Tasks">
+                            <input type="checkbox" ng-model="task.isSelected" icheck> {{task.Name}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

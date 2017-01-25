@@ -1,0 +1,6 @@
+﻿
+<div ng-repeat="page in modules.docmgr"
+     ui-view="{{'docmgr.content.' + page.Name}}"
+     ng-show="$state.includes('docmgr.'+ page.Name)">
+
+</div>

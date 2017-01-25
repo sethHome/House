@@ -1,0 +1,29 @@
+﻿<div class="panel " ng-controller="system.controller.business">
+    <div class="panel-header panel-controls">
+       
+        <div class="control-btn" reload="sysPanel">
+
+        </div>
+    </div>
+    <div class="panel-content" fullheight="panelcontent" scroll="initScroller" scroll-to="top">
+        <div class="form-group" style="margin-top:10px;">
+            <input class="form-control form-white" type="text" placeholder="输入筛选" ng-model="sysFilter">
+        </div>
+        <p>
+            <span class="pull-right">当前：{{(business | filter:sysFilter).length }}个系统</span>
+        </p>
+
+        <div class="form-group">
+
+            <ul class="list-group">
+                <li class="list-group-item"
+                    ng-class="{'active': currentBusiness.Key == b.Key}"
+                    ng-click="businessChanged(b)"
+                    ng-repeat="b in business  | filter:sysFilter  track by b.Key "
+                    ng-repeat-end="initScroller">
+                    {{b.Name}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

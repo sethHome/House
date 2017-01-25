@@ -1,0 +1,248 @@
+﻿<div class="panel ">
+
+    <div class="panel-content " blockui="gridPanel">
+
+        <div class="pretty-split-pane-frame" style="height:{{gridHeight + 20}}px">
+            <div data-split-pane>
+                <div data-split-pane-component>
+
+                    <div data-split-pane>
+                        <div data-split-pane-component data-width="25%">
+
+                            <div class="pretty-split-pane-component-inner">
+
+                                <tree tree-data="scope"
+                                      tree-model="bookCategorys"
+                                      tree-api="treeApi"
+                                      tree-plugins="wholerow,types,contextmenu"
+                                      changed="bookCategoryChanges">
+                                </tree>
+
+                            </div>
+
+                        </div>
+                        <div data-split-pane-divider data-width="5px"></div>
+                        <div data-split-pane-component >
+                            <div class="pretty-split-pane-component-inner">
+
+                                <div class="nav-tabs no-border" ng-init="currentIndex = 1">
+                                    <ul class="nav nav-tabs nav-red">
+                                        <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">图书信息</a></li>
+                                        <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab"><i class="fa fa-paperclip"></i> 附件</a></li>
+                                    </ul>
+                                    <div class="tab-content no-border">
+                                        <div class="tab-pane" ng-class="{active : currentIndex == 1}">
+                                            <form name="FormMaintain">
+
+                                                <div class="row">
+                                                    <div class="col-sm-6 ">
+                                                        <div class="form-group">
+                                                            <label>图书编号</label>
+
+                                                            <span class="pull-right vad-msg" id="msg_number"></span>
+                                                            <input class="form-control " type="text"
+                                                                   name="Number" validator="required,maxlength=200" message-id="msg_number"
+                                                                   placeholder="图书编号"
+                                                                   ng-model="bookInfo.Number">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 ">
+                                                        <div class="form-group">
+                                                            <label>图书名称</label>
+
+                                                            <span class="pull-right vad-msg" id="msg_name"></span>
+                                                            <input class="form-control " type="text"
+                                                                   name="Name" validator="required,maxlength=200" message-id="msg_name"
+                                                                   placeholder="图书名称"
+                                                                   ng-model="bookInfo.Name">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6 ">
+                                                        <div class="form-group">
+                                                            <label>作者</label>
+                                                            <span class="pull-right vad-msg" id="msg_author"></span>
+
+                                                            <input class="form-control " type="text"
+                                                                   name="Name" validator="required,maxlength=200" message-id="msg_author"
+                                                                   placeholder="作者"
+                                                                   ng-model="bookInfo.Author">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>出版社</label>
+                                                            <span class="pull-right vad-msg" id="msg_Press"></span>
+                                                            <ui-select ng-model="bookInfo.Press" theme="select2" search-enabled="false" class="form-control ">
+                                                                <ui-select-match placeholder="出版社">{{$select.selected.Text}}</ui-select-match>
+                                                                <ui-select-choices repeat="item.Value as item in getBaseData('Press')">
+                                                                    <div ng-bind-html="item.Text"></div>
+                                                                </ui-select-choices>
+                                                            </ui-select>
+                                                            <input class="hide" ng-model="bookInfo.Press" message-id="msg_Press"
+                                                                   name="Press" validator="required">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>价格</label>
+                                                            <span class="pull-right vad-msg" id="msg_price"></span>
+                                                            <div class="append-icon">
+                                                                <input type="text" ng-model="bookInfo.Price"
+                                                                       name="Price" validator="required,money" message-id="msg_price"
+                                                                       placeholder="价格"
+                                                                       class="form-control  money-input" />
+                                                                <i>元</i>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>库存</label>
+                                                            <span class="pull-right vad-msg" id="msg_count"></span>
+                                                            <input type="text" ng-model="bookInfo.Count"
+                                                                   name="Count" validator="required,number" message-id="msg_count"
+                                                                   placeholder="库存"
+                                                                   class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>条形码</label>
+                                                            <span class="pull-right vad-msg" id="msg_barcode"></span>
+                                                            <input type="text" ng-model="bookInfo.BarCode"
+                                                                   name="BarCode" validator="required" message-id="msg_barcode"
+                                                                   placeholder="条形码"
+                                                                   class="form-control" />
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>年份</label>
+                                                            <span class="pull-right vad-msg" id="msg_year"></span>
+                                                            <input type="text" ng-model="bookInfo.Year"
+                                                                   name="Year" validator="required,number" message-id="msg_year"
+                                                                   placeholder="年份"
+                                                                   class="form-control" />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label>
+                                                                图书简介
+                                                            </label>
+                                                            <span class="pull-right vad-msg" id="msg_Desc"></span>
+
+                                                            <textarea class="form-control form-white "
+                                                                      name="Content" ng-model="bookInfo.Note"
+                                                                      validator="required,maxlength=500" message-id="msg_Desc"
+                                                                      placeholder="图书简介"
+                                                                      rows="8"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button type="button" class="btn btn-primary btn-square pull-right"
+                                                                ng-click="save()">
+                                                            <i class="fa fa-save"></i> 保存
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                {{bookInfo | json}}
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane" ng-class="{active : currentIndex == 2}">
+                                            <div>
+                                                <attach-upload name="attachCtl"
+                                                               obj-id="bidInfo.ID"
+                                                               obj-name="Bid">
+                                                </attach-upload>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-split-pane-divider data-width="5px"></div>
+                <div data-split-pane-component data-width="25%">
+                    <div class="pretty-split-pane-component-inner p-10">
+                        <label>选择图书样式</label>
+                        <div class="icheck-inline">
+                            <span class="m-r-10" ng-repeat="item in bookStyles">
+                                <input icheck type="radio" name="NoteType"
+                                       ng-disabled="view"
+                                       value="{{item.Value}}" ng-model="$parent.bookInfo.Style"> {{item.Text}}
+                            </span>
+                        </div>
+                        <hr />
+                        <label>图书预览</label>
+                        <ul id="bk-list" class="bk-list clearfix" style="padding-left:25%">
+                            <li >
+                                <book class="bk-book book-{{bookInfo.Style}} bk-bookdefault">
+                                    <div class="bk-front">
+                                        <div class="bk-cover">
+                                            <h2>
+                                                <span>{{bookInfo.Author}}</span>
+                                                <span>{{bookInfo.Name}}</span>
+                                            </h2>
+                                        </div>
+                                        <div class="bk-cover-back"></div>
+                                    </div>
+                                    <div class="bk-page">
+                                        <div class="bk-content bk-content-current">
+                                            <p>{{bookInfo.Note}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="bk-back">
+                                        <p>
+                                            No.{{bookInfo.Number}}
+                                        </p>
+                                        <div class="bottom">
+                                            <span>￥{{bookInfo.Price}}</span> <br />
+                                            <barcode code="bookInfo.BarCode"></barcode>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="bk-right"></div>
+                                    <div class="bk-left">
+                                        <span class="c-white">{{bookInfo.Year}}</span>
+                                        <h2>
+                                            <span>{{bookInfo.Press | enumMap:'Press'}}</span>
+                                        </h2>
+                                    </div>
+                                    <div class="bk-top"></div>
+                                    <div class="bk-bottom"></div>
+                                </book>
+                                <div class="bk-info">
+
+                                    <button type="button" class="bk-bookback btn btn-sm btn-square btn-primary m-l-0 m-r-0">反面</button>
+                                    <button type="button" class="bk-bookview btn btn-sm btn-square btn-primary m-l-0 m-r-0">打开</button>
+
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

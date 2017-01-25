@@ -1,0 +1,117 @@
+﻿<div class="modal-header bg-primary modal-dragable " visiable="{{modelType == 'window'}}" ng-show="modelType == 'window'">
+    <button type="button" ng-click="closeModal()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">用车申请单</h4>
+</div>
+<div ng-class="{'modal-body' : modelType == 'window'}" blockui="panel">
+    
+    <form class="form-horizontal  m-0 p-0" ng-controller="carUseCtl"
+          name="FormApply" >
+
+        <fieldset class="m-0 p-0 p-t-10 p-b-10" ng-show="!readOnly">
+            <process-control flow-name="Form_Car" task-id="taskID"
+                             flow-data="flowData" form="FormApply"
+                             task-info="carUseInfo.FlowData"
+                             next="save({callBack : callBack,flowInfo : taskInfo})">
+            </process-control>
+        </fieldset>
+
+        <fieldset class="m-0  m-t-10 "
+                  fullheight="panelcontent" calheight="-200" scroll="formScroll" auto="true">
+
+            <div class="p-20">
+
+                <div class="row t-right text-sm">
+                    <div class="col-sm-8">
+                        <span>{{sysSettings["Customer.Name"]}}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <span>
+                            记录标识：Q/R7.3.7-02
+                        </span><br />
+                        <span>
+                            记录编号：用车申请[{{carUseInfo.SpecialtyID | enumMap:'Specialty' }}01]
+                        </span>
+                    </div>
+                </div>
+                <div class="row t-center m-b-20 ">
+                    <span class="text-2x">用车申请单</span>
+
+                    <span class="pull-right text-sm m-t-20 m-r-10">{{carUseInfo.CreateDate | TDate:'yyyy年M月d日'}}</span>
+                </div>
+                <div class="form-group ">
+                    <label class="col-sm-1 p-0 m-t-10">申请车辆</label>
+                    <div class="col-sm-11 p-0 m-t-10">
+                        <i class="fa fa-car"></i>{{carInfo.Name}}
+                        限座：{{carInfo.PersonCount}}人
+                        <span class="badge badge-primary">{{carInfo.Level | enumMap:"CarLevel"}}</span>
+                        <input class="hide" ng-model="carInfo.ID"
+                               name="carInfoID" validator="required">
+                    </div>
+                    
+                </div>
+                <div class="form-group ">
+                    <label class="col-sm-1 p-0 m-t-10">目的地</label>
+                    <div class="col-sm-5 ">
+                        <input ng-model="carUseInfo.TargetPlace" ng-readonly="readOnly"
+                               validator="required" name="Target"
+                               class="form-control form-white">
+                    </div>
+                    <label class="col-sm-1 p-0 m-t-10">里程</label>
+                    <div class="col-sm-5 ">
+                        <input ng-model="carUseInfo.Mileage" ng-readonly="readOnly"
+                               validator="required,number" name="Mileage"
+                               class="form-control form-white">
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="col-sm-1 p-0 m-t-10">出发日期</label>
+                    <div class="col-sm-5 ">
+                        <input ng-model="carUseInfo.StartDate" ng-readonly="readOnly"
+                               validator="required" name="StartDate"
+                               class="form-control form-white" date-picker>
+                    </div>
+                    <label class="col-sm-1 p-0 m-t-10">返回日期</label>
+                    <div class="col-sm-5 ">
+                        <input ng-model="carUseInfo.BackDate" ng-readonly="readOnly"
+                               validator="required" name="BackDate"
+                               class="form-control form-white" date-picker>
+                    </div>
+                </div>
+               
+                <div class="form-group ">
+                    <label class="col-sm-1 p-0 m-t-10">同行人员</label>
+                    <div class="col-sm-11 ">
+                      
+                        <user-choose class="pull-left" text="选择同行人员"
+                                     max="carInfo.PersonCount" ng-show="!readOnly"
+                                     users="PeerStaff_Users"></user-choose>
+
+                        <label class="label label-dark pull-left m-r-5 p-5"
+                               ng-repeat="u in PeerStaff_Users">
+                            <i class="icon-user"></i>&nbsp;{{u.Name}}
+                        </label>
+                        <input class="hide" ng-model="carUseInfo.PeerStaff"
+                               name="chooseEngineeringInfo1" validator="required">
+                        {{carUseInfo.PeerStaff | users}}
+                        
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="col-sm-1 p-0 m-t-10">申请说明</label>
+                    <div class="col-sm-11 ">
+
+                        <textarea class="form-control form-white m-t-5"
+                                  ng-readonly="readOnly"
+                                  name="Explain"
+                                  validator="required,maxlength=200"
+                                  ng-model="carUseInfo.Explain" rows="5"></textarea>
+                    </div>
+
+                </div>
+
+            </div>
+          
+        </fieldset>
+    </form>
+
+</div>

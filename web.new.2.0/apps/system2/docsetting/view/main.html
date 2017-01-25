@@ -1,0 +1,6 @@
+﻿
+<div ng-repeat="page in modules.docsetting"
+     ui-view="{{'docsetting.content.' + page.Name}}"
+     ng-show="$state.includes('docsetting.'+ page.Name)">
+
+</div>

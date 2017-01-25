@@ -1,0 +1,91 @@
+﻿<div class="p-10">
+  
+
+    <div class="row m-0">
+        <div class="col-md-5">
+            <fieldset>
+                <legend>分类表</legend>
+
+                <tree tree-data="scope"
+                      tree-model="categorys"
+                      tree-api="categoryTreeApi"
+                      changed="categoryChanged"
+                      tree-plugins="wholerow,contextmenu,types">
+                </tree>
+            </fieldset>
+        </div>
+        <div class="col-md-7">
+
+            <fieldset>
+                <legend>添加分类</legend>
+
+                <form name="FormMaintain">
+                    <div class="form-group">
+                        <label class="m-t-10">分类编号</label>
+                        <input class="form-control form-white" type="text" placeholder="分类编号"
+                               name="number" validator="required,maxlength=50"
+                               ng-model="categoryInfo.Number">
+                    </div>
+                    <div class="form-group">
+                        <label class="m-t-10">分类名称</label>
+                        <input class="form-control form-white" type="text" placeholder="分类名称"
+                               name="name" validator="required,maxlength=50"
+                               ng-model="categoryInfo.Name">
+                    </div>
+                    <div class="form-group">
+                        <button type="button"
+                                validation-submit="FormMaintain"
+                                ng-click="add1()"
+                                class="btn btn-primary btn-square ">
+                            增加节点
+                        </button>
+                        <button type="button"
+                                validation-submit="FormMaintain"
+                                ng-click="add2()"
+                                class="btn btn-primary btn-square ">
+                            增加子节点
+                        </button>
+                    </div>
+
+                </form>
+            </fieldset>
+
+
+            <fieldset>
+                <legend>编辑分类</legend>
+
+                <form name="FormMaintain">
+                    <div class="form-group">
+                        <label class="m-t-10">分类编号</label>
+                        <input class="form-control form-white" type="text" placeholder="分类编号"
+                               name="number" validator="required,maxlength=50"
+                               ng-model="currentCategory.Number">
+                    </div>
+                    <div class="form-group">
+                        <label class="m-t-10">分类名称</label>
+                        <input class="form-control form-white" type="text" placeholder="分类名称"
+                               name="name" validator="required,maxlength=50"
+                               ng-model="currentCategory.Name">
+                    </div>
+                    <div class="form-group">
+                        <button type="button"
+                                validation-submit="FormMaintain"
+                                ng-click="update()"
+                                class="btn btn-primary btn-square ">
+                            更新节点
+                        </button>
+                        <button type="button"
+                                validation-submit="FormMaintain"
+                                ng-click="delete()"
+                                class="btn btn-danger btn-square ">
+                            删除节点
+                        </button>
+                    </div>
+
+                </form>
+            </fieldset>
+
+            {{currentArchive | json}}
+        </div>
+    </div>
+</div>

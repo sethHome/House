@@ -1,0 +1,22 @@
+﻿<div class="modal-header bg-primary modal-dragable" >
+    修改名称
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+
+<div class="modal-body ">
+ 
+    <form ng-submit="submit()">
+       
+        <div class='input-group'>
+            <input class='form-control form-white' type=text ng-model="calEvent.title" />
+            <span class='input-group-btn'>
+                <button type='submit' class='btn btn-success'>
+                    <i class='fa fa-check'></i> 保存
+                </button>
+            </span>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default btn-square" type="button" ng-click="close()"><i class='fa fa-close'></i> 关闭</button>
+</div>

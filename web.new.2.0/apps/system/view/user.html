@@ -1,0 +1,60 @@
+﻿
+<div class="panel"  blockui="userPanel">
+
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner p-10"  >
+
+                    <div class="form-group" >
+                        <input class="form-control form-white" type="text" placeholder="输入筛选用户" ng-model="userFilter">
+                    </div>
+                    <div class="tile-area fg-white ">
+
+                        <div class="tile-wide  pull-left " data-role="tile" style="width:250px; height:120px;" ng-class="{'bg-aero' : currentUser.ID != user.ID ,'bg-primary': currentUser.ID == user.ID}"
+                             ng-click="userChanged(user)"
+                             ng-repeat="user in users | filter:userFilter  track by user.ID "
+                             ng-repeat-end="setPage()">
+                            <div class="tile-content p-10 ">
+                                <div class="row ">
+                                    <div class="col-xs-4">
+                                        <img src="../assets/global/images/avatars/{{user.PhotoImgLarge}}" alt="profil 4" class="img-responsive">
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <p class="member-job" ng-class="{'bg-red': !user.Visiable}">{{user.Name}}{{ user.Visiable ? "":"【禁用】"}} </p>
+                                        <p class="f-10">
+                                            <span ng-repeat="role in user.Roles track by role.Key">
+                                                {{role.Name}}
+                                                <span ng-show="!$last">,</span>
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tile-label " >
+
+                                {{user.Dept.Name}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="50%">
+                <div class="pretty-split-pane-component-inner p-20" ui-view>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

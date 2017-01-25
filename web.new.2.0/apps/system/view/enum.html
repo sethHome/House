@@ -1,0 +1,270 @@
+﻿<div class="panel" blockui="rolePanel">
+
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner p-20">
+
+                    <notification container="panel" model="enumNotify" type="success" timeout="2000">
+                        <div class="alert alert-success media fade in">
+                            <span class="f-16">{{enumMsg}}</span>
+                        </div>
+                    </notification>
+
+                    <div class="row">
+
+                        <div class="col-sm-9">
+                            <div class="prepend-icon">
+                                <input type="text" class="form-control form-white"
+                                       ng-model="enumFilter" placeholder="输入筛选">
+                                <i class="fa fa-search"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <button type="button"
+                                    ng-click="deleteEnum()"
+                                    class="btn btn-danger btn-square   ">
+                                <i class="fa fa-trash-o"></i>
+                                删除
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-5">
+                            <input type="text" ng-model="newEnum.Text" class="form-control form-white" placeholder="名称">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" ng-model="newEnum.Name" class="form-control form-white" placeholder="Key">
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="button"
+                                    ng-click="addEnum()"
+                                    class="btn btn-primary btn-square ">
+                                <i class="fa fa-plus"></i>
+                                添加
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-5">
+                            <input type="text" ng-model="currentEnum.Text" class="form-control form-white" placeholder="名称">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" ng-model="currentEnum.Name" ng-readonly="true" class="form-control " placeholder="Key">
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="button"
+                                    ng-click="updateEnum()"
+                                    class="btn btn-primary btn-square ">
+                                <i class="fa fa-edit"></i>
+                                修改
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <ul class="list-group">
+                        <li class="list-group-item"
+                            ng-class="{'active': currentEnum.Name == e.Name}"
+                            ng-click="enumChanged(e)"
+                            ng-repeat="e in enums  | filter:enumFilter  track by e.Name "
+                            ng-repeat-end="enumScroller.init()">
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <i class="fa fa-navicon"></i>
+                                    {{e.Text}}
+                                </div>
+                                <div class="col-xs-6 color-gray hint-text fs-12">
+                                    {{e.Name}}
+                                    <span class="pull-right">{{e.Items.length}}</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="70%">
+
+                <div data-split-pane>
+                    <div data-split-pane-component>
+                        <div class="pretty-split-pane-component-inner p-20" >
+
+                            <notification container="panel" model="itemNotify" type="success" timeout="2000">
+                                <div class="alert alert-success media fade in">
+                                    <span class="f-16">{{itemMsg}}</span>
+                                </div>
+                            </notification>
+
+                            <div class="row">
+
+                                <div class="col-sm-9">
+                                    <div class=" prepend-icon">
+                                        <input type="text" class="form-control form-white"
+                                               ng-model="itemFilter"
+                                               placeholder="输入筛选">
+                                        <i class="fa fa-search"></i>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <button type="button"
+                                            ng-click="deleteItem()"
+                                            class="btn btn-danger btn-square   ">
+                                        <i class="fa fa-trash-o"></i>
+                                        删除
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <input type="text" ng-model="newItem.Text" class="form-control form-white" placeholder="名称">
+                                </div>
+                                <div class="col-sm-2 ">
+                                    <span class=" color-gray hint-text fs-12 ">
+                                        <input type="checkbox" ng-model="newItem.GrowBinary" icheck> * 2
+                                    </span>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button"
+                                            ng-click="addItem()"
+                                            class="btn btn-primary btn-square ">
+                                        <i class="fa fa-plus"></i>
+                                        添加
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <input type="text" ng-model="currentItem.Text" class="form-control form-white" placeholder="名称">
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button"
+                                            ng-click="updateItem()"
+                                            class="btn btn-primary btn-square ">
+                                        <i class="fa fa-edit"></i>
+                                        修改
+                                    </button>
+                                </div>
+                            </div>
+
+                            <ul class="list-group">
+                                <li class="list-group-item"
+                                    ng-class="{'active': currentItem.Key == item.Key}"
+                                    ng-click="itemChanged(item)"
+                                    ng-repeat="item in currentEnum.Items | orderBy : 'Tags.index'  | filter:itemFilter  track by item.Key "
+                                    ng-repeat-end="itemScroller.init()">
+
+                                    <div class="row">
+                                        <div class="col-xs-10">
+                                            {{item.Text}}
+                                        </div>
+                                        <div class="col-xs-2 color-gray hint-text fs-12">
+                                            {{item.Value}}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div data-split-pane-divider data-width="5px"></div>
+                    <div data-split-pane-component data-width="50%">
+                        <div class="pretty-split-pane-component-inner p-20" >
+
+                            <notification container="panel" model="tagNotify" type="success" timeout="2000">
+                                <div class="alert alert-success media fade in">
+                                    <span class="f-16">{{tagMsg}}</span>
+                                </div>
+                            </notification>
+
+                            <div class="row">
+
+                                <div class="col-sm-9">
+                                    <div class=" prepend-icon">
+                                        <input type="text" class="form-control form-white"
+                                               ng-model="tagFilter"
+                                               placeholder="输入筛选">
+                                        <i class="fa fa-search"></i>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <button type="button"
+                                            ng-click="deleteTag()"
+                                            class="btn btn-danger btn-square   ">
+                                        <i class="fa fa-trash-o"></i>
+                                        删除
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-xs-3">
+                                    <input type="text" ng-model="newTag.Key" class="form-control form-white">
+                                </div>
+                                <div class="col-xs-6">
+                                    <input type="text" ng-model="newTag.Value" class="form-control form-white">
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button"
+                                            ng-click="addTag()"
+                                            class="btn btn-primary btn-square ">
+                                        <i class="fa fa-plus"></i>
+                                        添加
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-xs-3">
+                                    <input type="text" ng-model="currentTag.Key" ng-readonly="true" class="form-control ">
+                                </div>
+                                <div class="col-xs-6">
+                                    <input type="text" ng-model="currentTag.Value" class="form-control form-white">
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button"
+                                            ng-click="updateTag()"
+                                            class="btn btn-primary btn-square ">
+                                        <i class="fa fa-edit"></i>
+                                        修改
+                                    </button>
+                                </div>
+                            </div>
+
+                            <ul class="list-group">
+                                <li class="list-group-item"
+                                    ng-class="{'active': currentTag.Key == t.Key}"
+                                    ng-click="tagChanged(t)"
+                                    ng-repeat="t in Tags | filter:tagFilter  track by t.Key "
+                                    ng-repeat-end="tagScroller.init()">
+
+                                    <div class="row">
+                                        <div class="col-xs-2">
+                                            {{t.Key}}
+                                        </div>
+                                        <div class="col-xs-10 color-gray hint-text fs-12">
+                                            {{t.Value}}
+                                        </div>
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+

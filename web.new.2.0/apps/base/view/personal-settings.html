@@ -1,0 +1,34 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">个人设置</h4>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <ul class="nav nav-tabs" ng-init="currentIndex = 1">
+          
+            <li ng-class="{active:currentIndex == 1}"><a ng-click="currentIndex = 1">我的头像</a></li>
+        </ul>
+        <div class="tab-content " >
+            
+            <div class="tab-pane fade in" ng-class="{active : currentIndex == 1}">
+               
+                <img width="60" height="60" class="img-circle m-10" 
+                     ng-repeat="item in [1,2,3,4,5,6,7,8,9,10]"
+
+                     ng-class="{'userimg-selected' : currentUser.Account.PhotoImg == item + '.jpg'}"
+                     
+                     ng-click="chooseImg1(item)"
+                     ng-src="../../../assets/global/images/avatars/{{item}}x.jpg" />
+               
+               
+                <img width="60" height="60" class="img-circle m-10"
+                     ng-class="{'userimg-selected' : currentUser.Account.PhotoImg == 'avatar'+item+'.png'}"
+                     ng-repeat="item in [1,2,3,4,5,6,7,8,9,10,11,12,13]"
+                     ng-click="chooseImg2(item)"
+                     ng-src="../../../assets/global/images/avatars/avatar{{item}}_big.png" />
+            </div>
+
+        </div>
+    </div>
+</div>

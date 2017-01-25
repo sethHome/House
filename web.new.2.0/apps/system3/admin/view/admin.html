@@ -1,0 +1,6 @@
+﻿
+<div ng-repeat="page in modules.admin"
+     ui-view="{{'admin.content.' + page.Name}}"
+     ng-show="$state.includes('admin.'+ page.Name)">
+
+</div>

@@ -1,0 +1,284 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <i class="fa fa-money"></i> &nbsp; 合同收费
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body" blockui="maintainPanel">
+
+    <div class="nav-tabs" ng-init="currentIndex = 0">
+        <ul class="nav nav-tabs nav-red">
+            <li ng-click="currentIndex = 0" ng-class="{active : currentIndex == 0}"><a data-toggle="tab">收费详情 </a></li>
+            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">计划收费 <span class="badge badge-info ">{{rePayees.length}}</span></a></li>
+            <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab">实际收费 <span class="badge badge-info ">{{acPayees.length}}</span></a></li>
+            <li ng-click="currentIndex = 3" ng-class="{active : currentIndex == 3}"><a data-toggle="tab">实际开票 <span class="badge badge-info ">{{blPayees.length}}</span></a></li>
+        </ul>
+        <div class="tab-content p-r-0 ">
+            <div class="tab-pane" style="height:{{modalHeight}}px" scroll="tabPanelScl0" auto="true" ng-class="{active : currentIndex == 0}">
+
+                <div class="row m-0 p-t-10">
+                    <div class="col-sm-2 p-0"> <label>合同金额</label></div>
+                    <div class="col-sm-2"><span class="label label-default">{{ conInfo.Fee | money}} &nbsp;{{local.global.unit}}</span> </div>
+                    <div class="col-sm-2 p-0"> <label>计划收费</label></div>
+                    <div class="col-sm-2"><span class="label label-default">{{ reTotalFee | money}} &nbsp;{{local.global.unit}}</span> </div>
+                </div>
+                <hr />
+                <div class="row m-0 p-t-10">
+                    <div class="col-sm-2 p-0"> <label>已收款</label></div>
+                    <div class="col-sm-4"><span class="label label-info">{{ acTotalFee | money}} &nbsp;{{local.global.unit}}</span> </div>
+                    <div class="col-sm-2 p-0"> <label>可收款</label></div>
+                    <div class="col-sm-4"><span class="label label-danger">{{ (conInfo.Fee - acTotalFee) | money}} &nbsp;{{local.global.unit}}</span> </div>
+                </div>
+                <div class="row m-0 p-t-10">
+                    <div class="col-sm-2 p-0"> <label>收款进度</label></div>
+                    <div class="col-sm-9">
+                        <div class="progress-bar-thin progress-striped">
+                            <uib-progressbar class="progress-bar-thin m-t-5  " value="((acTotalFee / conInfo.Fee) * 100).toFixed(2)"></uib-progressbar>
+                        </div>
+                    </div>
+                    <div class="col-sm-1 p-0"> <label>{{((acTotalFee / conInfo.Fee) * 100).toFixed(2)}}%</label></div>
+                </div>
+                <hr />
+                <div class="row m-0 p-t-10">
+                    <div class="col-sm-2 p-0"> <label>已开票</label></div>
+                    <div class="col-sm-4"><span class="label label-info">{{ blTotalFee | money}} &nbsp;{{local.global.unit}}</span></div>
+                    <div class="col-sm-2 p-0"> <label>可开票</label></div>
+                    <div class="col-sm-4"><span class="label label-danger">{{ (conInfo.Fee - blTotalFee) | money}} &nbsp;{{local.global.unit}}</span> </div>
+                </div>
+                <div class="row m-0 p-t-10">
+                    <div class="col-sm-2 p-0"> <label>开票进度</label></div>
+                    <div class="col-sm-9">
+                        <div class="progress-bar-thin progress-striped">
+                            <uib-progressbar class="progress-bar-thin m-t-5  " value="((blTotalFee / conInfo.Fee) * 100).toFixed(2)"></uib-progressbar>
+                        </div>
+                    </div>
+                    <div class="col-sm-1 p-0"> <label>{{((blTotalFee / conInfo.Fee) * 100).toFixed(2)}}%</label></div>
+                </div>
+
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" scroll="tabPanelScl1" auto="true" ng-class="{active : currentIndex == 1}">
+                <form class="form-horizontal  m-0 p-0"
+                      name="FormMaintain">
+                    <div class="form-group m-0 p-0">
+                        <div class="col-sm-2 append-icon">
+                            <input type="text" ng-model="rePayee.Date"
+                                   name="SignDate" validator="required"
+                                   placeholder="{{local.conPay.reDate}}"
+                                   class="form-control form-white"
+                                   date-picker />
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <div class="col-sm-4">
+                            <ui-select ng-model="rePayee.Engineering" theme="select2" search-enabled="false" class="form-control form-white">
+                                <ui-select-match placeholder="{{local.global.choose}}{{local.business.engineering}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="item in conInfo.Engineerings">
+                                    <div ng-bind-html="item.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+
+                        </div>
+                        <div class="col-sm-2 append-icon">
+                            <input type="text" ng-model="rePayee.Fee"
+                                   name="Fee" validator="required,money"
+                                   placeholder="{{local.global.input}}{{local.conPay.fee}}"
+                                   class="form-control form-white money-input" />
+                            <i>{{local.global.unit}}</i>
+
+                        </div>
+                        <div class="col-sm-2 ">
+                            <input class="form-control form-white" type="text"
+                                   name="Number" validator="required,maxlength=50"
+                                   placeholder="{{local.global.input}}{{local.conPay.note}}"
+                                   ng-model="rePayee.Note">
+                        </div>
+
+                        <div class="col-sm-2 ">
+                            <button ng-click="addRePayee()"
+                                    class="btn btn-primary btn-sm m-0 ">
+                                <i class="fa fa-plus"></i>&nbsp; {{local.global.insert}}
+                            </button>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="widget-news ">
+                        <a class="message-item media"
+                           ng-repeat="item in rePayees">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="pull-left p-r-10">
+                                        <span class="label label-default">{{$index + 1}}</span>
+                                    </div>
+                                    <div>
+                                        <small class="pull-right">{{item.Date | TDate}}</small>
+                                        <span class="c-dark ">
+                                            {{item.Engineering.Name}}
+                                        </span>
+                                        <p class="f-12 c-gray">
+                                            金额：{{item.Fee |  money}} &nbsp;| &nbsp;备注：{{item.Note}} &nbsp; | &nbsp;
+                                            <span class="c-blue" style="cursor:pointer;" ng-click="delRePayee(item)"><i class="fa fa-close "></i>&nbsp;移除</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 2}">
+                <form class="form-horizontal  m-0 p-0"
+                      name="FormMaintain">
+                    <div class="form-group m-0 p-0">
+                        <div class="col-sm-2 append-icon">
+                            <input type="text" ng-model="acPayee.Date"
+                                   name="SignDate" validator="required"
+                                   placeholder="{{local.conPay.acDate}}"
+                                   class="form-control form-white"
+                                   date-picker />
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <div class="col-sm-4 ">
+                            <ui-select ng-model="acPayee.Engineering" theme="select2" search-enabled="false" class="form-control form-white">
+                                <ui-select-match placeholder="{{local.global.choose}}{{local.business.engineering}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="item in conInfo.Engineerings">
+                                    <div ng-bind-html="item.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+
+                        </div>
+                        <div class="col-sm-2 append-icon">
+                            <input type="text" ng-model="acPayee.Fee"
+                                   name="Fee" validator="required,money"
+                                   placeholder="{{local.global.input}}{{local.conPay.fee}}"
+                                   class="form-control form-white money-input" />
+                            <i>{{local.global.unit}}</i>
+
+                        </div>
+                        <div class="col-sm-2 ">
+                            <input class="form-control form-white" type="text"
+                                   name="Number" validator="required,maxlength=50"
+                                   placeholder="{{local.global.input}}{{local.conPay.note}}"
+                                   ng-model="acPayee.Note">
+                        </div>
+
+                        <div class="col-sm-2 ">
+                            <button ng-click="addAcPayee()"
+                                    class="btn btn-primary btn-sm m-0 ">
+                                <i class="fa fa-plus"></i>&nbsp; {{local.global.insert}}
+                            </button>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="widget-news ">
+                        <a class="message-item media"
+                           ng-repeat="item in acPayees">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="pull-left p-r-10">
+                                        <span class="label label-default">{{$index + 1}}</span>
+                                    </div>
+                                    <div>
+                                        <small class="pull-right">{{item.Date | TDate}}</small>
+                                        <span class="c-dark ">
+                                            {{item.Engineering.Name}}
+                                        </span>
+                                        <p class="f-12 c-gray">
+                                            金额：{{item.Fee |  money}} &nbsp;| &nbsp;备注：{{item.Note}} &nbsp; | &nbsp;
+                                            <span class="c-blue" style="cursor:pointer;" ng-click="delRePayee(item)"><i class="fa fa-close "></i>&nbsp;移除</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane" style="height:{{modalHeight}}px" ng-class="{active : currentIndex == 3}">
+                <form class="form-horizontal  m-0 p-0"
+                      name="FormMaintain">
+                    <div class="form-group m-0 p-0">
+                        <div class="col-sm-2 append-icon">
+                            <input type="text" ng-model="blPayee.Date"
+                                   name="SignDate" validator="required"
+                                   placeholder="{{local.conPay.blDate}}"
+                                   class="form-control form-white"
+                                   date-picker />
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <ui-select ng-model="blPayee.Engineering" theme="select2" search-enabled="false" class="form-control form-white">
+                                <ui-select-match placeholder="{{local.global.choose}}{{local.business.engineering}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="item in conInfo.Engineerings">
+                                    <div ng-bind-html="item.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+
+                        </div>
+                        <div class="col-sm-2 append-icon">
+                            <input type="text" ng-model="blPayee.Fee"
+                                   name="Fee" validator="required,money"
+                                   placeholder="{{local.global.input}}{{local.conPay.fee}}"
+                                   class="form-control form-white money-input" />
+                            <i>{{local.global.unit}}</i>
+
+                        </div>
+                        <div class="col-sm-2 ">
+                            <ui-select ng-model="blPayee.InvoiceType" theme="select2" search-enabled="false" class="form-control form-white">
+                                <ui-select-match placeholder="{{local.global.choose}}">{{$select.selected.Text}}</ui-select-match>
+                                <ui-select-choices repeat="item.Value as item in getBaseData('InvoiceType')">
+                                    <div ng-bind-html="item.Text"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="col-sm-2 ">
+                            <input class="form-control form-white" type="text"
+                                   name="Note" validator="required,maxlength=50"
+                                   placeholder="{{local.global.input}}{{local.conPay.note}}"
+                                   ng-model="blPayee.Note">
+                        </div>
+                        <div class="col-sm-1 ">
+                            <button ng-click="addBlPayee()"
+                                    class="btn btn-primary btn-sm m-0 ">
+                                <i class="fa fa-plus"></i>&nbsp; {{local.global.insert}}
+                            </button>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="widget-news ">
+                        <a class="message-item media"
+                           ng-repeat="item in blPayees">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="pull-left p-r-10">
+                                        <span class="label label-default">{{$index + 1}}</span>
+                                    </div>
+                                    <div>
+                                        <small class="pull-right">{{item.Date | TDate}}</small>
+                                        <span class="c-dark ">
+                                            {{item.Engineering.Name}}
+                                            <span class="label label-info ">{{item.InvoiceType | enumMap:"InvoiceType" }}</span>
+                                        </span>
+                                        <p class="f-12 c-gray">
+                                            金额：{{item.Fee |  money}} &nbsp;| &nbsp;备注：{{item.Note}} &nbsp; | &nbsp;
+                                            <span class="c-blue" style="cursor:pointer;" ng-click="delRePayee(item)"><i class="fa fa-close "></i>&nbsp;移除</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer bg-aero">
+    <button type="button"
+            ng-click="close()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-close"></i>
+        {{local.global.close}}
+    </button>
+</div>
+
+

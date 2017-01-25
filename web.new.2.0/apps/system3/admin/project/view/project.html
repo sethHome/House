@@ -1,0 +1,276 @@
+﻿<div class="row">
+
+    <div class="col-md-3">
+        <div class="panel ">
+            <div class="panel-header panel-controls">
+                <div class="form-group" style="margin-top:10px;">
+                    <input class="form-control form-white" type="text" placeholder="筛选" ng-model="ProjFilter">
+                </div>
+               
+            </div>
+
+
+            <div class="panel-content widget-news" blockui="listPanel" fullheight="panelcontent" scroll="ProjScroller" auto="true">
+
+                <div class="message-item media relative"
+                     ng-class="{'border-left m-l-10': currentProj.ID == Proj.ID}"
+                     ng-click="ProjChanged(Proj)"
+                     ng-repeat="Proj in projectList | filter:ProjFilter  track by Proj.ObjectID "
+                     ng-repeat-end="ProjScroller.init()">
+
+                    <div class="percentbox" value="{{Proj.TaskProcessPercent}}"></div>
+
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="relative">
+                                <small class="pull-right">{{Proj.DeliveryDate | TDate}}</small>
+                                <h5 class="c-dark">{{Proj.Name}}&nbsp;<span class="badge badge-danger">{{news.Type | enumMap:"NewsType"}}</span></h5>
+                                <p class="f-12 c-gray" >
+                                    编号：{{Proj.Number}},负责人： {{Proj.Manager | enumMap:"user"}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9" >
+        <div class="row">
+            <div class="col-sm-8 col-md-8 col-lg-8">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="panel" blockui="panel1">
+                            <div class="panel-header  bg-primary">
+                                <h3><i class="icon-list"></i> 项目信息</h3>
+                            </div>
+                            <div class="panel-content ">
+                                <div class="row m-0 p-t-10">
+                                    <div class="col-sm-1 p-0"> <label>{{local.proj.number}}</label></div>
+                                    <div class="col-sm-3">{{currentProj.Number}}</div>
+                                    <div class="col-sm-1 p-0"> <label>{{local.proj.name}}</label></div>
+                                    <div class="col-sm-7">{{currentProj.Name}}</div>
+                                </div>
+
+                                <div class="row m-0  p-t-10">
+                                    <div class="col-sm-1 p-0"><label>{{local.proj.customer}}</label></div>
+                                    <div class="col-sm-3">{{currentProj.Customer.Name}}</div>
+                                    <div class="col-sm-1 p-0"><label>{{local.proj.manager}}</label></div>
+                                    <div class="col-sm-3">{{currentProj.Manager | enumMap:"user"}} </div>
+                                    <div class="col-sm-1 p-0"><label>{{local.proj.vollevel}}</label></div>
+                                    <div class="col-sm-3">{{currentProj.VolLevel | enumMap:"VolLev"}}</div>
+                                </div>
+
+                                <div class="row m-0  p-t-10">
+                                    <div class="col-sm-1 p-0"><label>{{local.proj.kind}}</label></div>
+                                    <div class="col-sm-3">{{currentProj.Kind | enumMap:"ProjectKind"}}</div>
+                                    <div class="col-sm-1 p-0"><label>{{local.proj.type}}</label></div>
+                                    <div class="col-sm-3">{{currentProj.Type | enumMap:"ProjectType"}}</div>
+                                    <div class="col-sm-1 p-0"><label>{{local.proj.createdate}}</label></div>
+                                    <div class="col-sm-3">{{currentProj.CreateDate | TDate}}</div>
+                                </div>
+                                <div class="row m-0  p-t-10">
+                                    <div class="col-sm-1 p-0"><label>{{local.proj.deliverydate}}</label></div>
+                                    <div class="col-sm-3">{{currentProj.DeliveryDate | TDate}}</div>
+                                </div>
+                                <div class="row m-0  p-t-10 h-70">
+                                    <div class="col-sm-1 p-0"><label>{{local.proj.note}}</label></div>
+                                    <div class="col-sm-11" style="word-wrap:break-word;">{{currentProj.Note}}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="row ">
+                            <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="panel ">
+                                    <div class="panel-content widget-info">
+                                        <div class="row">
+                                            <div class="left">
+                                                <i class="fa fa-umbrella bg-green"></i>
+                                            </div>
+                                            <div class="right">
+                                                <p class="number countup" data-from="0" data-to="currentProj.TaskProcessPercent" suffix="%">
+                                                </p>
+                                                <p class="text">进度</p>
+                                            </div>
+                                            <div class="right">
+                                                <p class="number countup c-blue" data-from="0" data-to="123" suffix="天">
+                                                </p>
+                                                <p class="text">进行</p>
+                                            </div>
+                                            <div class="right">
+                                                <p class="number countup c-red" data-from="0" data-to="56" suffix="天">
+                                                </p>
+                                                <p class="text">剩余</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="panel ">
+                                    <div class="panel-content widget-info">
+                                        <div class="row">
+                                            <div class="left">
+                                                <i class="fa fa-bug bg-blue"></i>
+                                            </div>
+                                            <div class="right">
+                                                <p class="number countup" data-from="0" data-to="100">
+                                                </p>
+                                                <p class="text">完成卷册</p>
+                                            </div>
+                                            <div class="right">
+                                                <p class="number countup c-red" data-from="0" data-to="100">
+
+                                                </p>
+                                                <p class="text">未完卷册</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="panel ">
+                                    <div class="panel-content widget-info">
+                                        <div class="row">
+                                            <div class="left">
+                                                <i class="fa fa-file bg-blue"></i>
+                                            </div>
+                                            <div class="right">
+                                                <p class="number countup" data-from="0" data-to="100">
+                                                </p>
+                                                <p class="text">上传文件</p>
+                                            </div>
+                                            <div class="right">
+                                                <p class="number countup c-primary" data-from="0" data-to="100" suffix="%">
+                                                </p>
+                                                <p class="text">占总数量的</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="panel" blockui="PanelEngProcess">
+                            <div class="panel-header  bg-primary">
+                                <h3><i class="icon-list"></i> 工程进度</h3>
+                            </div>
+                            <div class="panel-content widget-news">
+
+                                <div class="message-item media relative"
+                                     ng-class="{'bg-aero': currentEng.ID == Eng.ID}"
+                                     ng-repeat="Eng in currentProj.Children | orderBy : 'Phase' | filter:EngFilter track by Eng.ObjectID ">
+
+                                    <div class="percentbox" value="{{Eng.TaskProcessPercent}}"></div>
+
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <div class="pull-left c-dark  head-boxed boxsize-60 m-r-10 {{Eng.Status | phasebg}}">
+                                                {{Eng.DuringDay}}天
+                                            </div>
+                                            <div class="relative">
+                                                <small class="pull-right">
+                                                    计划完成：{{Eng.DeliveryDate | TDate}}<br />
+                                                    <span ng-show="Eng.Status == 4">实际完成：{{Eng.FinishDate | TDate}}</span>
+                                                </small>
+
+                                                <h5 class="c-dark"> <a href="#/admin/engineering/{{Eng.ProjectID}}/{{Eng.ID}}/info">{{Eng.Name}}</a>&nbsp;<span class="badge badge-danger" ng-show="Eng.IsTimeOut">超期</span></h5>
+                                                <p class="f-12 c-gray">
+                                                    编号：{{Eng.Number}} ,负责人： {{Eng.Manager | enumMap:"user"}} ,阶段：{{Eng.Phase | enumMap:"EngineeringPhase"}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="panel" blockui="panel1">
+                            <div class="panel-header  bg-info">
+                                <h3><i class="icon-cog"></i> 项目附件</h3>
+                            </div>
+                            <div class="panel-content ">
+                                <attach-preview obj-id="currentProj.ID"
+                                                obj-name="Project"></attach-preview>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="panel">
+                            <div class="panel-header  bg-info">
+                                <h3><i class="icon-list"></i> 项目近况</h3>
+                            </div>
+                            <div class="panel-content widget-news">
+                                <a class="message-item media"
+                                   ng-repeat="news in [1,2,3,4,5]">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <div class="pull-left">
+                                                <i class="fa fa-newspaper-o pull-left"></i>
+                                            </div>
+                                            <div>
+                                                <small class="pull-right">{{'2015/05/05' | TDate}}</small>
+                                                <h5 class="c-dark">1111111</h5>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="panel" blockui="panel1">
+                            <div class="panel-header  bg-info">
+                                <h3><i class="icon-user"></i> 项目人员</h3>
+                            </div>
+                            <div class="panel-content widget-news ">
+                                <div class="message-item media "
+                                     ng-class="{'bg-aero': currentEng.ID == Eng.ID}"
+                                     ng-click="EngChanged(Eng)"
+                                     ng-repeat="Eng in currentProj.Children | orderBy : 'Phase' | filter:EngFilter track by Eng.ObjectID ">
+
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <img class="pull-left m-r-10 img-md img-rounded" ng-src="assets/global/images/avatars/user3.jpg" alt="Image">
+                                            <div>
+                                                <h5 class="c-dark">{{Eng.Name}}&nbsp;<span class="badge badge-info">项目经理</span></h5>
+                                                <p class="f-12 c-gray">
+                                                    变电一次，设计
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

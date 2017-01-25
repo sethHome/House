@@ -1,0 +1,5 @@
+﻿<div ng-repeat="page in modules.office"
+     ui-view="{{'office.content.' + page.Name}}"
+     ng-show="$state.includes('office.'+ page.Name)">
+
+</div>

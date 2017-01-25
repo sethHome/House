@@ -1,0 +1,206 @@
+﻿<div class="modal-header bg-primary modal-dragable " visiable="{{modelType == 'window'}}" ng-show="modelType == 'window'">
+    <button type="button" ng-click="closeModal()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">变更单</h4>
+</div>
+<div ng-class="{'modal-body' : modelType == 'window'}">
+    <form class="form-horizontal  m-0 p-0" ng-controller="formChangeCtl"
+          name="FormMaintain" blockui="panel">
+
+        <fieldset class="m-0 p-0 p-t-10 p-b-10" ng-show="!readOnly ">
+            <process-control flow-name="Form_Change" task-id="taskID"
+                             flow-data="flowData" form="FormMaintain"
+                             task-info="changeInfo.FlowData"
+                             next="save({callBack : callBack,flowInfo : taskInfo})">
+            </process-control>
+        </fieldset>
+
+        <a type="button" class="btn btn-primary btn-square"
+           href="{{formExoprtUrl}}"
+           ng-show="readOnly">
+            <i class="fa fa-file-word-o"></i>
+            导出Word
+        </a>
+
+        <fieldset class="m-0  m-t-10 "
+                  fullheight="panelcontent" calheight="-200" scroll="formScroll" auto="true">
+
+            <div class="p-20">
+
+                <div class="row t-right text-sm">
+                    <div class="col-sm-8">
+                        <span>{{sysSettings["Customer.Name"]}}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <span>
+                            记录标识：Q/R7.3.7-02
+                        </span><br />
+                        <span>
+                            记录编号：[{{chooseEngineeringInfo.Number}}]-设计变更[{{changeInfo.SpecialtyID | enumMap:'Specialty' }}01]
+                        </span>
+                    </div>
+
+                </div>
+                <div class="row t-center m-b-20 ">
+                    <span class="text-2x">变更单</span>
+
+                    <span class="pull-right text-sm m-t-20 m-r-10">{{changeInfo.CreateDate | TDate:'yyyy年M月d日'}}</span>
+                </div>
+
+                <div class="form-group ">
+                    <label class="col-sm-1 p-0 m-t-10">工程名称</label>
+                    <div class="col-sm-5 ">
+                        <input type="text" ng-model="chooseEngineeringInfo" ng-readonly="readOnly"
+                               placeholder="{{local.global.input}}{{local.eng.number}}"
+                               uib-typeahead="item as item.Name for item in loadEngineeringByName($viewValue)"
+                               typeahead-loading="loadingLocations"
+                               typeahead-no-results="noResults"
+                               typeahead-template-url="customTemplate.html"
+                               class="form-control form-white ">
+                        <div ng-show="noResults">
+                            <i class="glyphicon glyphicon-remove"></i> 没有找到工程
+                        </div>
+                        <input class="hide" ng-model="chooseEngineeringInfo.ID"
+                               name="chooseEngineeringInfo1" validator="required">
+                    </div>
+                    <label class="col-sm-1 p-0 m-t-10">工程编号</label>
+                    <div class="col-sm-5 ">
+                        <input type="text" ng-model="chooseEngineeringInfo" ng-readonly="readOnly"
+                               placeholder="{{local.global.input}}{{local.eng.name}}"
+                               uib-typeahead="item as item.Number for item in loadEngineeringByNumber($viewValue)"
+                               typeahead-loading="loadingLocations"
+                               typeahead-no-results="noResults"
+                               typeahead-template-url="customTemplate.html"
+                               class="form-control form-white ">
+                        <input class="hide" ng-model="chooseEngineeringInfo.ID"
+                               name="chooseEngineeringInfo2" validator="required">
+                    </div>
+                    <script type="text/ng-template" id="customTemplate.html">
+                        <a>
+                            <span ng-bind-html="match.model.Name | uibTypeaheadHighlight:query"></span>
+                        </a>
+                    </script>
+                </div>
+                <div class="form-group ">
+                    <label class="col-sm-1 p-0 m-t-10">专业</label>
+                    <div class="col-sm-5 ">
+
+                        <ui-select ng-model="changeInfo.SpecialtyID" theme="select2" search-enabled="false"
+                                   class="form-control form-white" ng-disabled="readOnly">
+                            <ui-select-match placeholder="{{local.global.choose}}">{{$select.selected | enumMap:'Specialty'}}</ui-select-match>
+                            <ui-select-choices repeat="s in specialtys">
+                                <div>{{s | enumMap:'Specialty'}}</div>
+                            </ui-select-choices>
+                        </ui-select>
+
+                        <input class="hide" ng-model="changeInfo.SpecialtyID"
+                               name="SpecialtyID" validator="required">
+
+                    </div>
+                    <label class="col-sm-1 p-0 m-t-10">卷册</label>
+                    <div class="col-sm-5 ">
+
+                        <ui-select ng-model="changeInfo.VolumeID" theme="select2" search-enabled="false"
+                                   class="form-control form-white" ng-disabled="readOnly">
+                            <ui-select-match placeholder="{{local.global.choose}}">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="item.ID as item in volumes">
+                                <div>[{{item.Number}}] - {{item.Name}}</div>
+                            </ui-select-choices>
+                        </ui-select>
+
+                        <input class="hide" ng-model="changeInfo.VolumeID"
+                               name="Volume" validator="required">
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="col-sm-1 p-0 m-t-10">主送单位</label>
+                    <div class="col-sm-5 ">
+
+                        <input type="text" ng-model="chooseMainCustInfo" ng-readonly="readOnly"
+                               placeholder="{{local.global.input}}{{local.eng.number}}"
+                               uib-typeahead="item as item.Name for item in loadCustomer($viewValue)"
+                               typeahead-loading="loadingLocations"
+                               typeahead-no-results="noCustResults"
+                               typeahead-template-url="customCustTemplate.html"
+                               class="form-control form-white ">
+                        <div ng-show="noCustResults">
+                            <i class="glyphicon glyphicon-remove"></i> 没有找到客户信息
+                        </div>
+
+                        <script type="text/ng-template" id="customCustTemplate.html">
+                            <a>
+                                <span ng-bind-html="match.model.Name | uibTypeaheadHighlight:query"></span>
+                            </a>
+                        </script>
+                        <input class="hide" ng-model="chooseMainCustInfo.ID"
+                               name="MainCust" validator="required">
+                    </div>
+                    <label class="col-sm-1 p-0 m-t-10">抄送单位</label>
+                    <div class="col-sm-5 ">
+                        <input type="text" ng-model="chooseCopyCustInfo" ng-readonly="readOnly"
+                               placeholder="{{local.global.input}}{{local.eng.number}}"
+                               uib-typeahead="item as item.Name for item in loadCustomer($viewValue)"
+                               typeahead-loading="loadingLocations"
+                               typeahead-no-results="noCustResults"
+                               typeahead-template-url="customCustTemplate.html"
+                               class="form-control form-white ">
+                        <input class="hide" ng-model="chooseCopyCustInfo.ID"
+                               name="CopyCust" validator="required">
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <label class="col-sm-1 p-0 m-t-10">变更原因</label>
+                    <div class="col-sm-11 ">
+
+                        <textarea class="form-control form-white m-t-5"
+                                  ng-readonly="readOnly"
+                                  name="reason"
+                                  validator="required,maxlength=200"
+                                  placeholder="{{local.global.input}}{{local.provide.docContent}}"
+                                  ng-model="changeInfo.Reason" rows="5"></textarea>
+                    </div>
+
+                </div>
+
+                <div class="form-group ">
+                    <span class="col-sm-1 p-0"><label class="m-t-10">变更内容</label> </span>
+                    <div class="col-sm-11 ">
+                        <textarea class="form-control form-white m-t-5"
+                                  ng-readonly="readOnly"
+                                  name="content"
+                                  validator="required,maxlength=500"
+                                  placeholder="{{local.global.input}}{{local.provide.docContent}}"
+                                  ng-model="changeInfo.Content" rows="15"></textarea>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <span class="col-sm-1 p-0"><label class="m-t-10">附件</label> </span>
+                    <div class="col-sm-11 " ng-show="!readOnly">
+                        <attach-upload name="attachCtl"
+                                       obj-id="changeInfo.ID"
+                                       obj-name="FormChange"
+                                       uploaded="attachUploaded($attachID,$changeCB)"></attach-upload>
+                    </div>
+                    <div class="col-sm-11 " ng-show="readOnly">
+                        <attach-preview obj-id="changeInfo.ID"
+                                        obj-name="FormChange"></attach-preview>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <span class="col-sm-1"></span>
+
+                    <div class="col-sm-11 text-sm">
+                        说明：<br />
+                        1、本单按苏电建〔2009〕1111号《江苏省电力公司输变电工程设计变更管理规定》编制和执行。<br />
+                        2、设计单位校核人为室主任或专业工程师，审核人为总工程师、批准人为总经理。<br />
+                        3、此单一式3份，设计人留存一份，其余发至相关方，工程完成后归档。
+
+                    </div>
+                </div>
+
+            </div>
+           
+        </fieldset>
+    </form>
+
+</div>

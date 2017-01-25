@@ -1,0 +1,38 @@
+﻿<ul class="nav nav-sidebar">
+
+    <li ng-repeat="menu in querys"
+        ng-repeat-end="initSilder()"
+        class="nav-parent"
+        ng-class="{ active  : currentParentMenu == menu}">
+
+        <a>
+
+            <i class="fa fa-filter"></i>
+
+            <span>{{menu.Text}} </span>
+            <span class="label label-default" >{{menu.currentMenu.Text}}</span>
+            <span class="fa arrow"></span>
+        </a>
+
+        <ul class="children collapse">
+
+            <li ng-repeat="submenu in menu.Items">
+                <a ng-click="goto(menu,submenu)">
+                    <span class="pull-left m-r-10">{{submenu.Text}}</span>
+                    
+                    
+                    <i ng-show="menu.currentMenu == submenu" class="fa fa-circle pull-right "></i>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-parent">
+        <a ng-click="clear()">
+
+            <i class="fa fa-close"></i>
+
+            <span>重置条件 </span>
+           
+        </a>
+    </li>
+</ul>

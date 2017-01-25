@@ -1,0 +1,57 @@
+﻿<div class="row">
+    <div class="col-md-4">
+        <div class="panel ">
+            <div class="panel-header panel-controls">
+                <div class="form-group" style="margin-top:10px;">
+                    <input class="form-control form-white" type="text" placeholder="输入筛选系统" ng-model="sysFilter">
+                </div>
+                <p>
+                    <span class="pull-right">当前：{{(business | filter:sysFilter).length }}个系统</span>
+                </p>
+                <div class="control-btn" reload="sysPanel">
+
+                </div>
+            </div>
+            <div class="panel-content" fullheight="panelcontent" scroll="initScroller" scroll-to="top">
+
+                <div class="form-group">
+
+                    <ul class="list-group">
+                        <li class="list-group-item"
+                            ng-class="{'active': currentBusiness.Key == b.Key}"
+                            ng-click="businessChanged(b)"
+                            ng-repeat="b in business  | filter:sysFilter  track by b.Key "
+                            ng-repeat-end="initScroller">
+                            {{b.Name}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel" >
+            <div class="panel-header panel-controls">
+
+                <div class="control-btn" reload="userPanel">
+                    <a ng-click="save()"><i class="icon-reload"></i></a>
+                </div>
+            </div>
+            <div class="panel-content" fullheight="panelcontent">
+                <div class="form-group" style="margin-top:10px;">
+                    <input class="form-control form-white" type="text" placeholder="输入筛选用户" ng-model="userFilter">
+                </div>
+                <div class="input-group">
+                    <div class="icheck-inline">
+                        <label class="user-checkbox" ng-repeat="user in users | filter:userFilter">
+                            <input type="checkbox" ng-model="user.isSelected" icheck> {{user.Account}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>

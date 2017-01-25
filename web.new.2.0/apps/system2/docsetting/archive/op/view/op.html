@@ -1,0 +1,26 @@
+﻿<div class="panel" blockui="panel1">
+
+    <div class="panel-content " >
+        <div class="folder pull-left m-10 text-2x text-center"
+             style="max-width:150px;"
+          ng-click="setCurrent(node)"
+           ng-repeat="node in currentArchive.Archives">
+            <i class="icon-folder fa-3x "></i>
+            <p>{{node.Name}}</p>
+        </div>
+
+        <a class="folder pull-left m-10 text-2x text-center"
+          ui-sref="docsetting.archive.field"
+           ng-show="currentArchive.HasVolume">
+            <i class="icon-folder fa-3x "></i>
+            <p>案卷</p>
+        </a>
+        <a class="folder pull-left m-10 text-2x text-center"
+           ui-sref="docsetting.archive.field"
+           ng-show="!currentArchive.Archives ">
+            <i class="icon-folder fa-3x "></i>
+            <p>文件</p>
+        </a>
+
+    </div>
+</div>

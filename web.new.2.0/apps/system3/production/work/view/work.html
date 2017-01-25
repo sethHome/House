@@ -1,0 +1,394 @@
+﻿<div class="panel">
+
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px;">
+
+        
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div data-split-pane>
+                    <div data-split-pane-component>
+                        <div class="pretty-split-pane-component-inner p-t-10">
+
+
+                            <process-control task-id="currentTaskID"
+                                             simple="true"
+                                             next="check({callBack : callBack,flowInfo : taskInfo})">
+                            </process-control>
+
+                            <hr class="m-0" />
+
+                           
+
+                            <attach-upload name="attachCtl"
+                                           obj-id="volumeInfo.ID"
+                                           obj-name="Volume">
+                            </attach-upload>
+                        </div>
+                    </div>
+                    <div data-split-pane-divider data-height="5px"></div>
+                    <div data-split-pane-component data-height="50%">
+                        <div class="pretty-split-pane-component-inner">
+
+
+                            <div class="nav-tabs no-border" ng-init="currentIndex1=1" >
+                                <ul class="nav nav-tabs nav-red">
+                                    <li ng-click="currentIndex1 = 1" ng-class="{active : currentIndex1 == 1}"><a data-toggle="tab">进度</a></li>
+                                    <li ng-click="currentIndex1 = 2" ng-class="{active : currentIndex1 == 2}"><a data-toggle="tab">校审 <span class="badge badge-danger m-l-5" style="border-radius:10px;">{{checkItems.length}}</span></a></li>
+                                    <li ng-click="currentIndex1 = 3" ng-class="{active : currentIndex1 == 3}"><a data-toggle="tab">记事 <span class="badge badge-danger m-l-5" style="border-radius:10px;">{{engNotes.length}}</span></a></li>
+                                    <!--<li ng-click="currentIndex1 = 4" ng-class="{active : currentIndex1 == 4}"><a data-toggle="tab">提资</a></li>
+                                    <li ng-click="currentIndex1 = 5" ng-class="{active : currentIndex1 == 5}"><a data-toggle="tab">表单</a></li>-->
+                                </ul>
+                                <div class="tab-content p-0">
+                                    <div class="tab-pane active" ng-class="{active : currentIndex1 == 1}" >
+                                        <div class="engineering-flow-color border-bottom">
+
+                                        </div>
+                                        <div engineering-flow engid="volumeInfo.EngineeringID" 
+                                             flowusers="engUsers"
+                                             style="width: 100%; height: 500px;"></div>
+
+                                    </div>
+                                    <div class="tab-pane p-20" ng-class="{active : currentIndex1 == 2}">
+                                        <div class="form-group m-0 m-b-10 p-b-10 row border-bottom ">
+                                            <label class="col-sm-6 m-0 p-l-30">{{local.check.context}}</label>
+                                            <label class="col-sm-1 m-0 p-0">{{local.check.type}}</label>
+                                            <label class="col-sm-1 m-0 p-0">{{local.check.user}}</label>
+                                            <label class="col-sm-1 m-0 p-l-10">{{local.check.date}}</label>
+                                            <label class="col-sm-3 m-0 p-l-30">
+                                                {{local.check.isCorrect}} &nbsp; {{local.check.pass}}
+                                            </label>
+
+                                        </div>
+
+                                        <div ng-repeat="item in checkItems" class="form-group m-0 p-0 m-t-5"
+                                             ng-repeat-end="workScroll.init()">
+                                            <div class="row" ng-show="!item.edit">
+
+                                                <span class="col-sm-6  "><span class="label label-default">{{$index + 1}}</span>&nbsp; {{item.Context}}</span>
+                                                <span class="col-sm-1 m-0 p-0 ">{{item.Type | enumMap:"CheckErrorType"}}</span>
+                                                <span class="col-sm-1 m-0 p-0 ">
+                                                    {{item.UserID | enumMap:"user"}}
+                                                </span>
+                                                <span class="col-sm-1 m-0 p-0 ">{{item.Date | TDate}}</span>
+                                                <span class="col-sm-2 m-0 p-l-30">
+
+                                                    <input type="checkbox" ng-change="updateCheckInfo(item)"
+                                                           ng-disabled="!isDesignModel"
+                                                           ng-model="item.IsCorrect" icheck>
+                                                    &nbsp; 
+                                                    <input type="checkbox" ng-change="updateCheckInfo(item)"
+                                                           ng-disabled="!item.IsCorrect || isDesignModel || item.UserID != currentUser.Account.ID"
+                                                           ng-model="item.IsPass" icheck>
+                                                </span>
+                                             
+                                                <div class="col-sm-1 m-0 p-l-30">
+                                                    <a class="btn btn-transparent pull-right m-0 p-0"
+                                                       ng-show="!isDesignModel && item.UserID == currentUser.Account.ID"
+                                                       ng-click="deleteCheckInfo(item)"
+                                                       style="height:auto;">
+                                                        <i class="fa fa-close"></i>
+                                                    </a>
+                                                    <a class="btn btn-transparent pull-right m-0 p-0"
+                                                       ng-show="!isDesignModel && item.UserID == currentUser.Account.ID"
+                                                       ng-click="item.edit = true"
+                                                       style="height:auto;">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row m-0 p-0" ng-show="item.edit">
+                                                <div class="col-sm-9 p-0 m-0">
+                                                    <textarea rows="3"
+                                                              ng-model="item.Context"
+                                                              placeholder="{{local.check.context}}"
+                                                              class="form-control form-white"></textarea>
+                                                </div>
+                                                <div class="col-sm-2 ">
+                                                    <ui-select ng-model="item.Type" theme="select2" search-enabled="false" class="form-control form-white">
+                                                        <ui-select-match placeholder="{{local.check.type}}">{{$select.selected.Text}}</ui-select-match>
+                                                        <ui-select-choices repeat="item.Value as item in getBaseData('CheckErrorType')">
+                                                            <div ng-bind-html="item.Text"></div>
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                </div>
+                                                <div class="col-sm-1 ">
+                                                    <button class="btn btn-primary btn-square btn-sm m-0 "
+                                                            ng-click="updateCheckInfo(item)">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="form-group row m-0 p-0" ng-show="!isDesignModel">
+                                            <div class="col-sm-9 p-0 m-0">
+                                                <textarea rows="3"
+                                                          ng-model="newCheckInfo.Context"
+                                                          placeholder="{{local.check.context}}"
+                                                          class="form-control form-white"></textarea>
+                                            </div>
+                                            <div class="col-sm-2 ">
+                                                <ui-select ng-model="newCheckInfo.Type" theme="select2" search-enabled="false" class="form-control form-white">
+                                                    <ui-select-match placeholder="{{local.check.type}}">{{$select.selected.Text}}</ui-select-match>
+                                                    <ui-select-choices repeat="item.Value as item in getBaseData('CheckErrorType')">
+                                                        <div ng-bind-html="item.Text"></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <div class="col-sm-1 ">
+                                                <button class="btn btn-primary btn-square btn-sm m-0 "
+                                                        ng-click="addCheckInfo(newCheckInfo)">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" ng-class="{active : currentIndex1 == 3}">
+                                        <div class="row m-0">
+                                            <button class="btn btn-info btn-square pull-right m-t-5" ng-click="addEngNote()"><i class="fa fa-plus"></i> 添加记事</button>
+                                        </div>
+                                        <div class="widget-news ">
+                                            <a class="message-item media"
+                                               ng-repeat="note in engNotes">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <div class="pull-left p-r-10">
+                                                            <i class="fa fa-file-text"></i>
+                                                        </div>
+                                                        <div>
+                                                            <small class="pull-right">{{note.NoteDate | TDate}}</small>
+                                                            <span class="c-dark ">
+                                                                {{note.Content}}
+                                                            </span>
+
+                                                            <p class="f-12 c-gray">
+                                                                记事类型：{{note.NoteType | enumMap:"NoteType" }} &nbsp;| &nbsp;记事人：{{note.UserID | enumMap:"user"}}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                    <div class="tab-pane" ng-class="{active : currentIndex1 == 4}">
+
+                                        {{ volumeInfo.Engineering | json}}
+                                    </div>
+                                    <div class="tab-pane" ng-class="{active : currentIndex1 == 5}">
+
+                                        55555
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="25%">
+                <div class="pretty-split-pane-component-inner">
+
+                    <div class="nav-tabs no-border" ng-init="currentIndex=1">
+                        <ul class="nav nav-tabs nav-red no-border">
+                            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">工程信息</a></li>
+                            <li ng-click="currentIndex = 2" ng-class="{active : currentIndex == 2}"><a data-toggle="tab">项目要求</a></li>
+                            <li ng-click="currentIndex = 3" ng-class="{active : currentIndex == 3}"><a data-toggle="tab">相关人员</a></li>
+                        </ul>
+                        <div class="tab-content p-0 ">
+                            <div class="tab-pane" ng-class="{active : currentIndex == 1}">
+
+                                <table class="item-table" border="1" cellpadding="0" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <td width="18px">&nbsp;</td>
+                                            <td width="30%">项</td>
+                                            <td>值</td>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr class="item-head">
+                                            <td><i class="fa fa-info"></i> </td>
+                                            <td colspan="2"> 工程信息</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>工程编号</td>
+                                            <td>{{volumeInfo.Engineering.Number}}</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>工程名称</td>
+                                            <td>{{volumeInfo.Engineering.Name}}</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>电压等级</td>
+                                            <td>{{volumeInfo.Engineering.VolLevel | enumMap:'VolLev'}}</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>工程类型</td>
+                                            <td>{{volumeInfo.Engineering.Type | enumMap:'EngineeringType'}}</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>工程阶段</td>
+                                            <td>{{volumeInfo.Engineering.Phase | enumMap:'EngineeringPhase'}}</td>
+                                        </tr>
+                                        <tr class="item-head">
+                                            <td><i class="fa fa-calendar"></i></td>
+                                            <td colspan="2"> 工程时间</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>登记日期</td>
+                                            <td>{{volumeInfo.Engineering.CreateDate | TDate}}</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>启动日期</td>
+                                            <td>{{volumeInfo.Engineering.StartDate | TDate}}</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>计划完成</td>
+                                            <td>{{volumeInfo.Engineering.DeliveryDate | TDate}}</td>
+                                        </tr>
+                                        <tr class="item-head">
+                                            <td><i class="fa fa-file-text"></i> </td>
+                                            <td colspan="2"> 工程备注</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>备注</td>
+                                            <td>{{volumeInfo.Engineering.Note}}</td>
+                                        </tr>
+                                        <tr class="item-head">
+                                            <td><i class="fa fa-heart"></i></td>
+                                            <td colspan="2"> 工程关注</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>是否关注</td>
+                                            <td> 
+                                                <span class="c-blue" style="cursor:pointer;" ng-click="followEng()"> 
+                                                <i class="fa " ng-class="{'fa-heart' : volumeInfo.Engineering.IsFollow,'fa-heart-o' : !volumeInfo.Engineering.IsFollow}"></i> 
+                                                {{volumeInfo.Engineering.IsFollow ? "取消关注" :"关注工程"}}</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="item-head">
+                                            <td><i class="fa fa-file-archive-o"></i></td>
+                                            <td colspan="2"> 卷册</td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>编号</td>
+                                            <td> {{volumeInfo.Number}} </td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>名称</td>
+                                            <td> {{volumeInfo.Name}} </td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>所属专业</td>
+                                            <td> {{volumeInfo.SpecialtyID | enumMap:'Specialty'}} </td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>主设</td>
+                                            <td> {{volumeInfo.Designer | enumMap:'user'}} </td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>校对</td>
+                                            <td> {{volumeInfo.Checker | enumMap:'user'}} </td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>开始时间</td>
+                                            <td> {{volumeInfo.StartDate | TDate}} </td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>结束时间</td>
+                                            <td> {{volumeInfo.EndDate | TDate}} </td>
+                                        </tr>
+                                        <tr class="item-row">
+                                            <td class="item-head"></td>
+                                            <td>备注</td>
+                                            <td>{{volumeInfo.Note}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                            <div class="tab-pane p-10" ng-class="{active : currentIndex == 2}">
+                                <label>设计依据</label>
+                                <p class="border-top">{{engPlan.AccordingTo}}</p>
+                                <label>设计范围</label>
+                                <p class="border-top">{{engPlan.Range}}</p>
+                                <label>设计成品</label>
+                                <p class="border-top">{{engPlan.Product}}</p>
+                                <label>其他说明</label>
+                                <p class="border-top">{{engPlan.Note}}</p>
+                                <label>设计输入</label>
+                                <p class="border-top">{{engPlan.Input}}</p>
+                                <label>主要设计原则</label>
+                                <p class="border-top">{{engPlan.Principle}}</p>
+                                <label>质量目标</label>
+                                <p class="border-top">{{engPlan.Quality}}</p>
+                                <label>质量保证措施</label>
+                                <p class="border-top">{{engPlan.Measures}}</p>
+                               
+                            </div>
+
+                            <div class="tab-pane" ng-class="{active : currentIndex == 3}">
+                               
+                                <div class="list-view ">
+
+                                    <ul>
+                                        <li class="chat-user-list clearfix">
+
+                                            <a ng-click="openChat(user.id)"
+                                               ng-repeat="user in engUsers">
+                                                <span class="col-xs-height col-middle ">
+                                                    <span class="thumbnail-wrapper d32  ">
+                                                        <img width="34" height="34" alt=""
+                                                             ng-src="assets/global/images/avatars/{{user.id | userImg}}"
+                                                             class="col-top user-header">
+                                                    </span>
+                                                </span>
+                                                <p class="p-l-10 col-xs-height col-middle col-xs-6">
+                                                    <span>{{user.id | enumMap:'user'}}</span>
+                                                    
+                                                    <span class="block text-master hint-text fs-12">
+                                                        <span>{{user.id | userDept}}</span> &nbsp;|&nbsp;
+                                                        <span ng-repeat="t in user.tags">{{t}} &nbsp;</span>
+                                                    </span>
+                                                </p>
+                                                <p class="p-l-10 col-xs-height col-middle col-xs-6">
+
+                                                </p>
+                                            </a>
+
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

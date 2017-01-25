@@ -1,0 +1,54 @@
+﻿<div class="panel " >
+    <div class="panel-header">
+        <button type="button" class="btn btn-default btn-square  m-0"
+                ng-click="add()">
+            <i class="fa fa-plus"></i>创建
+        </button>
+
+        <div class="prepend-icon pull-right m-b-0 pull-right">
+            <input type="text"
+                   ng-model="filter.txtfilter"
+                   enter-press="loadSource()"
+                   ng-click="loadSource()"
+                   class="form-control form-white filterbox " placeholder="全宗号、全宗名称">
+            <i class="fa fa-search"></i>
+        </div>
+    </div>
+
+    <div class="panel-content widget-news p-t-0" style="height:{{panelHeight - 50}}px" >
+
+
+        <div class="message-item media bold bg-white m-t-10 ">
+            <div class="media">
+                <div class="media-body row">
+
+                    <div class="col-sm-2">全宗号</div>
+                    <div class="col-sm-2">名称</div>
+                    <div class="col-sm-2">备注</div>
+                    <div class="col-sm-2">操作</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="message-item media"
+             ng-repeat="f in fondsList track by f.Number ">
+
+            <div class="media">
+                <div class="media-body">
+                    <div class="media-body row">
+
+                        <div class="col-sm-2">{{f.Number}}</div>
+                        <div class="col-sm-2">{{f.Name}}</div>
+                        <div class="col-sm-2">{{f.Note}}</div>
+                        <div class="col-sm-2">
+                            <a class="btn btn-sm" style="padding-left:0 !important;" ng-click="delete(f)"><i class="fa fa-trash-o"></i> 删除</a>
+                            <a class="btn btn-sm" style="padding-left:0 !important;" ng-click="update(f)"><i class="fa fa-edit"></i> 更新</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

@@ -1,0 +1,89 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <i class="fa fa-stop"></i> &nbsp;工程暂停
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body">
+
+    <form name="FormMaintain">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>
+                        通知相关人员
+                    </label>
+
+                    <tags-input ng-model="noteInfo.ReceiveUsers"
+                                class="user-tag"
+                                template="userTagTemplate"
+                                add-from-autocomplete-only="true"
+                                display-property="Name"
+                                placeholder="选择用户">
+                        <auto-complete source="filterUsers($query)"
+                                       template="userTagItemTemplate"
+                                       min-length="0"
+                                       load-on-focus="true"
+                                       load-on-empty="true"
+                                       max-results-to-show="20">
+                        </auto-complete>
+                    </tags-input>
+
+                    <script type="text/ng-template" id="userTagTemplate">
+                        <div class="tag-template">
+                            <div>
+                                <span><i class="fa fa-user"></i> {{$getDisplayText()}}</span>
+                                <small class="hint-text fs-12">< {{data.Dept.Name}} ></small>
+                                <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+                            </div>
+                        </div>
+                    </script>
+                    <script type="text/ng-template" id="userTagItemTemplate">
+                        <div class="tag-template">
+                            <span class="col-xs-height col-middle">
+                                <span class="thumbnail-wrapper d32  ">
+                                    <img width="34" height="34" alt=""
+                                         ng-src="assets/global/images/avatars/{{data.PhotoImg}}"
+                                         class="col-top user-header">
+                                </span>
+                            </span>
+                            <p class="p-l-10 col-xs-height col-middle col-xs-6">
+                                <span class="text-master">{{data.Name}}</span>
+                                <span class="block text-master hint-text fs-12">{{data.Dept.Name}}</span>
+                            </p>
+                        </div>
+                    </script>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>
+                        暂停原因
+                    </label>
+                    <span class="pull-right vad-msg" id="msg_Content"></span>
+
+                    <textarea class="form-control form-white "
+                              name="Content" ng-model="noteInfo.Content"
+                              validator="required,maxlength=500" message-id="msg_Content"
+                              placeholder="{{local.global.input}}{{local.note.content}}"
+                              rows="8"></textarea>
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+<div class="modal-footer bg-aero">
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="stop()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-stop"></i>
+        暂停
+    </button>
+</div>

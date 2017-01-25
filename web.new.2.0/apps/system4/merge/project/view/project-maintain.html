@@ -1,0 +1,257 @@
+﻿<div class="modal-header bg-primary modal-dragable modal-block">
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">{{maintainService.update ? "更新" : "新建项目"}}</h4>
+</div>
+
+<div class="modal-body ">
+    <form name="FormMaintain1" scroll="maintainScroll" data-height="500" auto="true" ng-show="currentStep == 1" >
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label ">
+                        项目编号
+                    </label>
+                    <span class="pull-right" id="msg_number"></span>
+                    <input ng-model="projInfo.Number" type="text" name="projInfo.Number" class="form-control form-white"
+                           message-id="msg_number"
+                           validator="required">
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label ">
+                        项目名称
+                    </label>
+                    <span class="pull-right" id="msg_name"></span>
+                    <input ng-model="projInfo.Name" type="text" name="projInfo.Name" class="form-control form-white"
+                           message-id="msg_name"
+                           validator="required">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label ">
+                        项目区域
+                    </label>
+                    <span class="pull-right" id="msg_region"></span>
+                    <ui-select ng-model="projInfo.Area" theme="select2" search-enabled="false" class="form-control form-white">
+                        <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                        <ui-select-choices repeat="item.Value as item in getBaseData('region')">
+                            <div ng-bind-html="item.Text"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <input class="hide" ng-model="projInfo.Area"
+                           message-id="msg_region"
+                           name="projInfo.Region" validator="required">
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label ">
+                        项目经理
+                    </label>
+                    <span class="pull-right" id="msg_mgr"></span>
+
+                    <ui-select ng-model="projInfo.Manager" theme="select2" search-enabled="false" class="form-control form-white">
+                        <ui-select-match placeholder="{{local.global.choose}}{{local.proj.manager}}">{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="item.ID as item in user_item | role:'R2'">
+                            <div ng-bind-html="item.Name"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <input class="hide" ng-model="projInfo.Manager"
+                           message-id="msg_mgr"
+                           name="Manager" validator="required">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label ">
+                        项目阶段
+                    </label>
+                    <span class="pull-right" id="msg_phase"></span>
+                    <ui-select ng-model="projInfo.Phase" theme="select2" search-enabled="false" class="form-control form-white">
+                        <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                        <ui-select-choices repeat="item.Value as item in getBaseData('ProjPhase')">
+                            <div ng-bind-html="item.Text"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                    <input class="hide" ng-model="projInfo.Phase"
+                           message-id="msg_phase"
+                           name="projInfo.Phase" validator="required">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="control-label ">
+                        项目备注
+                    </label>
+                    <span class="pull-right" id="msg_note"></span>
+
+                    <textarea class="form-control form-white"
+                              name="Note"
+                              validator="maxlength=500"
+                              message-id="msg_note"
+                              ng-model="projInfo.Note" rows="5"></textarea>
+                </div>
+            </div>
+
+
+        </div>
+
+    </form>
+
+    <form name="FormMaintain2" scroll="maintainScroll2" data-height="500" auto="true" ng-show="currentStep == 2">
+        <div class="row">
+
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="control-label ">
+                        封面
+                    </label>
+                    <attach-upload name="attachCtl1"
+                                   pl-filters-model="filters"
+                                   obj-id="projInfo.ID"
+                                   obj-name="ProjectCover">
+                    </attach-upload>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="control-label ">
+                        附件目录
+                    </label>
+                    <attach-upload name="attachCtl2"
+                                   pl-filters-model="filters"
+                                   obj-id="projInfo.ID"
+                                   obj-name="ProjectAttachLs">
+                    </attach-upload>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="control-label ">
+                        附件
+                    </label>
+                    <attach-upload name="attachCtl3"
+                                   pl-filters-model="filters"
+                                   obj-id="projInfo.ID"
+                                   obj-name="ProjectAttach">
+                    </attach-upload>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form name="FormMaintain3" scroll="maintainScroll3" data-height="500" auto="true" ng-show="currentStep == 3">
+        <div class="row">
+
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="control-label ">
+                        禁用词汇
+                    </label>
+                    <textarea class="form-control form-white" 
+                              placeholder=", 分割" 
+                              ng-model="projInfo.DisableWord" rows="10">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form name="FormMaintain4" scroll="maintainScroll4" data-height="500" auto="true" ng-show="currentStep == 4">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="control-label ">
+                        参与专业
+                    </label>
+
+                    <div class="icheck-inline m-10">
+                        <span class="m-r-10"
+                              ng-init="isSelected(item)"
+                              ng-show="!item.isSelected"
+                              ng-repeat="item in SpecialtysCopy">
+                            <input type="checkbox" ng-model="item.isSelected" icheck> {{item.Text}}
+                        </span>
+                    </div>
+                    <hr />
+                    <div class="form-group row m-l-10 m-r-10">
+                        <label class="col-sm-2 p-0 p-l-20">{{local.specil.name}}</label>
+                        <label class="col-sm-4 p-0 p-l-20">负责人</label>
+                        <label class="col-sm-6 p-0 p-l-20">{{local.specil.note}}</label>
+                    </div>
+
+                    <div class="form-group row m-l-10 m-r-10"
+                         ng-show="item.isSelected"
+                         ng-repeat="item in SpecialtysCopy"
+                         ng-repeat-end="maintainScroll.init()">
+
+                        <div class="col-sm-2 ">
+                            {{item.Text}}
+                        </div>
+
+                        <div class="col-sm-4 ">
+                            <ui-select ng-model="item.Manager" theme="select2" search-enabled="false" class="form-control form-white">
+                                <ui-select-match placeholder="{{local.specil.manager}}">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices repeat="item.ID as item in user_item ">
+                                    <div ng-bind-html="item.Name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" ng-model="item.Note"
+                                   placeholder="{{local.specil.note}}"
+                                   class="form-control form-white" />
+                        </div>
+                        <span class="col-sm-1 p-0 p-l-20">
+                            <a class="btn btn-transparent m-0 p-0"
+                               ng-click="item.isSelected = false"
+                               style="height:auto;">
+                                <i class="fa fa-close"></i>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer bg-aero">
+
+    <button type="button"
+            ng-click="sub()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-angle-left"></i> 上一步 
+    </button>
+
+    <button type="button"
+            ng-click="next()"
+            validation-submit="FormMaintain1"
+            class="btn btn-primary btn-square">
+        {{currentStep == 4 ? "保&nbsp;&nbsp;&nbsp;存" : "下一步"}}
+         <i class="fa fa-angle-right"></i>
+    </button>
+
+</div>

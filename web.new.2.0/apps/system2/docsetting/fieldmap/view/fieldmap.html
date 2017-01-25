@@ -1,0 +1,94 @@
+﻿<div class="panel">
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner p-10">
+                    <i class="fa fa-database"></i> 档案库 
+                    <tree tree-data="scope"
+                          tree-model="archiveNodes"
+                          changed="archive_changed"
+                          tree-plugins="wholerow,contextmenu,types"></tree>
+
+                    
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="70%">
+                <div data-split-pane>
+                    <div data-split-pane-component>
+
+                        <div class="pretty-split-pane-component-inner ">
+
+                            <div class="panel ">
+
+                                <div class="panel-content " blockui="listPanel" auto="true">
+                                    <div class="row m-0">
+
+                                        <p class="text-2x pull-left">
+                                            <i class="fa fa-database"></i>{{currentArchive.parentText}}.{{currentArchive.text}}
+                                            <i class="fa fa-arrows-h"></i>
+                                            <i class="icon-folder"></i>{{currentFile.Name}}
+                                        </p>
+
+                                        <button class="btn btn-primary btn-square m-0 pull-right"
+                                                ng-click="saveMapping()">
+                                            <i class="fa fa-save"></i> 保存
+                                        </button>
+                                    </div>
+                                   
+
+                                    <div class="width-100p"
+                                         style="height:{{gridHeight - 80}}px"
+                                         ui-grid-auto-resize
+                                         ui-grid-edit
+                                         ui-grid="mapGridOptions"></div>
+
+                                    <script type="text/ng-template" id="uiSelect">
+                                        <ui-select-wrap>
+                                            <ui-select ng-model="MODEL_COL_FIELD" theme="select2" search-enabled="false" append-to-body="true" class="form-control form-white">
+                                                <ui-select-match placeholder="请选择">{{$select.selected.Name}}</ui-select-match>
+                                                <ui-select-choices repeat="item.ID as item in col.colDef.getSource()">
+                                                    <div ng-bind-html="item.Name"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </ui-select-wrap>
+                                    </script>
+
+                                    <script type="text/ng-template" id="uiMappingSelect">
+                                        <ui-select-wrap>
+                                            <ui-select ng-model="MODEL_COL_FIELD" theme="select2" search-enabled="false" append-to-body="true" class="form-control form-white">
+                                                <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                                <ui-select-choices repeat="item.Key as item in col.colDef.getSource()">
+                                                    <div ng-bind-html="item.Text"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </ui-select-wrap>
+                                    </script>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div data-split-pane-divider data-width="5px"></div>
+                    <div data-split-pane-component data-width="40%">
+                        <div class="pretty-split-pane-component-inner p-10">
+                            <i class="icon-folder"></i> 文件库
+                            <tree tree-data="scope"
+                                  tree-model="fileNodes"
+                                  changed="file_changed"
+                                  tree-plugins="wholerow,contextmenu,types"></tree>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

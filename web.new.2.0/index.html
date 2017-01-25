@@ -1,0 +1,539 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="admin-themes-lab">
+    <meta name="author" content="themes-lab">
+    <link rel="shortcut icon" href="../assets/global/images/favicon.png" type="image/png">
+    <title>项目管理系统</title>
+    <link href="../assets/global/css/style.css" rel="stylesheet">
+    <link href="../assets/global/css/theme.css" rel="stylesheet">
+    <link href="../assets/global/css/ui.css" rel="stylesheet">
+    <link href="../assets/admin/layout3/css/layout.css" rel="stylesheet">
+
+    <link href="assets/global/plugins/slick/slick.css" rel="stylesheet">
+    <link href="assets/global/plugins/icheck/skins/all.css" rel="stylesheet">
+    <link href="assets/global/plugins/bootstrap-tags-input/bootstrap-tagsinput.css" rel="stylesheet" />
+    <link href="assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="assets/global/plugins/jstree/dist/themes/default/style.css" rel="stylesheet" />
+    <link href="assets/global/plugins/font-awesome-animation/font-awesome-animation.min.css" rel="stylesheet">
+    
+    <link href="assets/bower_components/angular-ui-select/dist/select.min.css" rel="stylesheet" />
+    <link href="assets/global/css/split-pane.css" rel="stylesheet" />
+    <link href="assets/global/css/pretty-split-pane.css" rel="stylesheet" />
+
+    <link href="assets/global/css/page.css" rel="stylesheet" />
+</head>
+<!-- LAYOUT: Apply "submenu-hover" class to body element to have sidebar submenu show on mouse hover -->
+<!-- LAYOUT: Apply "sidebar-collapsed" class to body element to have collapsed sidebar -->
+<!-- LAYOUT: Apply "sidebar-top" class to body element to have sidebar on top of the page -->
+<!-- LAYOUT: Apply "sidebar-hover" class to body element to show sidebar only when your mouse is on left / right corner -->
+<!-- LAYOUT: Apply "submenu-hover" class to body element to show sidebar submenu on mouse hover -->
+<!-- LAYOUT: Apply "fixed-sidebar" class to body to have fixed sidebar -->
+<!-- LAYOUT: Apply "fixed-topbar" class to body to have fixed topbar -->
+<!-- LAYOUT: Apply "rtl" class to body to put the sidebar on the right side -->
+<!-- LAYOUT: Apply "boxed" class to body to have your page with 1200px max width -->
+<!-- THEME STYLE: Apply "theme-sdtl" for Sidebar Dark / Topbar Light -->
+<!-- THEME STYLE: Apply  "theme sdtd" for Sidebar Dark / Topbar Dark -->
+<!-- THEME STYLE: Apply "theme sltd" for Sidebar Light / Topbar Dark -->
+<!-- THEME STYLE: Apply "theme sltl" for Sidebar Light / Topbar Light -->
+<!-- THEME COLOR: Apply "color-default" for dark color: #2B2E33 -->
+<!-- THEME COLOR: Apply "color-primary" for primary color: #319DB5 -->
+<!-- THEME COLOR: Apply "color-red" for red color: #C9625F -->
+<!-- THEME COLOR: Apply "color-green" for green color: #18A689 -->
+<!-- THEME COLOR: Apply "color-orange" for orange color: #B66D39 -->
+<!-- THEME COLOR: Apply "color-purple" for purple color: #6E62B5 -->
+<!-- THEME COLOR: Apply "color-blue" for blue color: #4A89DC -->
+<!-- BEGIN BODY -->
+<body class="sidebar-light fixed-topbar theme-sltl bg-light-dark color-default sidebar-collapsed"
+      ng-controller="base.controller.page">
+
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <section>
+        <!-- BEGIN SIDEBAR -->
+        <div class="sidebar">
+            <div class="logopanel">
+                <h1>
+                    <a href="dashboard.html"></a>
+                </h1>
+            </div>
+
+            <div class="sidebar-inner"
+                 ng-repeat="m in moduleContents"
+                 ui-view="{{m}}.Sidebar"
+                 ng-show="$state.includes(m)">
+
+            </div>
+        </div>
+        <!-- END SIDEBAR -->
+        <div class="main-content">
+            <!-- BEGIN TOPBAR -->
+            <div class="topbar">
+
+
+                <div class="header-left">
+
+                    <div class="topnav">
+                        <a class="menutoggle" data-toggle="sidebar-collapsed"><span class="menu__handle"><span>Menu</span></span></a>
+
+                        <ul class="nav nav-horizontal mmenu">
+
+                            <li class="dropdown "
+                                ng-click="$state.go(menu.Href)"
+                                ng-class="{ active  : $state.includes(menu.Href.split('.')[0])}"
+                                ng-repeat="menu in currentBusiness.Menus">
+
+                                <a>{{menu.Text}}</a>
+                                <ul class="dropdown-menu fullwidth">
+
+                                    <li class="mmenu-content withdesc" ui-view="{{menu.Href}}.MegaMenu">
+                                        无菜单
+                                        <!-- end row -->
+                                    </li>
+                                    <!-- end grid demo -->
+                                </ul>
+                                <!-- end drop down menu -->
+                            </li>
+
+                        </ul>
+                    </div>
+
+
+                </div>
+
+                <div class="header-right">
+
+                    <ul class="header-menu nav navbar-nav">
+
+                        <!-- BEGIN MESSAGES DROPDOWN -->
+                        <li class="dropdown" id="messages-header">
+                            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <i class="icon-bell "
+                                   ng-class="{ 'faa-ring animated': notifications.Source.length > 0}"></i>
+                                <span class="badge badge-primary badge-header">
+                                    {{notifications.Source.length}}
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header clearfix">
+                                    <p class="pull-left">
+                                        您有{{notifications.Source.length}}条未读消息
+                                    </p>
+                                </li>
+                                <li class="dropdown-body">
+                                    <ul class="dropdown-menu-list withScroll" data-height="220">
+                                        <li class="clearfix"
+                                            ng-click="openNotifyWindow(n)"
+                                            ng-repeat="n in notifications.Source">
+                                            <span class="pull-left p-r-5">
+                                                <img src="assets/global/images/avatars/avatar3.png" alt="avatar 3">
+                                            </span>
+                                            <div class="clearfix">
+                                                <div>
+                                                    <strong ng-show="n.SendUser == 0">系统</strong>
+                                                    <strong ng-show="n.SendUser > 0">{{n.SendUser | enumMap : 'user'}}</strong>
+                                                    <small class="pull-right text-muted">
+                                                        <span class="glyphicon glyphicon-time p-r-5"></span> {{n.EffectDate | strDate}}
+                                                    </small>
+                                                </div>
+                                                <p>{{n.Title}}</p>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <li class="dropdown-footer clearfix" ng-click="openNotifyWindow()">
+                                    <a class="pull-left">查看所有{{notifications.TotalCount}}条消息</a>
+                                    <a class="pull-right">
+                                        <i class="icon-arrow-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END MESSAGES DROPDOWN -->
+
+                        
+                     
+                        <!-- BEGIN USER DROPDOWN -->
+                        <li class="dropdown" id="user-header">
+                            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <img ng-src="assets/global/images/avatars/{{currentUser.Account.PhotoImg}}" alt="user image">
+                                <span class="username">您好, {{currentUser.Account.Name}}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a ng-click="settings()"><i class="icon-settings"></i><span>个人设置</span></a>
+                                </li>
+                                <li>
+                                    <a ng-click="changePassword()"><i class="icon-user"></i><span>修改密码</span></a>
+                                </li>
+                                <li>
+                                    <a ui-sref="home.calendar"><i class="icon-calendar"></i><span>行事日历</span></a>
+                                </li>
+
+                                <li>
+                                    <a href="login-v2.html"><i class="icon-logout"></i><span>注销&nbsp;{{currentUser.Account.Name}}</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END USER DROPDOWN -->
+
+                        <li id="quickview-toggle"><a href="#"><i class="icon-bubbles"></i></a></li>
+                    </ul>
+                </div>
+
+                <div class="header-right" ui-view="header-menu">
+
+                </div>
+
+                <!-- header-right -->
+            </div>
+            <!-- END TOPBAR -->
+            <!-- BEGIN PAGE CONTENT -->
+
+            <div class="at-view-slide-in-left page-content">
+
+                <ul class="head-tab">
+
+                    <li class="tab-item"
+                        ng-click="$state.go(tab.state,tab.params)"
+                        ng-class="{ active  : $state.includes(tab.state)}"
+                        ng-repeat="tab in currentBusiness.tabs">
+
+                        <i class="fa fa-file"></i>
+                        <span class="tab-title">{{tab.state.text}}</span>
+
+                        <button ng-if="!tab.first" class="close m-t-5 f-16" ng-click="closeTab(tab)">×</button>
+                    </li>
+
+                    <li class="tab-more active dropdown pull-right" ng-show="currentBusiness.tabs.length > 0">
+
+                        <a data-toggle="dropdown" data-close-others="true">
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a style="cursor:default;" ng-click="addToQuickLink()"> <i class="fa fa-plus"></i> 加入快速访问</a>
+                            </li>
+                            <li>
+                                <a style="cursor:default;" ng-click="closeAll()"> <i class="fa fa-thumb-tack"></i> 固定到此栏</a>
+                            </li>
+                            <li>
+                                <a style="cursor:default;" ng-click="closeAll()"> <i class="fa fa-file"></i> 设置为模块首页</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a style="cursor:default;" ng-click="closeAll()"> <i class="fa fa-close"></i> 关闭所有</a>
+                            </li>
+                            <li>
+                                <a style="cursor:default;" ng-click="closeOthers()"> <i class="fa fa-close"></i> 关闭其他</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+
+                <div ui-view="login" ng-show="$state.includes('login')">
+
+                </div>
+
+                
+                <div ng-repeat="m in moduleContents"
+                     ui-view="{{m}}.Content"
+                     ng-show="$state.includes(m)">
+
+                </div>
+
+
+            </div>
+
+            <div class="footer">
+                <div class="copyright">
+                    <p class="pull-left sm-pull-reset">
+                        <span>Copyright <span class="copyright">©</span> 2016 </span>
+                        <span class="c-blue">水杉数字科技有限公司</span>.
+                        <span>版权所有. </span>
+                        <span>版本号. </span>
+                        <span class="c-brown">beta</span>.
+                    </p>
+                    <p class="pull-right sm-pull-reset">
+                        <span><a href="#" class="m-r-10">技术支持</a> | <a href="#" class="m-l-10 m-r-10">关于水杉</a> | <a href="#" class="m-l-10">联系我们</a></span>
+                    </p>
+                </div>
+            </div>
+            <!-- END PAGE CONTENT -->
+        </div>
+        <!-- END MAIN CONTENT -->
+    </section>
+
+    <!-- BEGIN QUICKVIEW SIDEBAR -->
+    <div id="quickview-sidebar">
+        <div class="quickview-header">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#chat" data-toggle="tab">通讯录</a></li>
+                <li><a href="#notes" data-toggle="tab">记事本</a></li>
+                <li><a href="#settings" data-toggle="tab" class="settings-tab">系统</a></li>
+            </ul>
+        </div>
+        <div class="quickview">
+            <div class="tab-content">
+                <div class="tab-pane fade active in p-0" id="chat">
+
+                    <div class="inner " fullheight calheight="-50" scroll="userList">
+
+                        <div class="form-group m-0">
+                            <input class="form-control form-white" type="text" placeholder="输入筛选" ng-model="userFilter">
+                        </div>
+                        <div class="list-view ">
+
+                            <div class="list-view-group-container"
+                                 ng-repeat="dept in department | orderBy : dept.name">
+                                <div class="list-view-group-header text-uppercase">{{dept.name}}&nbsp;{{dept.users.length}}人</div>
+                                <ul>
+                                    <li class="chat-user-list clearfix"
+                                        ng-repeat="user in dept.users | filter:userFilter "
+                                        ng-repeat-end="userList.init()"
+                                        ng-show="user.ID != currentUser.Account.ID">
+
+                                        <a ng-click="openChat(user)">
+                                            <span class="badge badge-danger badge-msg" ng-show="user.unReadMsgCount">
+                                                {{ user.unReadMsgCount}}
+                                            </span>
+                                            <span class="col-xs-height col-middle faa-flash " ng-class="{'animated' : user.unReadMsgCount}">
+
+                                                <span class="thumbnail-wrapper d32  ">
+                                                    <img width="34" height="34" alt=""
+                                                         ng-src="assets/global/images/avatars/{{user.PhotoImg}}"
+                                                         class="col-top user-header">
+                                                </span>
+                                            </span>
+                                            <p class="p-l-10 col-xs-height col-middle col-xs-6" ng-class="{'out-line' : !onLineUsers[user.ID]}">
+                                                <span>{{user.Name}}</span>
+                                                <span class="block text-master hint-text fs-12">
+                                                    {{dept.name}} &nbsp; {{onLineUsers[user.ID] ? "在线" : ""}}
+                                                </span>
+
+                                            </p>
+
+                                            <p class="p-l-10 col-xs-height col-middle col-xs-6">
+
+                                                <span class="block text-master hint-text fs-12" title="{{ user.lastMsg.Message }}">
+                                                    <span ng-show="user.lastMsg.MessageType == 300">
+                                                        {{ user.lastMsg.Message  | subStr:6}}
+                                                    </span>
+                                                    <span ng-show="user.lastMsg.MessageType == 303">
+                                                        文件
+                                                    </span>
+                                                </span>
+
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="notes">
+                    <div class="list-notes current withScroll">
+                        <div class="notes ">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="add-note">
+                                        <i class="fa fa-plus"></i> 添加新的记事
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="notes-list">
+                                <div class="note-item media current fade in">
+                                    <button class="close">×</button>
+                                    <div>
+                                        <div>
+                                            <p class="note-name">Reset my account password</p>
+                                        </div>
+                                        <p class="note-desc hidden">Break security reasons.</p>
+                                        <p><small>Tuesday 6 May, 3:52 pm</small></p>
+                                    </div>
+                                </div>
+                                <div class="note-item media fade in">
+                                    <button class="close">×</button>
+                                    <div>
+                                        <div>
+                                            <p class="note-name">Call John</p>
+                                        </div>
+                                        <p class="note-desc hidden">He have my laptop!</p>
+                                        <p><small>Thursday 8 May, 2:28 pm</small></p>
+                                    </div>
+                                </div>
+                                <div class="note-item media fade in">
+                                    <button class="close">×</button>
+                                    <div>
+                                        <div>
+                                            <p class="note-name">Buy a car</p>
+                                        </div>
+                                        <p class="note-desc hidden">I'm done with the bus</p>
+                                        <p><small>Monday 12 May, 3:43 am</small></p>
+                                    </div>
+                                </div>
+                                <div class="note-item media fade in">
+                                    <button class="close">×</button>
+                                    <div>
+                                        <div>
+                                            <p class="note-name">Don't forget my notes</p>
+                                        </div>
+                                        <p class="note-desc hidden">I have to read them...</p>
+                                        <p><small>Wednesday 5 May, 6:15 pm</small></p>
+                                    </div>
+                                </div>
+                                <div class="note-item media current fade in">
+                                    <button class="close">×</button>
+                                    <div>
+                                        <div>
+                                            <p class="note-name">Reset my account password</p>
+                                        </div>
+                                        <p class="note-desc hidden">Break security reasons.</p>
+                                        <p><small>Tuesday 6 May, 3:52 pm</small></p>
+                                    </div>
+                                </div>
+                                <div class="note-item media fade in">
+                                    <button class="close">×</button>
+                                    <div>
+                                        <div>
+                                            <p class="note-name">Call John</p>
+                                        </div>
+                                        <p class="note-desc hidden">He have my laptop!</p>
+                                        <p><small>Thursday 8 May, 2:28 pm</small></p>
+                                    </div>
+                                </div>
+                                <div class="note-item media fade in">
+                                    <button class="close">×</button>
+                                    <div>
+                                        <div>
+                                            <p class="note-name">Buy a car</p>
+                                        </div>
+                                        <p class="note-desc hidden">I'm done with the bus</p>
+                                        <p><small>Monday 12 May, 3:43 am</small></p>
+                                    </div>
+                                </div>
+                                <div class="note-item media fade in">
+                                    <button class="close">×</button>
+                                    <div>
+                                        <div>
+                                            <p class="note-name">Don't forget my notes</p>
+                                        </div>
+                                        <p class="note-desc hidden">I have to read them...</p>
+                                        <p><small>Wednesday 5 May, 6:15 pm</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail-note note-hidden-sm">
+                        <div class="note-header clearfix">
+                            <div class="note-back">
+                                <i class="icon-action-undo"></i>
+                            </div>
+                            <div class="note-edit">Edit Note</div>
+                            <div class="note-subtitle">title on first line</div>
+                        </div>
+                        <div id="note-detail">
+                            <div class="note-write">
+                                <textarea class="form-control" placeholder="Type your note here"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade " id="settings">
+
+                    <div class="business-system" 
+                         ng-repeat="b in Businesss track by b.Key"
+                         ng-class="{ 'bg-aero'  : currentBusiness == b}"
+                         ng-click="changeBusiness(b)">
+                        <p>{{b.Name}}</p>
+                    </div>
+
+                    <!---->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END QUICKVIEW SIDEBAR -->
+    <!-- BEGIN PRELOADER -->
+    <div class="loader-overlay">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
+    <!-- END PRELOADER -->
+    <a href="#" class="scrollup"><i class="fa fa-angle-up"></i></a>
+
+    <script src="assets/global/plugins/jquery/jquery-1.11.1.min.js"></script>
+
+    <script src="assets/bower_components/angular/angular.min.js"></script>
+    <script src="assets/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="assets/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+
+    <script src="assets/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    
+
+    <script src="assets/bower_components/json3/lib/json3.js"></script>
+    <script src="assets/bower_components/angular-resource/angular-resource.js"></script>
+    <script src="assets/bower_components/angular-touch/angular-touch.js"></script>
+    <script src="assets/bower_components/angular-route/angular-route.js"></script>
+
+    
+    <script src="assets/global/plugins/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script src="assets/global/plugins/jquery-ui/jquery-ui-1.11.2.min.js"></script>
+
+    <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script> <!-- Jquery Cookies, for theme -->
+
+    <script src="assets/global/plugins/jquery-block-ui/jquery.blockUI.min.js"></script> <!-- simulate synchronous behavior when using AJAX -->
+    <script src="assets/global/plugins/bootbox/bootbox.min.js"></script> <!-- Modal with Validation -->
+    <script src="assets/global/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script> <!-- Custom Scrollbar sidebar -->
+    <script src="assets/global/plugins/bootstrap-dropdown/bootstrap-hover-dropdown.min.js"></script> <!-- Show Dropdown on Mouseover -->
+    <script src="assets/global/plugins/charts-sparkline/sparkline.min.js"></script> <!-- Charts Sparkline -->
+
+    <script src="assets/global/plugins/noty/jquery.noty.packaged.min.js"></script>  <!-- Notifications -->
+    <script src="assets/global/js/pages/notifications.js"></script>
+    <script src="assets/global/plugins/progressbar/progressbar.min.js"></script>
+    <script src="assets/global/plugins/webui-popover/dist/jquery.webui-popover.min.js"></script>
+    <script src="assets/global/plugins/bootstrap-tags-input/bootstrap-tagsinput.min.js"></script>
+    <script src="assets/global/plugins/countup/countUp.min.js"></script> <!-- Number Animated -->
+    <script src="assets/bower_components/interact/dist/interact.min.js"></script>
+    <script src="assets/bower_components/css-element-queries/src/ElementQueries.js"></script>
+    <script src="assets/bower_components/css-element-queries/src/ResizeSensor.js"></script>
+    <script src="assets/global/plugins/icheck/icheck.min.js"></script>
+    <script src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.cn.min.js"></script>
+    <script src="assets/global/plugins/Ladda-master/dist/spin.min.js"></script>
+    <script src="assets/global/plugins/Ladda-master/dist/ladda.min.js"></script>
+
+    <script src="assets/global/plugins/bootstrap-slider/bootstrap-slider.js"></script> <!-- Bootstrap Input Slider -->
+    <script src="assets/global/plugins/ion-slider/ion.rangeSlider.min.js"></script> <!-- Range Input Slider -->
+
+    <script src="assets/global/plugins/gojs/go.js"></script>
+
+    <script src="assets/global/js/sidebar_hover.js"></script> <!-- Sidebar on Hover -->
+    <script src="assets/global/js/application.js"></script> <!-- Main Application Script -->
+    <script src="assets/global/js/quickview.js"></script> <!-- Chat Script -->
+    <script src="assets/global/js/widgets/notes.js"></script>
+
+   
+
+    <script src="assets/admin/layout3/js/layout.js"></script>
+    <script src="assets/global/js/metro.js"></script>
+    <script src="assets/global/js/prototypeEx.js"></script>
+
+    <script src="assets/bower_components/requirejs/require.js" data-main="main"></script>
+</body>
+</html>

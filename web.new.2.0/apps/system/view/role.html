@@ -1,0 +1,127 @@
+﻿<div class="panel" blockui="rolePanel">
+
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner p-10" >
+
+                    <div>
+                    
+                        <button class="btn btn-primary btn-square "><i ng-click="add()" class="fa fa-plus"></i> 添加</button>
+                        <button class="btn btn-primary btn-square "><i ng-click="rename()" class="fa fa-edit"></i> 重命名</button>
+                        <button class="btn btn-primary btn-square "><i ng-click="remove()" class="fa fa-trash"></i> 删除</button>
+
+                        <button class="btn btn-primary btn-square "><i ng-click="saveRole()" ng-show="editModel" class="fa fa-save"></i> 保存</button>
+                    </div>
+                    <div class="form-group" style="margin-top:10px;">
+                        <input class="form-control form-white" type="text" placeholder="输入筛选" ng-model="roleFilter">
+                    </div>
+
+                    <div class="form-group">
+
+                        <ul class="list-group">
+
+                            <li class="list-group-item"
+                                ng-class="{'active': currentRole.Key == role.Key}"
+                                ng-click="roleChanged(role,$index)"
+                                ng-repeat="role in roles | filter:roleFilter track by role.Key"
+                                ng-repeat-end="initScroller">
+                                <div ng-show="currentRole.Key != role.Key || !editModel">
+                                    <i class="fa fa-group"></i>&nbsp;&nbsp;{{role.Name}}
+                                    <span class="pull-right">{{role.Users.length }}个用户</span>
+                                </div>
+                                <div class="form-group" ng-show="currentRole.Key == role.Key && editModel">
+                                    <input class="form-control form-white" type="text" ng-model="role.Name">
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="70%">
+
+                <div data-split-pane>
+                    <div data-split-pane-component>
+                        <div class="pretty-split-pane-component-inner p-10" ng-controller="system.controller.department.user">
+
+                            <button class="btn btn-primary btn-square " ng-click="save()"><i class="fa fa-save "></i> 保存</button>
+
+                            <div class="form-group" style="margin-top:10px;">
+                                <input class="form-control form-white" type="text" placeholder="输入筛选" ng-model="userFilter">
+                            </div>
+                            <div class="input-group" blockui="userPanel">
+                                <div class="icheck-inline">
+                                    <label class="user-checkbox" ng-repeat="user in users | filter:userFilter">
+                                        <input type="checkbox" ng-model="user.isSelected" icheck> {{user.Name}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-split-pane-divider data-width="5px"></div>
+                    <div data-split-pane-component data-width="50%">
+                        <div class="pretty-split-pane-component-inner p-10" ng-controller="system.controller.department.permission">
+
+                            <button class="btn btn-primary btn-square " ng-click="save()"><i class="fa fa-save "></i> 保存</button>
+
+                            <ul class="nav nav-tabs" ng-init="currentIndex = 0">
+                                <li ng-class="{active:currentIndex == 0}"><a ng-click="currentIndex = 0">UI操作</a></li>
+                                <li ng-class="{active:currentIndex == 1}"><a ng-click="currentIndex = 1">数据访问</a></li>
+                                <li ng-class="{active:currentIndex == 2}"><a ng-click="currentIndex = 2">接口调用</a></li>
+                            </ul>
+                            <div class="tab-content" blockui="permissionPanel">
+                                <div class="tab-pane fade in"
+                                     ng-class="{'active ':currentIndex == 0}">
+
+                                    <tree tree-data="scope"
+                                          tree-model="uiPermissions"
+                                          tree-api="uiTreeApi"
+                                          tree-plugins="checkbox,wholerow,contextmenu"
+                                          tree-checkbox-parent="false"
+                                          tree-checkbox-children="false"
+                                          changed="permissionChanged"
+                                          ready="treeReady1"></tree>
+                                </div>
+                                <div class="tab-pane fade in"
+                                     ng-class="{'active ':currentIndex == 1}">
+
+                                    <tree tree-data="scope"
+                                          tree-model="dataPermissions"
+                                          tree-api="dataTreeApi"
+                                          tree-plugins="checkbox,wholerow"
+                                          tree-checkbox-parent="true"
+                                          tree-checkbox-children="false"
+                                          ready="treeReady2"></tree>
+                                </div>
+                                <div class="tab-pane fade in"
+                                     ng-class="{'active ':currentIndex == 2}">
+
+                                    <tree tree-data="scope"
+                                          tree-model="apiPermissions"
+                                          tree-api="apiTreeApi"
+                                          tree-plugins="checkbox,wholerow"
+                                          tree-checkbox-parent="true"
+                                          tree-checkbox-children="false"
+                                          ready="treeReady3"></tree>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+

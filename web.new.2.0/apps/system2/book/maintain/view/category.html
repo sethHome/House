@@ -1,0 +1,38 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+    <h4 class="modal-title">图书分类</h4>
+</div>
+
+<div class="modal-body ">
+    <form class="form-horizontal m-10" name="FormMaintain">
+        <div class="form-group">
+            <span class="col-sm-4"><label class="m-t-10">分类编号</label> </span>
+            <div class="col-sm-8">
+                <input class="form-control form-white" type="text"
+                       name="Number" validator="required,maxlength=50"
+                       ng-model="categoryInfo.Number">
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="col-sm-4"><label class="m-t-10">分类名称</label> </span>
+            <div class="col-sm-8">
+                <input class="form-control form-white" type="text"
+                       name="Name" validator="required,maxlength=50"
+                       ng-model="categoryInfo.Name">
+            </div>
+        </div>
+        <div>
+            {{categoryInfo | json}}
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer bg-aero">
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="save()"
+            class="btn btn-primary btn-square ">
+        <i class="fa fa-save"></i>
+        保存
+    </button>
+</div>

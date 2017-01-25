@@ -1,0 +1,172 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Data" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+
+<#@include file="Manager.tt"#> 
+<#@include file="DBSql.tt"#>
+
+<# var manager = Manager.Create(Host, GenerationEnvironment); #>
+
+<# manager.StartHeader(); #>
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Microsoft.Practices.Unity;
+using Api.Framework.Core;
+using Api.Framework.Core.DBAccess;
+using Api.Framework.Core.Attach;
+
+namespace PM.Base
+{   
+<# manager.EndBlock(); #>
+
+<#        
+    var schema = GetSchema();
+    foreach(System.Data.DataRow row in schema)
+    {    
+        string tb_name = row["TABLE_NAME"].ToString();        
+        manager.StartNewFile(tb_name+"Service.cs");
+#>
+    /// <summary>
+    /// <#=tb_name#> 服务
+    /// </summary>
+    public partial class <#=tb_name#>Service : I<#=tb_name#>Service
+    {    
+		private BaseRepository<<#=tb_name#>Entity> _DB;
+		private PMContext _PMContext;
+
+		[Dependency]
+        public IObjectAttachService _IObjectAttachService { get; set; }
+
+        public <#=tb_name#>Service()
+        {
+			this._PMContext = new PMContext();
+            this._DB = new BaseRepository<<#=tb_name#>Entity>(this._PMContext);
+        }
+
+		public PageSource<<#=tb_name#>Info> GetPagedList(PageQueryParam PageParam)
+		{
+			Expression<Func<<#=tb_name#>Entity, bool>> expression = c => true;
+
+			#region Filter
+			if (!string.IsNullOrEmpty(PageParam.TextCondtion))
+            {
+                //expression = expression.And(p => p.Name.Contains(PageParam.TextCondtion) || p.Number.Contains(PageParam.TextCondtion));
+            }
+
+            foreach (DictionaryEntry filter in PageParam.FilterCondtion)
+            {
+                var val = filter.Value.ToString();
+
+                if (string.IsNullOrEmpty(val))
+                {
+                    continue;
+                }
+
+                switch (filter.Key.ToString())
+                {
+                    //case "ID":
+                    //    {
+                    //        var id = int.Parse(val);
+                    //        expression = expression.And(c => c.ID == id);
+                    //        break;
+                    //    }
+                    default:
+                        break;
+                }
+            }
+			#endregion
+
+            var pageSource = this._DB.GetOrderPagedList(expression, PageParam);
+            var source = new List<<#=tb_name#>Info>();
+           
+            foreach (var entity in pageSource)
+            {
+                source.Add(new <#=tb_name#>Info(entity)
+                {
+                    
+                });
+            }
+
+            return new PageSource<<#=tb_name#>Info>()
+            {
+                Source = source,
+                PageCount = pageSource.TotalPageCount,
+                TotalCount = pageSource.TotalItemCount
+            };
+		}
+
+		public <#=tb_name#>Entity Get(int ID)
+		{
+			return this._DB.Get(ID);
+		}
+
+		public int Add(<#=tb_name#>Info <#=tb_name#>)
+		{
+			var entity = new <#=tb_name#>Entity(<#=tb_name#>);
+            
+            entity.IsDelete = false;
+            this._DB.Add(entity);
+
+            //foreach (var attachID in <#=tb_name#>.AttachIDs)
+            //{
+            //    AddAttach(entity.ID, attachID);
+            //}
+
+            return entity.ID;
+		}
+
+		public void Update(int ID,<#=tb_name#>Entity <#=tb_name#>)
+		{
+			var entity = this._DB.Get(ID);
+
+			entity.SetEntity(<#=tb_name#>);
+
+			this._DB.Edit(entity);
+		}
+
+		public void Delete(int ID)
+		{
+			this._DB.Delete(ID);
+		}
+
+		public void Delete(string IDs)
+        {
+            var ids = IDs.Split(',');
+
+            foreach (var id in ids)
+            {
+                this.Delete(int.Parse(id));
+            }
+        }
+
+		private void AddAttach(int ID, int AttachID)
+        {
+            _IObjectAttachService.Add(new ObjectAttachEntity()
+            {
+                ObjectKey = "<#=tb_name#>",
+                ObjectID = ID,
+                AttachID = AttachID
+            });
+        }
+		
+    } 
+<#
+        manager.EndBlock();    
+    }            
+#>
+
+
+
+<# manager.StartFooter(); #>
+}
+<# manager.EndBlock(); #>
+
+<# manager.Process(true); #>

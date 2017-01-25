@@ -1,0 +1,6 @@
+﻿
+<div ng-repeat="page in modules.merge"
+     ui-view="{{'merge.content.' + page.Name}}"
+     ng-show="$state.includes('merge.'+ page.Name)">
+
+</div>

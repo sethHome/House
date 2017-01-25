@@ -1,0 +1,107 @@
+﻿<div class="panel" blockui="permissionPanel">
+
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner p-10">
+
+                    <div class="form-group" style="margin-top:10px;">
+                        <input class="form-control form-white" type="text" placeholder="输入筛选" ng-model="permissionFilter">
+                    </div>
+
+                    <tree tree-data="scope"
+                          tree-model="permissions"
+                          tree-api="uiTreeApi"
+                          tree-plugins="wholerow,contextmenu,search"
+                          search="permissionFilter"
+                          changed="permissionChanged"
+                          ready="treeReady"></tree>
+
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="50%">
+                <div class="pretty-split-pane-component-inner p-20">
+
+
+                    <form class="form-horizontal" blockui="editPanel">
+                        <button class="btn btn-default btn-square" ng-click="updatePermission()"><i class="fa fa-save"></i> 保存 </button>
+
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">权限描述</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="currentPermission.Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">权限标志</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="currentPermission.Key">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label"></span>
+                            <div class="col-sm-10">
+                                <div class="icheck-inline">
+                                    <label>
+                                        <input type="checkbox" ng-model="currentPermission.CannotInherit" icheck> 禁止被继承
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <hr />
+
+                    <form class="form-horizontal" blockui="newPanel">
+                        <button class="btn btn-default btn-square"  ng-click="createPermission()"><i class="fa fa-save"></i> 保存 </button>
+                       
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">上级权限</span>
+                            <div class="col-sm-10">
+                               {{currentPermission.Name}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">权限描述</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="newPermission.Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="col-sm-2 control-label">权限标志</span>
+                            <div class="col-sm-10">
+                                <input class="form-control form-white" type="text" ng-model="newPermission.Key">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group" ng-init="newPermission.CanInherit = true">
+                            <span class="col-sm-2 control-label"></span>
+                            <div class="col-sm-10">
+                                <div class="icheck-inline">
+                                    <label>
+                                        <input type="checkbox" ng-model="newPermission.CannotInherit" icheck> 禁止被继承
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+

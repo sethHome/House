@@ -1,0 +1,30 @@
+﻿<div class="panel" >
+    <div class="panel-content pretty-split-pane-frame" style="height:{{panelHeight}}px">
+
+        <div data-split-pane>
+            <div data-split-pane-component>
+
+                <div class="pretty-split-pane-component-inner p-10">
+
+                    <tree tree-data="scope"
+                          tree-model="documents"
+                          tree-api="treeApi"
+                          changed="changed"
+                          tree-plugins="wholerow,contextmenu,types">
+                    </tree>
+                </div>
+
+            </div>
+            <div data-split-pane-divider data-width="5px"></div>
+            <div data-split-pane-component data-width="70%" >
+                <div class="pretty-split-pane-component-inner " ui-view>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
