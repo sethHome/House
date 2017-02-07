@@ -34,8 +34,6 @@
             // enum
             $scope.addEnum = function () {
 
-                $scope.enumMsg = "保存成功";
-                
                 system_enum_service.addEnum($scope.newEnum).then(function (key) {
                     $scope.enums.push({
                         Key: key,
@@ -44,29 +42,26 @@
                         Items: []
                     });
                     $scope.newEnum = {};
-                    $scope.enumNotify.show();
+                    bootbox.alert("保存成功");
                 });
             }
 
             $scope.updateEnum = function () {
-                $scope.enumMsg = "更新成功";
                 system_enum_service.updateEnum($scope.currentEnum).then(function () {
-                    $scope.enumNotify.show();
+                    bootbox.alert("更新成功");
                 });
             }
 
             $scope.deleteEnum = function () {
-                $scope.enumMsg = "删除成功";
                 system_enum_service.deleteEnum($scope.currentEnum.Name).then(function () {
                     $scope.enums.removeObj($scope.currentEnum);
                     $scope.currentEnum = undefined;
-                    $scope.enumNotify.show();
+                    bootbox.alert("删除成功");
                 });
             }
 
             // item
             $scope.addItem = function () {
-                $scope.itemMsg = "保存成功";
 
                 system_enum_service.addItem($scope.currentEnum.Name, $scope.newItem, $scope.add2).then(function (value) {
 
@@ -78,35 +73,30 @@
                     });
 
                     $scope.newItem = {};
-
-                    $scope.itemNotify.show();
+                    bootbox.alert("保存成功");
                 });
             }
 
             $scope.updateItem = function () {
-                $scope.itemMsg = "更新成功";
 
                 system_enum_service.updateItem($scope.currentEnum.Name, $scope.currentItem).then(function () {
 
-                    $scope.itemNotify.show();
+                    bootbox.alert("更新成功");
                 });
             }
 
             $scope.deleteItem = function () {
-                $scope.itemMsg = "删除成功";
 
                 system_enum_service.deleteItem($scope.currentEnum.Name, $scope.currentItem.Value).then(function () {
                     $scope.currentEnum.Items.removeObj($scope.currentItem);
 
                     $scope.currentItem = undefined;
-
-                    $scope.itemNotify.show();
+                    bootbox.alert("删除成功");
                 });
             }
 
             // tag
             $scope.addTag = function () {
-                $scope.tagMsg = "保存成功";
 
                 system_enum_service.addTag($scope.currentEnum.Name, $scope.currentItem.Value, $scope.newTag).then(function () {
 
@@ -118,22 +108,19 @@
                     });
                    
                     $scope.newTag = {};
-
-                    $scope.tagNotify.show();
+                    bootbox.alert("保存成功");
                 });
             }
 
             $scope.updateTag = function () {
-                $scope.tagMsg = "更新成功";
 
                 system_enum_service.updateTag($scope.currentEnum.Name, $scope.currentItem.Value, $scope.currentTag).then(function () {
 
-                    $scope.tagNotify.show();
+                    bootbox.alert("更新成功");
                 });
             }
 
             $scope.deleteTag = function () {
-                $scope.tagMsg = "删除成功";
 
                 system_enum_service.deleteTag($scope.currentEnum.Name, $scope.currentItem.Value, $scope.currentTag.Key).then(function () {
 
@@ -141,8 +128,7 @@
                     $scope.Tags.removeObj($scope.currentTag);
 
                     $scope.currentTag = undefined;
-
-                    $scope.tagNotify.show();
+                    bootbox.alert("删除成功");
                 });
             }
 

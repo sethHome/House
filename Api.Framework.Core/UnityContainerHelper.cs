@@ -27,10 +27,10 @@ namespace Api.Framework.Core
 
             // 或者在配置文件中进行配置
             var configSection = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
-            configSection.Configure(container, "PMContainer");
-            configSection.Configure(container, "DMContainer");
-            configSection.Configure(container, "BpmContainer");
-            configSection.Configure(container, "MergeContainer");
+            foreach (var item in configSection.Containers)
+            {
+                configSection.Configure(container, item.Name);
+            }
             return container;
         }
 
