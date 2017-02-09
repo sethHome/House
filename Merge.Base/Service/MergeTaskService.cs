@@ -80,7 +80,7 @@ namespace Merge.Base.Service
             return result;
         }
 
-       
+
         private MergeResult MergeDoc_CS(int ID, int UserID, MergeOption Options)
         {
             var result = new MergeResult()
@@ -261,7 +261,7 @@ namespace Merge.Base.Service
 
                         _WordMergeService.SetParaStyle(para);
 
-                        
+
                     }
 
                     section.Body.AppendChild(dstNode);
@@ -392,9 +392,9 @@ namespace Merge.Base.Service
             doc.Sections.Add(section);
 
             // 按照章节号对段落排序
-            var items = allNode.OrderBy(d => double.Parse(d.Key.Replace("_", "")));
+            var items = allNode.OrderBy(d => getOrderIndex(d.Key));
 
-            int index1 = 1, index2 = 0, index3 = 0, index4 = 0;
+            int index1 = 1, index2 = 0, index3 = 0, index4 = 0,index5 = 0;
 
             // 将排序好的节点插入新的文档中
             foreach (var item in items)
@@ -429,7 +429,7 @@ namespace Merge.Base.Service
                                 index1++;
                             }
 
-                            index2 = index3 = index4 = 1;
+                            index2 = index3 = index4 = index5 = 1;
                         }
                         else if (para.ParagraphFormat.StyleIdentifier == StyleIdentifier.Heading2)
                         {
@@ -453,15 +453,15 @@ namespace Merge.Base.Service
                                 index2++;
                             }
 
-                            index3 = index4 = 1;
+                            index3 = index4 = index5 = 1;
                         }
                         else
                         {
                             if (node.IsListNode)
                             {
                                 para.ListFormat.ListLevel.StartAt = node.ListValue;
-                                para.ListLabel.Font.Bold = false;
-                                para.ListLabel.Font.Size = 14;
+                                para.ListLabel.Font.Bold = Options.ContentStyle.Bold;
+                                para.ListLabel.Font.Size = Options.ContentStyle.Size;
                             }
                             else
                             {
@@ -472,8 +472,26 @@ namespace Merge.Base.Service
                                 var text = para.Range.Text.TrimStart();
                                 var m3 = _KYWordMergeService.ParaReg3.Match(text);
                                 var m4 = _KYWordMergeService.ParaReg4.Match(text);
+                                var m5 = _KYWordMergeService.ParaReg5.Match(text);
 
-                                if (m4.Success)
+                                if (m5.Success)
+                                {
+                                    para.ParagraphFormat.FirstLineIndent = 0;
+
+                                    var index = m5.Value.Split('.')[4];
+
+                                    if (int.Parse(index) != index5)
+                                    {
+                                        result.ParaIndexCheck.Add(string.Format("五级标题序号错误,标题：{0}", para.Range.Text));
+
+                                        index5 = int.Parse(index) + 1;
+                                    }
+                                    else
+                                    {
+                                        index5++;
+                                    }
+                                }
+                                else if (m4.Success)
                                 {
                                     para.ParagraphFormat.FirstLineIndent = 0;
 
@@ -489,6 +507,8 @@ namespace Merge.Base.Service
                                     {
                                         index4++;
                                     }
+
+                                    index5 = 1;
                                 }
                                 else if (m3.Success)
                                 {
@@ -507,7 +527,7 @@ namespace Merge.Base.Service
                                         index3++;
                                     }
 
-                                    index4 = 1;
+                                    index4 = index5 = 1;
                                 }
                             }
                         }
@@ -585,6 +605,14 @@ namespace Merge.Base.Service
             result.Attach = newAttach;
 
             return result;
+        }
+
+        private string getOrderIndex(string chapterIndex)
+        {
+            var indexArray = chapterIndex.Replace("_", "").Split('.');
+
+            return string.Join("", indexArray.Select(a => a.PadLeft(2, '0')));
+
         }
 
         private string getFilePath()

@@ -25,7 +25,36 @@
 		for (var i = 1; i < 18; i++) {
 		    $scope.newPageChapters.push({ "Value": i, "Text": "第" + i + "章" });
 		}
-		$scope.gridOptions = {
+
+
+        $scope.MergeOption = {
+            'HeadNumber':2,
+            'Head1Style': {
+                'Align':0,
+                'FontFamily': 1,
+                'Size':"12",
+            },
+            'Head2Style': {
+                'Align': 0,
+                'FontFamily': 1,
+                'Size': "12",
+            },
+            'ContentStyle': {
+                'FontFamily': 1,
+                'Size': "12",
+            },
+            'ListStyle': {
+                'FontFamily': 1,
+                'Size': "12",
+            },
+            'PageNumberStyle': {
+                'FontFamily': 1,
+                'Size': "12",
+                'Align': 1,
+            }
+        };
+
+        $scope.gridOptions = {
 		    data: "projects",
 		    multiSelect: false,
 		    enableGridMenu: false,
@@ -120,7 +149,10 @@
 		    }
 		    $scope.mergePanel.block();
 
-		    mergeService.merge($scope.currentProj.ID, $scope.options).then(function (result) {
+            $scope.MergeOption.NewPageChapters = $scope.newPageChapters.where(p => p.isSelected).map(p => p.Value);
+
+            mergeService.merge($scope.currentProj.ID, $scope.MergeOption).then(function (result) {
+
 		        $scope.mergeResult = result;
 
 		        $scope.currentTaskTab = 3;

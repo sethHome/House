@@ -25,7 +25,7 @@
                         <li ng-class="{active : currentTaskTab == 1}" ng-click="currentTaskTab = 1"><a data-toggle="tab">工程信息</a></li>
                         <li ng-class="{active : currentTaskTab == 2}" ng-click="currentTaskTab = 2"><a data-toggle="tab">合并记录</a></li>
                         <li ng-class="{active : currentTaskTab == 3}" ng-click="currentTaskTab = 3"><a data-toggle="tab">合并结果</a></li>
-                        <!--<li ng-class="{active : currentTaskTab == 4}" ng-click="currentTaskTab = 4"><a data-toggle="tab">合并选项</a></li>-->
+                        <li ng-class="{active : currentTaskTab == 4}" ng-click="currentTaskTab = 4"><a data-toggle="tab">合并选项</a></li>
                     </ul>
                     <div class="tab-content">
 
@@ -146,17 +146,6 @@
                             <fieldset>
                                 <legend>标题一</legend>
                                 <div class="row">
-                                   
-                                    <div class="col-md-3">
-                                        字体
-                                        <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
-                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
-                                            <ui-select-choices repeat="item.Value as item in getBaseData('FontFamily')">
-                                                <div ng-bind-html="item.Text"></div>
-                                            </ui-select-choices>
-                                        </ui-select>
-                                    </div>
-                                   
                                     <div class="col-md-3">
                                         位置
                                         <ui-select ng-model="MergeOption.Head1Style.Align" theme="select2" search-enabled="false" class="form-control form-white">
@@ -167,51 +156,48 @@
                                         </ui-select>
                                     </div>
                                     <div class="col-md-3">
-                                        大小
-                                        <div style="width:100%" class="primary">
-                                            <div class="slide-ios" data-slider-max="30" data-slider-value="14"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        序号与标题的空格
-                                        <div style="width:100%" class="primary">
-                                            <div class="slide-ios" data-slider-max="5" data-slider-value="3"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-
-                                    <div class="col-md-3">
-                                        章节序号样式
+                                        字体
                                         <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
                                             <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
-                                            <ui-select-choices repeat="item.Value as item in HeadNumbers">
+                                            <ui-select-choices repeat="item.Value as item in getBaseData('FontFamily')">
                                                 <div ng-bind-html="item.Text"></div>
                                             </ui-select-choices>
                                         </ui-select>
                                     </div>
-
+                                    <div class="col-md-3">
+                                        大小
+                                        <ui-select ng-model="MergeOption.Head1Style.Size" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Tags.size as item in getBaseData('FontSize')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="icheck-inline m-10">
+                                            <input type="checkbox" ng-model="MergeOption.Head1Style.Bold" icheck> 加粗
+                                        </div>
+                                    </div>
                                 </div>
-                                
+                               <div class="row">
+                                   <div class="col-md-3">
+                                       章节序号样式
+                                       <ui-select ng-model="MergeOption.HeadNumber" theme="select2" search-enabled="false" class="form-control form-white">
+                                           <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                           <ui-select-choices repeat="item.Value as item in HeadNumbers">
+                                               <div ng-bind-html="item.Text"></div>
+                                           </ui-select-choices>
+                                       </ui-select>
+                                   </div>
+                               </div>
                             </fieldset>
 
                             <fieldset>
                                 <legend>标题二</legend>
                                 <div class="row">
-
-                                    <div class="col-md-3">
-                                        字体
-                                        <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
-                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
-                                            <ui-select-choices repeat="item.Value as item in getBaseData('FontFamily')">
-                                                <div ng-bind-html="item.Text"></div>
-                                            </ui-select-choices>
-                                        </ui-select>
-                                    </div>
-
                                     <div class="col-md-3">
                                         位置
-                                        <ui-select ng-model="MergeOption.Head1Style.Align" theme="select2" search-enabled="false" class="form-control form-white">
+                                        <ui-select ng-model="MergeOption.Head2Style.Align" theme="select2" search-enabled="false" class="form-control form-white">
                                             <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
                                             <ui-select-choices repeat="item.Value as item in getBaseData('Alignment')">
                                                 <div ng-bind-html="item.Text"></div>
@@ -219,45 +205,53 @@
                                         </ui-select>
                                     </div>
                                     <div class="col-md-3">
-                                        大小
-                                        <div style="width:100%" class="primary">
-                                            <div class="slide-ios" data-slider-max="30" data-slider-value="14"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        序号与标题的空格
-                                        <div style="width:100%" class="primary">
-                                            <div class="slide-ios" data-slider-max="5" data-slider-value="3"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </fieldset>
-
-                            <fieldset>
-                                <legend>正文</legend>
-                                <div class="row">
-
-                                    <div class="col-md-3">
                                         字体
-                                        <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
+                                        <ui-select ng-model="MergeOption.Head2Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
                                             <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
                                             <ui-select-choices repeat="item.Value as item in getBaseData('FontFamily')">
                                                 <div ng-bind-html="item.Text"></div>
                                             </ui-select-choices>
                                         </ui-select>
                                     </div>
-
                                     <div class="col-md-3">
                                         大小
-                                        <div style="width:100%" class="primary">
-                                            <div class="slide-ios" data-slider-max="30" data-slider-value="14"></div>
+                                        <ui-select ng-model="MergeOption.Head2Style.Size" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Tags.size as item in getBaseData('FontSize')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="icheck-inline m-10">
+                                            <input type="checkbox" ng-model="MergeOption.Head2Style.Bold" icheck> 加粗
                                         </div>
                                     </div>
-                                  
                                 </div>
+                            </fieldset>
 
+                            <fieldset>
+                                <legend>正文</legend>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        字体
+                                        <ui-select ng-model="MergeOption.ContentStyle.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Value as item in getBaseData('FontFamily')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        大小
+                                        <ui-select ng-model="MergeOption.ContentStyle.Size" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Tags.size as item in getBaseData('FontSize')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
                             </fieldset>
 
                             <fieldset>
@@ -266,7 +260,7 @@
 
                                     <div class="col-md-3">
                                         字体
-                                        <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
+                                        <ui-select ng-model="MergeOption.ListStyle.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
                                             <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
                                             <ui-select-choices repeat="item.Value as item in getBaseData('FontFamily')">
                                                 <div ng-bind-html="item.Text"></div>
@@ -276,9 +270,12 @@
 
                                     <div class="col-md-3">
                                         大小
-                                        <div style="width:100%" class="primary">
-                                            <div class="slide-ios" data-slider-max="30" data-slider-value="14"></div>
-                                        </div>
+                                        <ui-select ng-model="MergeOption.ListStyle.Size" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Tags.size as item in getBaseData('FontSize')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
                                     </div>
 
                                 </div>
@@ -288,45 +285,55 @@
                             <fieldset>
                                 <legend>页码</legend>
                                 <div class="row">
-
+                                    <div class="col-md-3">
+                                        位置
+                                        <ui-select ng-model="MergeOption.PageNumberStyle.Align" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Value as item in getBaseData('Alignment')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
                                     <div class="col-md-3">
                                         字体
-                                        <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
+                                        <ui-select ng-model="MergeOption.PageNumberStyle.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
                                             <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
                                             <ui-select-choices repeat="item.Value as item in getBaseData('FontFamily')">
                                                 <div ng-bind-html="item.Text"></div>
                                             </ui-select-choices>
                                         </ui-select>
                                     </div>
-
                                     <div class="col-md-3">
                                         大小
-                                        <div style="width:100%" class="primary">
-                                            <div class="slide-ios" data-slider-max="30" data-slider-value="14"></div>
+                                        <ui-select ng-model="MergeOption.PageNumberStyle.Size" theme="select2" search-enabled="false" class="form-control form-white">
+                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
+                                            <ui-select-choices repeat="item.Tags.size as item in getBaseData('FontSize')">
+                                                <div ng-bind-html="item.Text"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="icheck-inline m-10">
+                                            <input type="checkbox" ng-model="MergeOption.PageNumberStyle.Bold" icheck> 加粗
                                         </div>
                                     </div>
-
                                 </div>
-
                             </fieldset>
 
                             <fieldset>
                                 <legend>其他</legend>
                                 <div class="row">
-
-                                    <div class="col-md-3">
+                                    <div class="col-md-12">
                                         需要另一起一页的章节
-                                        <ui-select ng-model="MergeOption.Head1Style.FontFamily" theme="select2" search-enabled="false" class="form-control form-white">
-                                            <ui-select-match placeholder="请选择">{{$select.selected.Text}}</ui-select-match>
-                                            <ui-select-choices repeat="item.Value as item in newPageChapters">
-                                                <div ng-bind-html="item.Text"></div>
-                                            </ui-select-choices>
-                                        </ui-select>
+                                    
+                                        <div class="icheck-inline m-10">
+                                            <span class="m-r-10 m-b-10"
+                                                  ng-repeat="item in newPageChapters">
+                                                <input type="checkbox" ng-model="item.isSelected" icheck> {{item.Text}}
+                                            </span>
+                                        </div>
                                     </div>
-
-
                                 </div>
-
                             </fieldset>
                         </div>
                     </div>

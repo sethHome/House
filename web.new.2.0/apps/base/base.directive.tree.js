@@ -202,13 +202,18 @@
                     });
 
                 },
+               
                 init: function (s, e, a, config) {
                     treeDir.managePlugins(s, e, a, config);
 
                     this.tree = $(e).jstree(config);
 
                     if (a.treeApi) {
-                        s[a.treeApi] = $(e).jstree(true);
+                        if (typeof (s[a.treeApi]) == "function") {
+                            s.setTreeApi($(e).jstree(true));
+                        } else {
+                            s[a.treeApi] = $(e).jstree(true);
+                        }
                     }
 
                     treeDir.manageEvents(s, e, a);

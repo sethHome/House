@@ -21,6 +21,9 @@
             })
 
             return {
+                getDept: function () {
+                    return restSrv.all("department").getList();
+                },
                 getUsers: function () {
                     return restSrv.all("user").getList();
                 },

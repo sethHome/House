@@ -166,7 +166,7 @@
 
     app.module.controller("merge.controller.projectmaintain", function ($scope, mergeService, $uibModal, $uibModalInstance, maintainService) {
 
-        $scope.filters = [{ title: "OfficeWord", extensions: "docx" }];
+        $scope.filters = [{ title: "OfficeWord", extensions: "doc,docx" }];
 
         $scope.maintainService = maintainService;
         $scope.projInfo = maintainService.projInfo;

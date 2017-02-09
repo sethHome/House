@@ -469,6 +469,7 @@ namespace Api.Framework.Core.Organization
             {
                 var dept = new DepartmentInfo()
                 {
+                    ID = n.ConfigID,
                     Key = string.Format("Origanization.Dept.{0}", getDeptFullKey(n)),
                     Name = n.NodeValue,
                     SubDepartments = new List<DepartmentInfo>()

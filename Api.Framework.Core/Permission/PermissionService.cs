@@ -178,6 +178,10 @@ namespace Api.Framework.Core.Permission
             if (!_UserDeptPermissionCache.ContainsKey(UserIdentity))
             {
                 var userDeptPermission = _IDepartment.GetUserPermissions(UserIdentity);
+                if (userDeptPermission == null)
+                {
+                    userDeptPermission = new Dictionary<int, long>();
+                }
                 _UserDeptPermissionCache.Add(UserIdentity, userDeptPermission);
             }
 

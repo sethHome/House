@@ -67,7 +67,7 @@ namespace Api.Framework.Core.BaseData
 
             var nodes = _IBaseConfig.GetConfigNodes(c => c.Key.StartsWith(Key), Key, true, 1);
 
-            var i = 1L;
+            var i = 0L;
 
             for (; i < long.MaxValue; i = Item.GrowBinary ? i * 2 : i + 1)
             {

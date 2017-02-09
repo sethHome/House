@@ -91,23 +91,13 @@ namespace Merge.Base.Service
                 this._MergeOption.NewPageChapters = new List<string>();
             }
 
-            var map = new string[] { "", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
-
             var total = 30;
 
             this._NumberChinesMap = new string[total];
 
             for (int i = 0; i < total; i++)
             {
-                var a = (i + 1) / 10;
-                switch (a)
-                {
-                    case 1: this._NumberChinesMap[i] = string.Format("十{0}", map[i - 9]); break;
-                    case 2: this._NumberChinesMap[i] = string.Format("二十{0}", map[i - 19]); break;
-                    case 3: this._NumberChinesMap[i] = string.Format("三十{0}", map[i - 29]); break;
-                    default:
-                        this._NumberChinesMap[i] = map[i]; break;
-                }
+                this._NumberChinesMap[i] = numberToChinese(i + 1);
             }
         }
 
@@ -116,23 +106,20 @@ namespace Merge.Base.Service
         /// </summary>
         private Dictionary<string, string> _UnitMaps = new Dictionary<string, string>()
         {
-            { "KV","kV" },      { "KM","km" },
-            { "KG","kg" },      { "AKG","AKG" },
-            { "MVA","MVA" },    { "KVAR","kvar" },
-            { "MW","MW" },      { "KW","kW" },
-            { "KPA","kPa" },    { "MPA","MPa" },
-            { "MB/S","Mb/s" },  { "GB/S","Gb/s" },
-            { "AH","Ah" },      { "M/S","m/s" },
-            { "CM/KV","cm/kV" }, { "KN","kN"}
+            { "KV","kV"}, {"KM","km" }, {"KG","kg" },{"AKG","AKG" }, {"KVAR","kvar" }, {"KW","kW" }, {"KPA","kPa" }, {"MPA","MPa" }
         };
 
-        public Regex ParaReg1 = new Regex(@"[0-9]+?");
+        public Regex ParaReg1 = new Regex(@"[0-9]*");
+        public Regex ParaReg1Index = new Regex(@"[0-9]*");
         public Regex ParaReg2 = new Regex(@"^[0-9]\d*\.[0-9]\d*");
         public Regex ParaReg3 = new Regex(@"^[0-9]\d*\.[0-9]\d*\.[0-9]\d*");
         public Regex ParaReg4 = new Regex(@"^[0-9]\d*\.[0-9]\d*\.[0-9]\d*\.[0-9]\d*");
+        public Regex ParaReg5 = new Regex(@"^[0-9]\d*\.[0-9]\d*\.[0-9]\d*\.[0-9]\d*\.[0-9]\d*");
 
         public void SetDocNode(Document doc, Dictionary<string, List<DocNode>> allNode)
         {
+            doc.UpdateListLabels();
+
             foreach (Section sc in doc.Sections)
             {
                 var docAllNodes = sc.Body.GetChildNodes(NodeType.Any, false);
@@ -148,6 +135,7 @@ namespace Merge.Base.Service
                             if (m1.Success)
                             {
                                 // 一级标题
+                                //var indexStr = ParaReg1Index.Match(m1.Value, 1).Value;
                                 AddNode(allNode, node, m1.Value);
                             }
                         }
@@ -173,6 +161,7 @@ namespace Merge.Base.Service
                             {
                                 allNode.Last().Value.Add(new DocNode() { Node = node });
                             }
+
                         }
                     }
                     else if (node.NodeType == NodeType.Table)
@@ -197,7 +186,7 @@ namespace Merge.Base.Service
                 indexStr += "_";
             }
 
-            allNode.Add(indexStr, new List<DocNode>() { new DocNode() { Node = node } });
+            allNode.Add(indexStr, new List<DocNode>() { new DocNode { Node = node } });
         }
 
         /// <summary>
@@ -212,7 +201,7 @@ namespace Merge.Base.Service
             head1.Font.Size = this._MergeOption.Head1Style.Size;
             head1.Font.Bold = this._MergeOption.Head1Style.Bold;
             head1.Font.Italic = this._MergeOption.Head1Style.Italic;
-            head1.ParagraphFormat.Alignment = this._MergeOption.Head2Style.Align;
+            head1.ParagraphFormat.Alignment = this._MergeOption.Head1Style.Align;
             head1.ParagraphFormat.LeftIndent = ConvertUtil.MillimeterToPoint(0);
             head1.ParagraphFormat.LineSpacingRule = LineSpacingRule.Exactly; // 行间距 固定值
             head1.ParagraphFormat.LineSpacing = 23;      // 行间距 23磅
@@ -291,37 +280,10 @@ namespace Merge.Base.Service
 
             builder.Writeln("目录");
 
-            builder.InsertTableOfContents("\\o \"1-2\" \\h \\z \\u");
-
-            #region 目录页码
-            builder.MoveToHeaderFooter(HeaderFooterType.FooterPrimary);
-            builder.CurrentParagraph.RemoveAllChildren();
-
-            builder.ParagraphFormat.Alignment = ParagraphAlignment.Center;
-            builder.ParagraphFormat.FirstLineIndent = 0;
-
-            builder.PageSetup.PageStartingNumber = 1;   // 开始页码
-            builder.PageSetup.RestartPageNumbering = true;  //       重新开始编号
-            builder.PageSetup.DifferentFirstPageHeaderFooter = false;   // 奇偶页不同
-
-            // 版式：页眉1.5cm，页脚：2cm
-            builder.PageSetup.HeaderDistance = ConvertUtil.MillimeterToPoint(1.5 * 10);
-            builder.PageSetup.FooterDistance = ConvertUtil.MillimeterToPoint(2 * 10);
-            builder.PageSetup.PageNumberStyle = NumberStyle.UppercaseRoman;
-
-            builder.Font.Name = "宋体";
-            builder.Font.Bold = false;
-            builder.Font.Size = 12;
-
-            builder.InsertField("PAGE", "");
-
-            // 设置正文样式 去除页眉横线
-            builder.MoveToHeaderFooter(HeaderFooterType.HeaderPrimary);
-            builder.CurrentParagraph.RemoveAllChildren();
-            builder.ParagraphFormat.ClearFormatting();
-            #endregion
+            builder.InsertTableOfContents("\\o \"1-3\" \\h \\z \\u");
 
             doc.UpdateFields();
+
 
             var ps = sc.Body.GetChildNodes(NodeType.Paragraph, false);
 
@@ -333,14 +295,14 @@ namespace Merge.Base.Service
                 {
                     para.ParagraphFormat.Alignment = ParagraphAlignment.Right;
                     para.ParagraphFormat.LineSpacingRule = LineSpacingRule.Exactly; // 行间距 固定值
-                    para.ParagraphFormat.LineSpacing = 25;      // 行间距 25磅
+                    para.ParagraphFormat.LineSpacing = 23;      // 行间距 23磅
 
                     para.ParagraphFormat.FirstLineIndent = 0;
                     para.ParagraphFormat.LeftIndent = 0;
 
                     if (regex2.IsMatch(para.Range.Text))
                     {
-                        para.ParagraphFormat.LeftIndent = ConvertUtil.MillimeterToPoint(5);   // 每个段落首行缩进2个字符 = 1厘米
+                        para.ParagraphFormat.LeftIndent = ConvertUtil.MillimeterToPoint(10);   // 每个段落首行缩进2个字符 = 1厘米
                     }
 
                     for (int i = 0; i < para.Runs.Count; i++)
@@ -391,9 +353,11 @@ namespace Merge.Base.Service
             if (para.ParagraphFormat.StyleIdentifier == StyleIdentifier.Heading1)
             {
                 // 一级标题
+
                 var newPage = para.Range.Text.StartsWith("\f");
 
                 var leftPart = ParaReg1.Replace(para.Range.Text.Trim().Trim(new char[] { '\'', '\"', '\\', '\0', '\a', '\b', '\f', '\n', '\r', '\t', '\v' }), "").Trim();
+
 
                 // 第4章前后,工程造价分析章节 分页
                 if (newPage || this._MergeOption.NewPageChapters.Contains(index))
@@ -413,6 +377,7 @@ namespace Merge.Base.Service
                     leftPart)
                 };
 
+                
                 para.Runs.Add(r);
             }
             else if (para.ParagraphFormat.StyleIdentifier == StyleIdentifier.Heading2)
@@ -432,25 +397,7 @@ namespace Merge.Base.Service
 
                 var r = new Run(para.Document)
                 {
-                    Text = string.Format("{0}{1}{2}", index, "".PadLeft(this._MergeOption.Head1Style.ChapterSpaceCount, ' '), leftPart)
-                };
-
-                para.Runs.Add(r);
-            }
-            else if (para.ParagraphFormat.StyleIdentifier == StyleIdentifier.Heading3)
-            {
-                // 三级级标题
-                var text = para.Range.Text.Trim(new char[] { '\'', '\"', '\\', '\0', '\a', '\b', '\f', '\n', '\r', '\t', '\v' });
-
-                var leftPart = ParaReg3.Replace(text, "").Trim();
-
-                var indexPart = ParaReg3.Match(text).Value;
-
-                para.Runs.Clear();
-
-                var r = new Run(para.Document)
-                {
-                    Text = string.Format("{0}  {1}", indexPart, leftPart)
+                    Text = string.Format("{0}{1}{2}", index, "".PadLeft(this._MergeOption.Head2Style.ChapterSpaceCount, ' '), leftPart)
                 };
 
                 para.Runs.Add(r);
@@ -469,7 +416,7 @@ namespace Merge.Base.Service
             builder.MoveToHeaderFooter(HeaderFooterType.FooterPrimary);
             builder.CurrentParagraph.RemoveAllChildren();
 
-            builder.ParagraphFormat.Alignment = ParagraphAlignment.Center;
+            builder.ParagraphFormat.Alignment = this._MergeOption.PageNumberStyle.Align;
             builder.ParagraphFormat.FirstLineIndent = 0;
 
             builder.PageSetup.PageStartingNumber = 1;   // 开始页码
@@ -479,21 +426,22 @@ namespace Merge.Base.Service
             // 版式：页眉1.5cm，页脚：2cm
             builder.PageSetup.HeaderDistance = ConvertUtil.MillimeterToPoint(1.5 * 10);
             builder.PageSetup.FooterDistance = ConvertUtil.MillimeterToPoint(2 * 10);
-            builder.PageSetup.PageNumberStyle = NumberStyle.NumInDash;
+            builder.PageSetup.PageNumberStyle = NumberStyle.Arabic;
 
             builder.Font.Name = this._MergeOption.PageNumberStyle.FontFamily.ToString();
             builder.Font.Size = this._MergeOption.PageNumberStyle.Size;
             builder.Font.Bold = this._MergeOption.PageNumberStyle.Bold;
             builder.Font.Italic = this._MergeOption.PageNumberStyle.Italic;
 
+            //builder.Write("-");
             builder.InsertField("PAGE", "");
+            //builder.Write("-");
 
             // 设置正文样式 去除页眉横线
             builder.MoveToHeaderFooter(HeaderFooterType.HeaderPrimary);
             builder.CurrentParagraph.RemoveAllChildren();
             builder.ParagraphFormat.ClearFormatting();
             //builder.ParagraphFormat.StyleIdentifier = StyleIdentifier.Normal;
-
         }
 
         /// <summary>
@@ -555,8 +503,9 @@ namespace Merge.Base.Service
                         p.ParagraphFormat.LeftIndent = 0;
                         p.ParagraphFormat.LineSpacingRule = LineSpacingRule.Multiple;
                         p.ParagraphFormat.LineSpacing = 12;  // 单倍行距
+
                         // 设置表格内段落内容
-                        setParaContent(p, 12);
+                        setParaContent(p);
                     }
                 }
 
@@ -590,25 +539,28 @@ namespace Merge.Base.Service
             {
                 if (img.IsImage)
                 {
-                    var paraTitleHead = img.ParentParagraph.PreviousSibling as Paragraph; // 图上标题
-                    var paraTitleFoot = img.ParentParagraph.NextSibling as Paragraph;   // 图下标题
-
-                    if (paraTitleHead != null && regTitle.IsMatch(paraTitleHead.Range.Text.Trim()))
+                    if (img.ParentParagraph != null)
                     {
-                        // 以图1开头的段落认为是图片的标题
-                        paraTitleHead.ParagraphFormat.Alignment = ParagraphAlignment.Center;
-                    }
-                    if (paraTitleFoot != null && regTitle.IsMatch(paraTitleFoot.Range.Text.Trim()))
-                    {
-                        // 以图1开头的段落认为是图片的标题
-                        paraTitleFoot.ParagraphFormat.Alignment = ParagraphAlignment.Center;
-                    }
+                        var paraTitleHead = img.ParentParagraph.PreviousSibling as Paragraph; // 图上标题
+                        var paraTitleFoot = img.ParentParagraph.NextSibling as Paragraph;   // 图下标题
 
-                    // 有图片的段落行距最小值,居中，不缩进
-                    img.ParentParagraph.ParagraphFormat.Alignment = ParagraphAlignment.Center;
-                    img.ParentParagraph.ParagraphFormat.LineSpacingRule = LineSpacingRule.AtLeast;
-                    img.ParentParagraph.ParagraphFormat.FirstLineIndent = 0;
-                    img.ParentParagraph.ParagraphFormat.LeftIndent = 0;
+                        if (paraTitleHead != null && regTitle.IsMatch(paraTitleHead.Range.Text.Trim()))
+                        {
+                            // 以图1开头的段落认为是图片的标题
+                            paraTitleHead.ParagraphFormat.Alignment = ParagraphAlignment.Center;
+                        }
+                        if (paraTitleFoot != null && regTitle.IsMatch(paraTitleFoot.Range.Text.Trim()))
+                        {
+                            // 以图1开头的段落认为是图片的标题
+                            paraTitleFoot.ParagraphFormat.Alignment = ParagraphAlignment.Center;
+                        }
+
+                        // 有图片的段落行距最小值,居中，不缩进
+                        img.ParentParagraph.ParagraphFormat.Alignment = ParagraphAlignment.Center;
+                        img.ParentParagraph.ParagraphFormat.LineSpacingRule = LineSpacingRule.AtLeast;
+                        img.ParentParagraph.ParagraphFormat.FirstLineIndent = 0;
+                        img.ParentParagraph.ParagraphFormat.LeftIndent = 0;
+                    }
 
                     // 文字环绕 嵌入型
                     img.WrapType = Aspose.Words.Drawing.WrapType.Inline;
@@ -735,6 +687,9 @@ namespace Merge.Base.Service
                 SetParaStyle(p);
             }
 
+            // 重新设置页码
+            SetPageNumber(attchDoc);
+
             attchDoc.FirstSection.PageSetup.RestartPageNumbering = false;
 
             docSource.AppendDocument(attchDoc, ImportFormatMode.UseDestinationStyles);
@@ -805,7 +760,7 @@ namespace Merge.Base.Service
         /// 设置段落内容
         /// </summary>
         /// <param name="para"></param>
-        private void setParaContent(Paragraph para, int size = 14)
+        private void setParaContent(Paragraph para)
         {
             // 2. 设置段落文字
             if (para.Runs.Count == 0)
@@ -862,8 +817,23 @@ namespace Merge.Base.Service
 
                 if (!isFieldCode)
                 {
-                    para.Runs[i].Font.Name = this._MergeOption.ContentStyle.FontFamily.ToString();
-                    para.Runs[i].Font.Size = this._MergeOption.ContentStyle.Size;
+                    if (para.ParagraphFormat.StyleIdentifier == StyleIdentifier.Heading1)
+                    {
+                        para.Runs[i].Font.Name = this._MergeOption.Head1Style.FontFamily.ToString();
+                        para.Runs[i].Font.Size = this._MergeOption.Head1Style.Size;
+                        para.Runs[i].Font.Bold = this._MergeOption.Head1Style.Bold;
+                    }
+                    else if (para.ParagraphFormat.StyleIdentifier == StyleIdentifier.Heading2)
+                    {
+                        para.Runs[i].Font.Name = this._MergeOption.Head2Style.FontFamily.ToString();
+                        para.Runs[i].Font.Size = this._MergeOption.Head2Style.Size;
+                        para.Runs[i].Font.Bold = this._MergeOption.Head2Style.Bold;
+                    }
+                    else
+                    {
+                        para.Runs[i].Font.Name = this._MergeOption.ContentStyle.FontFamily.ToString();
+                        para.Runs[i].Font.Size = this._MergeOption.ContentStyle.Size;
+                    }
                 }
 
                 // 标点符号英转中
@@ -1006,6 +976,76 @@ namespace Merge.Base.Service
                     i++;
                 }
             }
+        }
+
+        /// <summary>
+        /// 数字转中文
+        /// </summary>
+        /// <param name="number">eg: 22</param>
+        /// <returns></returns>
+        private string numberToChinese(int number)
+        {
+            string res = string.Empty;
+            string str = number.ToString();
+            string schar = str.Substring(0, 1);
+            switch (schar)
+            {
+                case "1":
+                    res = "一";
+                    break;
+                case "2":
+                    res = "二";
+                    break;
+                case "3":
+                    res = "三";
+                    break;
+                case "4":
+                    res = "四";
+                    break;
+                case "5":
+                    res = "五";
+                    break;
+                case "6":
+                    res = "六";
+                    break;
+                case "7":
+                    res = "七";
+                    break;
+                case "8":
+                    res = "八";
+                    break;
+                case "9":
+                    res = "九";
+                    break;
+                default:
+                    res = "零";
+                    break;
+            }
+            if (str.Length > 1)
+            {
+                switch (str.Length)
+                {
+                    case 2:
+                    case 6:
+                        res += "十";
+                        break;
+                    case 3:
+                    case 7:
+                        res += "百";
+                        break;
+                    case 4:
+                        res += "千";
+                        break;
+                    case 5:
+                        res += "万";
+                        break;
+                    default:
+                        res += "";
+                        break;
+                }
+                res += numberToChinese(int.Parse(str.Substring(1, str.Length - 1)));
+            }
+            return res;
         }
     }
 }

@@ -127,8 +127,13 @@
                 system_user_service.checkAccount($scope.newUser.Account).then(function (result) {
                     if (result) {
                         system_user_service.create($scope.newUser).then(function (id) {
+                            
                             $scope.newUser.ID = id;
-                            $scope.users.push($scope.newUser);
+                            $scope.users.push(angular.copy($scope.newUser));
+
+                            $scope.newUser.ID = 0;
+                            $scope.newUser.Name = undefined;
+                            $scope.newUser.Account = undefined;
 
                             $scope.createPanel.unblock();
                         });

@@ -91,7 +91,7 @@ namespace Api.Framework.Core.BusinessSystem
         {
             var keyPart = "BusinessSystem.";
 
-            var nodes = _IBaseConfig.GetConfigNodes(c => c.Key.StartsWith(keyPart), 1,4);
+            var nodes = _IBaseConfig.GetConfigNodes(c => c.Key.StartsWith(keyPart) && !c.IsDeleted, 1,4);
 
             foreach (var node in nodes)
             {

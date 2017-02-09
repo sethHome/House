@@ -85,9 +85,8 @@ namespace Merge.Base.Service
     public enum FontFamily
     {
         宋体 = 1,
-        楷体 = 2,
-        黑体 = 3,
-        幼圆 = 4,
-        微软雅黑 = 5
+        华文仿宋 = 2,
+        楷体 = 3,
+        黑体 = 4,
     }
 }

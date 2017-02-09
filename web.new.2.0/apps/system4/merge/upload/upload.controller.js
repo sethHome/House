@@ -4,7 +4,7 @@
 
     app.module.controller("merge.controller.upload", function ($scope, mergeService, $uibModal) {
 
-        $scope.filters = [{ title: "OfficeWord", extensions: "docx" }];
+        $scope.filters = [{ title: "OfficeWord", extensions: "doc,docx" }];
 
         $scope.selected_changed = function (e, data) {
 

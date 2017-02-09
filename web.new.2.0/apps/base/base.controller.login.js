@@ -101,88 +101,73 @@
                     $rootScope.department = [];
                     $rootScope.uses = {};
 
-                    userService.getUsersEx().then(function (data) {
-                        $rootScope.user_item = data;
+                    userService.getDept().then(function (data) {
 
-                        var noDept = {
-                            key: "Z",
-                            name: "无部门",
-                            users: []
-                        };
-                        $rootScope.user_enum = {};
-                        $rootScope.user_item = data;
+                        angular.forEach(data[0].SubDepartments, function (item) {
+                            
+                            $rootScope.department.push({
+                                id: item.ID,
+                                key: item.Key,
+                                name: item.Name,
+                                users: []
+                            });
+                        });
 
-                        angular.forEach($rootScope.user_item, function (user) {
+                        userService.getUsersEx().then(function (data) {
+                            $rootScope.user_item = data;
 
-                            $rootScope.user_enum[user.ID] = user.Name;
+                            var noDept = {
+                                key: "Z",
+                                name: "无部门",
+                                users: []
+                            };
+                            $rootScope.user_enum = {};
+                            $rootScope.user_item = data;
 
-                            if (user.Dept) {
-                                var dept = $rootScope.department.find(function (d) { return d.key == user.Dept.Key; });
+                            angular.forEach($rootScope.user_item, function (user) {
 
-                                if (dept == undefined) {
-                                    $rootScope.department.push({
-                                        id: user.Dept.ID,
-                                        key: user.Dept.Key,
-                                        name: user.Dept.Name,
-                                        users: [user]
-                                    });
-                                } else {
+                                $rootScope.user_enum[user.ID] = user.Name;
+
+                                if (user.Dept) {
+
+                                    var dept = $rootScope.department.find(function (d) { return d.key == user.Dept.Key; });
+
                                     dept.users.push(user);
+
+                                } else {
+                                    noDept.users.push(user);
                                 }
-                            } else {
-                                noDept.users.push(user);
+                            });
+
+                            if (noDept.users.length > 0) {
+                                $rootScope.department.push(noDept);
                             }
 
-                            //var c = user.Name.substr(0, 1);
+                            $rootScope.enum_users_map = {};
+                            $rootScope.enum_depts_map = {};
 
-                            //if ($scope.nameCharGroup.indexOf(c) == -1) {
-                            //    $scope.nameCharGroup.push(c);
+                            $rootScope.enum_users = data.map(function (u) {
+                                $rootScope.enum_users_map[u.ID] = u.Name;
+                                return { Value: u.ID, Text: u.Name }
+                            });
+                            $rootScope.enum_depts = $rootScope.department.map(function (d) {
 
-                            //    $scope.uses[c] = [user];
-                            //} else {
-                            //    $scope.uses[c].push(user);
-                            //}
+                                $rootScope.enum_depts_map[d.id] = d.name;
 
+                                return {
+                                    Value: d.id,
+                                    Text: d.name
+                                }
+                            });
+
+                            $scope.messages.push({ content: "用户列表已加载", color: "c-green" });
+
+                            loadEnum();
                         });
-
-                        if (noDept.users.length > 0) {
-                            $rootScope.department.push(noDept);
-                        }
-
-                        $rootScope.enum_users_map = {};
-                        $rootScope.enum_depts_map = {};
-
-                        $rootScope.enum_users = data.map(function (u) {
-                            $rootScope.enum_users_map[u.ID] = u.Name;
-                            return { Value: u.ID, Text: u.Name }
-                        });
-                        $rootScope.enum_depts = $rootScope.department.map(function (d) {
-
-                            $rootScope.enum_depts_map[d.id] = d.name;
-                           
-                            return {
-                                Value: d.id,
-                                Text: d.name
-                            }
-                        });
-
-                        $scope.messages.push({ content: "用户列表已加载", color: "c-green" });
-
-                        loadEnum();
                     });
 
-                    //userService.getUsers().then(function (data) {
+                    
 
-
-                    //    $rootScope.user_enum = {};
-                    //    $rootScope.user_item = data;
-
-                    //    angular.forEach(data, function (user) {
-
-                    //        $rootScope.user_enum[user.ID] = user.Name;
-                    //    });
-
-                    //});
                 }
 
                 // 加载系统设置
@@ -196,7 +181,7 @@
 
                         $rootScope.sysSettings = settings;
 
-                        loadNotifys();
+                        loadUsers();
                     })
                 }
 
@@ -242,18 +227,18 @@
                 }
 
                 // 加载系统通知
-                var loadNotifys = function () {
-                    $scope.messages.push({ content: "加载系统通知", color: "c-blue" });
+                //var loadNotifys = function () {
+                //    $scope.messages.push({ content: "加载系统通知", color: "c-blue" });
 
-                    notificationService.getEffects(10, 2).then(function (data) {
-                        $rootScope.notifications = data;
-                        $scope.messages.push({ content: "已获取系统通知", color: "c-green" });
+                //    notificationService.getEffects(10, 2).then(function (data) {
+                //        $rootScope.notifications = data;
+                //        $scope.messages.push({ content: "已获取系统通知", color: "c-green" });
 
 
-                        loadUsers();
+                //        loadUsers();
 
-                    });
-                }
+                //    });
+                //}
 
                 // 加载用户设置
                 var loadUserConfig = function () {
@@ -278,7 +263,7 @@
 
                         $scope.messages.push({ content: "即将导航到桌面", color: "c-green" });
 
-                        goFirstState("book.maintain");
+                        goFirstState("merge.merge");
                     })
                 }
 

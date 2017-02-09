@@ -7,7 +7,9 @@
         app.controller("system.controller.department", function ($scope, $stateParams,
             system_organization_service, system_business_service) {
 
-            $scope.treeApi = {};
+            $scope.setTreeApi = function (api) {
+                $scope.treeApi = api;
+            }
 
             $scope.loadDeptTree = function () {
                 $scope.deptPanel.block();
