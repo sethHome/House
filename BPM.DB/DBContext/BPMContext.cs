@@ -14,7 +14,7 @@ namespace BPM.DB
         }
 
         public BPMContext()
-            : base("Name=DBConnectionStr")
+            : base("Name=base")
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.ProxyCreationEnabled = false;

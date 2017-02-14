@@ -16,7 +16,7 @@ namespace DM.Base.Entity
         }
 
         public DMContext()
-            : base("Name=DMConnectionStr")
+            : base("Name=document")
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.ProxyCreationEnabled = false;

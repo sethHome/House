@@ -18,7 +18,7 @@ namespace Api.Framework.Core
         }
 
         public SystemContext()
-            : base("Name=DBConnectionStr")
+            : base("Name=base")
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.ProxyCreationEnabled = false;

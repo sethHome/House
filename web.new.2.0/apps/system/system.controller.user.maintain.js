@@ -60,6 +60,9 @@
 
             $scope.save = function () {
                 $scope.maintainPanel.block();
+
+                $scope.currentUser.DeptID = $scope.currentDeptID;
+
                 system_user_service.update($scope.currentUser).then(function () {
                     $scope.maintainPanel.unblock();
                 });
@@ -89,60 +92,5 @@
             }
         });
 
-        app.controller("system.controller.user.create", function ($scope, system_organization_service, system_user_service, system_business_service) {
-
-            $scope.roles = system_organization_service.getRole().$object;
-            $scope.allBusiness = system_business_service.getBusiness({ withuser: true }).$object;
-
-            $scope.newUser = { Visiable : true,Roles: [], Businesses: [] };
-            $scope.$watch("newUser.Account", function () {
-                $scope.accountError = false;
-            });
-            $scope.setRole = function (r) {
-
-                r.selected = !r.selected;
-
-                if (r.selected) {
-                    $scope.newUser.Roles.push(r);
-                } else {
-                    $scope.newUser.Roles.removeObj(r);
-                }
-            }
-
-            $scope.setBusiness = function (b) {
-
-                b.selected = !b.selected;
-
-                if (b.selected) {
-                    $scope.newUser.Businesses.push(b);
-                } else {
-                    $scope.newUser.Businesses.removeObj(b);
-                }
-            }
-
-            $scope.save = function () {
-               
-                $scope.createPanel.block();
-
-                system_user_service.checkAccount($scope.newUser.Account).then(function (result) {
-                    if (result) {
-                        system_user_service.create($scope.newUser).then(function (id) {
-                            
-                            $scope.newUser.ID = id;
-                            $scope.users.push(angular.copy($scope.newUser));
-
-                            $scope.newUser.ID = 0;
-                            $scope.newUser.Name = undefined;
-                            $scope.newUser.Account = undefined;
-
-                            $scope.createPanel.unblock();
-                        });
-                    } else {
-                        $scope.accountError = true;
-
-                        $scope.createPanel.unblock();
-                    }
-                });
-            }
-        });
+        
     });

@@ -20,7 +20,7 @@ namespace PM.Base
         }
 
         public PMContext()
-            : base("Name=DBConnectionStr")
+            : base("Name=project")
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.ProxyCreationEnabled = false;

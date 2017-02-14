@@ -16,7 +16,7 @@ namespace DM.Base.Entity
         }
 
         public DBContext()
-            : base("Name=MergeConnectionStr")
+            : base("Name=merge")
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.ProxyCreationEnabled = false;

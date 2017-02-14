@@ -1,0 +1,90 @@
+﻿<div class="modal-header bg-primary modal-dragable">
+    <i class="fa fa-user"></i> &nbsp;新建用户
+    <button type="button" ng-click="close()" class="close"><i class="icons-office-52"></i></button>
+</div>
+<div class="modal-body">
+
+    <div class="nav-tabs" ng-init="currentIndex = 1">
+        <ul class="nav nav-tabs nav-red">
+            <li ng-click="currentIndex = 1" ng-class="{active : currentIndex == 1}"><a data-toggle="tab">用户信息</a></li>
+        </ul>
+        <div class="tab-content m-0 p-0 ">
+            <div class="tab-pane" style="height:{{modalHeight}}px"  ng-class="{active : currentIndex == 1}">
+                <form class="form-horizontal m-0 p-0 " name="FormMaintain">
+                   
+                    <div class="form-group">
+                        <label class="col-sm-2  m-t-10">帐号</label>
+                        <div class="col-sm-10 ">
+                            <input class="form-control form-white" type="text"
+                                   name="Account" validator="required,maxlength=15"
+                                   placeholder="{{local.global.input}}"
+                                   ng-model="newUser.Account">
+                            <p ng-show="accountError" class="validation-invalid">帐号重复</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 m-t-10">姓名</label>
+                        <div class="col-sm-10 ">
+                            <input class="form-control form-white" type="text"
+                                   name="Name" validator="required,maxlength=50"
+                                   placeholder="{{local.global.input}}"
+                                   ng-model="newUser.Name">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 m-t-10">部门</label>
+                        <div class="col-sm-10 ">
+                            <ui-select ng-model="newUser.Dept.Key" theme="select2" search-enabled="true" class="form-control form-white">
+                                <ui-select-match placeholder="{{local.global.choose}}">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="item.key as item in department ">
+                                    <div ng-bind-html="item.name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                            <input class="hide" ng-model="newUser.Dept.Key"
+                                   name="Dept" validator="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 m-t-10">角色</label>
+                        <div class="col-sm-10 ">
+                            <div class="selectbox pull-left"
+                                 ng-repeat="r in roles track by r.Key"
+                                 ng-class="{'bg-blue' : r.selected}"
+                                 ng-click="setRole(r)">{{r.Name}}</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 m-t-10">业务系统</label>
+                        <div class="col-sm-10 ">
+                            <div class="selectbox pull-left"
+                                 ng-repeat="b in allBusiness track by b.Key"
+                                 ng-class="{'bg-blue' : b.selected}"
+                                 ng-click="setBusiness(b)">{{b.Name}}</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<div class="modal-footer bg-aero">
+    <button type="button"
+            validation-submit="FormMaintain"
+            ng-click="save()"
+            class="btn btn-primary btn-square">
+        <i class="fa fa-plus"></i>
+        {{local.global.save}}
+    </button>
+    <button type="button"
+            ng-click="reset()"
+            validation-reset="FormMaintain"
+            class="btn btn-danger btn-square ">
+        <i class="fa fa-refresh"></i>
+        {{local.global.reset}}
+    </button>
+</div>
+
+
+
