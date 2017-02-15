@@ -109,7 +109,7 @@ namespace Merge.Base.Service
             { "KV","kV"}, {"KM","km" }, {"KG","kg" },{"AKG","AKG" }, {"KVAR","kvar" }, {"KW","kW" }, {"KPA","kPa" }, {"MPA","MPa" }
         };
 
-        public Regex ParaReg1 = new Regex(@"[0-9]*");
+        public Regex ParaReg1 = new Regex(@"第[0-9]章*");
         public Regex ParaReg1Index = new Regex(@"[0-9]*");
         public Regex ParaReg2 = new Regex(@"^[0-9]\d*\.[0-9]\d*");
         public Regex ParaReg3 = new Regex(@"^[0-9]\d*\.[0-9]\d*\.[0-9]\d*");
@@ -135,8 +135,8 @@ namespace Merge.Base.Service
                             if (m1.Success)
                             {
                                 // 一级标题
-                                //var indexStr = ParaReg1Index.Match(m1.Value, 1).Value;
-                                AddNode(allNode, node, m1.Value);
+                                var indexStr = ParaReg1Index.Match(m1.Value, 1).Value;
+                                AddNode(allNode, node, indexStr);
                             }
                         }
                         else if (para.ParagraphFormat.StyleIdentifier == StyleIdentifier.Heading2)

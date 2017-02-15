@@ -263,7 +263,7 @@
 
                         $scope.messages.push({ content: "即将导航到桌面", color: "c-green" });
 
-                        goFirstState("merge.merge");
+                        goFirstState("home.desktop");
                     })
                 }
 
